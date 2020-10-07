@@ -11,9 +11,11 @@ public class WindowInfo extends LitePalSupport {
 
     private String windowAddress;       //档口位置
 
-    private int windowScore;            //档口星级评分
+    private float windowScore;            //档口星级评分
 
     private int windowDishNumber;       //档口下菜品数量
+
+    private int ImageID;                //档口图片ID
 
     /**
      * setting method
@@ -39,8 +41,12 @@ public class WindowInfo extends LitePalSupport {
         this.windowName = windowName;
     }
 
-    public void setWindowScore(int windowScore) {
+    public void setWindowScore(float windowScore) {
         this.windowScore = windowScore;
+    }
+
+    public void setImageID(int imageID) {
+        ImageID = imageID;
     }
 
     /**
@@ -59,7 +65,7 @@ public class WindowInfo extends LitePalSupport {
         return belongToCanteenName;
     }
 
-    public int getWindowScore() {
+    public float getWindowScore() {
         return windowScore;
     }
 
@@ -71,4 +77,7 @@ public class WindowInfo extends LitePalSupport {
         return windowName;
     }
 
+    public int getImageID() {
+        return ImageID;
+    }
 }

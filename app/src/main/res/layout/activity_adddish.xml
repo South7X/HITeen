@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:text=""
+        android:id="@+id/text_dishname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:gravity="top"
+        android:hint="请输入新增菜品名称"/>
+
+    <EditText
+        android:text=""
+        android:id="@+id/text_belongtocateen"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:gravity="top"
+        android:hint="请输入新增菜品所属餐厅"/>
+
+    <EditText
+        android:text=""
+        android:id="@+id/text_belongtowindow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:gravity="top"
+        android:hint="请输入新增菜品所属档口"/>
+
+    <EditText
+        android:text=""
+        android:id="@+id/text_dishprice"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:gravity="top"
+        android:hint="请输入新增菜品价格"/>
+
+    <EditText
+        android:text=""
+        android:id="@+id/text_tags"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:gravity="top"
+        android:hint="请输入新增菜品标签"/>
+
+    <Button
+        android:text="提交"
+        android:id="@+id/button_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

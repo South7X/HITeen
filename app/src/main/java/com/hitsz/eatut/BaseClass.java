@@ -3,18 +3,22 @@ package com.hitsz.eatut;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.hitsz.eatut.adapter.order;
 import com.hitsz.eatut.database.CanteenInfo;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.WindowInfo;
+import com.hitsz.eatut.database.orderFood;
+import com.hitsz.eatut.adapter.dish;
 
 import org.litepal.LitePal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BaseClass {
 
     /**
-     * -------------------------------哈希部分------------------------------------
+     * -----------------------------------------哈希部分---------------------------------------------
      */
 
     /**
@@ -40,18 +44,20 @@ public class BaseClass {
 
 
     /**
-     * -------------------------------树部分---------------------------------------
+     * @author lixiang
+     * -------------------------------------------树部分---------------------------------------------
      */
-    //存储结点信息
-    private static class NodeElement{
+//存储结点信息
+    public static class NodeElement{
         String nodeName;        //名称（食堂、档口、菜品）
-        float score;            //评分
+        float score;              //单结点评分
+        float sumScore;           //累加评分
         int childNumber;        //下属级别数量
         int idInDatabase;       //所在数据库中的id
     }
 
     //左孩子右兄弟表示法存储树的结构
-    private static class TreeNode{
+    public static class TreeNode{
         NodeElement nodeData;   //结点数据
         TreeNode firstChild;    //第一个孩子
         TreeNode firstBrother;  //第一个兄弟
@@ -60,14 +66,14 @@ public class BaseClass {
         }
     }
 
-    private static TreeNode rootNode;
+    public static TreeNode rootNode;
 
-    //-------------------------------建树------------------------------
+//-------------------------------建树------------------------------
     /**
      * 函数功能 从数据库读取食堂、档口、菜品数据存入结点信息(初始化树）
      * @author lixiang
      */
-    //建立一棵树～
+//建立一棵树～
     public static void buildTreeFromDatabase(){
         buildCanteenNodesFromDatabase();
         buildWindowNodesFromDatabase();
@@ -92,7 +98,7 @@ public class BaseClass {
     }
 
     //----------------------------
-    //读入食堂信息建树
+//读入食堂信息建树
     private static void buildCanteenNodesFromDatabase(){
         List<CanteenInfo> canteenInfos = LitePal.findAll(CanteenInfo.class);
         rootNode = recursiveCanteenNode(canteenInfos, 0);
@@ -111,7 +117,7 @@ public class BaseClass {
     }
 
     //------------------------------
-    //读入档口信息建树
+//读入档口信息建树
     private static void buildWindowNodesFromDatabase(){
         List<WindowInfo> windowInfos = LitePal.findAll(WindowInfo.class);
         for (WindowInfo windowInfo: windowInfos){
@@ -135,12 +141,13 @@ public class BaseClass {
         TreeNode tempNode = rootNode; //找到新结点的父结点
         while (!isWindowBelongToCanteen(windowInfo, tempNode)){
             tempNode = tempNode.firstBrother;
+            if (tempNode == null) break;//不存在该食堂
         }
         return tempNode;
     }
 
     //-------------------------------
-    //读入菜品信息建树
+//读入菜品信息建树
     private static void buildDishNodesFromDatabase(){
         List<DishInfo> dishInfos = LitePal.findAll(DishInfo.class);
         for (DishInfo dishInfo: dishInfos){
@@ -168,15 +175,18 @@ public class BaseClass {
         TreeNode tempNode = rootNode; //找到新结点的父结点
         while(!isDishBelongToCanteen(dishInfo, tempNode)){
             tempNode = tempNode.firstBrother;
+            if (tempNode == null) return tempNode;
         }
         tempNode = tempNode.firstChild;
+        if (tempNode == null) return tempNode;
         while(!isDishBelongToWindow(dishInfo, tempNode)){
             tempNode = tempNode.firstBrother;
+            if (tempNode == null) break;
         }
         return tempNode;
     }
 
-    //-----------------------------增加----------------------------------
+//-----------------------------增加----------------------------------
     /**
      * 增加食堂数据操作
      * @author lixiang
@@ -220,21 +230,30 @@ public class BaseClass {
      * @param windowAddress 档口地址
      * @param belongToCanteenName 所属食堂
      */
-    public static void addNewWindow(String windowName, String windowAddress,
-                                    String belongToCanteenName, int dishNum){
+    public static boolean addNewWindow(String windowName, String windowAddress,
+                                       String belongToCanteenName, int dishNum){
         WindowInfo newWindow = new WindowInfo();
         newWindow.setBelongToCanteenName(belongToCanteenName);
         newWindow.setWindowAddress(windowAddress);
         newWindow.setWindowDishNumber(dishNum);
         newWindow.setWindowName(windowName);
-        newWindow.save();
-        addNewWindowTreeNode(newWindow);
+        if(addNewWindowTreeNode(newWindow)){//若为false，则说明未找到所属食堂
+            newWindow.save();//存入数据库
+            return true;
+        }
+        else return false;
     }
     //增加档口结点到树
-    private static void addNewWindowTreeNode(WindowInfo windowInfo){
-        TreeNode newNode = new TreeNode(createNewWindowNodeDataFromDatabase(windowInfo));
-        TreeNode parentNode = findWindowNodePosition(windowInfo);
-        addNewNodeFromParentNode(parentNode, newNode);//加到该食堂下的子结点
+    private static boolean addNewWindowTreeNode(WindowInfo windowInfo){
+        TreeNode parentNode = findWindowNodePosition(windowInfo);//找到所属食堂结点
+        if (parentNode == null) {
+            return false;//不存在所属食堂
+        }
+        else {
+            TreeNode newNode = new TreeNode(createNewWindowNodeDataFromDatabase(windowInfo));
+            addNewNodeFromParentNode(parentNode, newNode);//加到该食堂下的子结点
+            return true;
+        }
     }
     /**
      * 增加菜品数据操作
@@ -245,26 +264,33 @@ public class BaseClass {
      * @param belongToCanteenName 所属食堂
      * @param tags 标签
      */
-    public static void addNewDish(String dishName, String belongToCanteenName,
-                                  String belongToWindowName, float price, String tags){
+    public static boolean addNewDish(String dishName, String belongToCanteenName,
+                                     String belongToWindowName, float price, String tags){
         DishInfo newDish = new DishInfo();
         newDish.setBelongToCanteen(belongToCanteenName);
         newDish.setBelongToWindow(belongToWindowName);
         newDish.setDishName(dishName);
         newDish.setDishPrice(price);
         newDish.setDishTags(tags);
-        newDish.save();
-        addNewDishTreeNode(newDish);
-        addLinkedListFromDatabase(newDish);
+        if (addNewDishTreeNode(newDish)){//增加到树
+            newDish.save();
+            addLinkedListFromDatabase(newDish);//增加到链表
+            return true;
+        }
+        else return false;
     }
     //增加菜品结点到树
-    private static void addNewDishTreeNode(DishInfo dishInfo){
-        TreeNode newNode = new TreeNode(createNewDishNodeDataFromDatabase(dishInfo));
+    private static boolean addNewDishTreeNode(DishInfo dishInfo){
         TreeNode parentNode = findDishNodePosition(dishInfo);
-        addNewNodeFromParentNode(parentNode, newNode);//加到该档口下的子结点
+        if (parentNode == null) return false;
+        else {
+            TreeNode newNode = new TreeNode(createNewDishNodeDataFromDatabase(dishInfo));
+            addNewNodeFromParentNode(parentNode, newNode);//加到该档口下的子结点
+            return true;
+        }
     }
 
-    //----------------------------------遍历----------------------------------
+//----------------------------------遍历----------------------------------
     /**
      * 遍历整棵树
      */
@@ -280,7 +306,7 @@ public class BaseClass {
         }
     }
 
-    //------------------------------删除--------------------------------------
+//------------------------------删除--------------------------------------
     /**
      * 删除菜品数据
      * @author lixiang
@@ -288,22 +314,29 @@ public class BaseClass {
      * @param belongToCanteenName 所属食堂
      * @param belongToWindowName 所属档口
      */
-    public static void deleteDishFromDatabase(String dishName, String belongToCanteenName,
-                                              String belongToWindowName){
+    public static boolean deleteDishFromDatabase(String dishName, String belongToCanteenName,
+                                                 String belongToWindowName){
         //利用树存储的映射结点信息找到要删除的菜品在数据库中的ID，并在树中删除
         int positionID = deleteDishNode(dishName, belongToCanteenName, belongToWindowName);
+        if (positionID == 0) return false;
         deleteDishFromLinkedList(positionID);//从链表中删除
         LitePal.delete(DishInfo.class, positionID);//从数据库中删除
+        return true;
     }
     private static int deleteDishNode(String dishName, String belongToCanteenName,
-                                       String belongToWindowName){
+                                      String belongToWindowName){
         TreeNode tempNode = rootNode;
-        while (!tempNode.nodeData.nodeName.equals(belongToCanteenName))
+        while (!tempNode.nodeData.nodeName.equals(belongToCanteenName)){
             tempNode = tempNode.firstBrother;//找到其所属食堂结点
+            if (tempNode == null) return 0;
+        }
         //Log.d("TreeNode", tempNode.nodeData.nodeName);
         tempNode = tempNode.firstChild;
-        while (!tempNode.nodeData.nodeName.equals(belongToWindowName))
+        if (tempNode == null) return 0;
+        while (!tempNode.nodeData.nodeName.equals(belongToWindowName)){
             tempNode = tempNode.firstBrother;//找到其所属档口结点
+            if (tempNode == null) return 0;
+        }
         tempNode.nodeData.childNumber --;
         return deleteNode(tempNode, dishName);
     }
@@ -312,26 +345,36 @@ public class BaseClass {
      * @author lixiange
      * @param windowName 档口名
      * @param belongToCanteenName 所属食堂
+     *
      */
-    public static void deleteWindowFromDatabase(String windowName, String belongToCanteenName){
+    public static boolean deleteWindowFromDatabase(String windowName, String belongToCanteenName){
         int positionID = deleteWindowNode(windowName, belongToCanteenName);
+        if (positionID == 0) return false;
         LitePal.delete(WindowInfo.class, positionID);//从数据库中删除
+        createLinkedListFromDatabase();//重新生成链表
+        return true;
     }
     private static int deleteWindowNode(String windowName, String belongToCanteenName){
         TreeNode tempNode = rootNode;
-        while(!tempNode.nodeData.nodeName.equals(belongToCanteenName))
+        while(!tempNode.nodeData.nodeName.equals(belongToCanteenName)){
             tempNode = tempNode.firstBrother;
+            if (tempNode == null) return 0;
+        }
         tempNode.nodeData.childNumber--;
         return deleteNode(tempNode, windowName);
     }
     /**
      * 删除食堂数据
-     * @author lixiange
+     * @author lixiang
      * @param canteenName 食堂名
+     *
      */
-    public static void deleteCanteenFromDatabase(String canteenName){
+    public static boolean deleteCanteenFromDatabase(String canteenName){
         int positionID = deleteCanteenNode(canteenName);
+        if (positionID == 0) return false;
         LitePal.delete(CanteenInfo.class, positionID);//从数据库中删除
+        createLinkedListFromDatabase();//重新建立链表
+        return true;
     }
     private static int deleteCanteenNode(String canteenName){
         TreeNode tempNode = rootNode;
@@ -340,8 +383,11 @@ public class BaseClass {
             return tempNode.nodeData.idInDatabase;
         }
         else{
-            while(!tempNode.firstBrother.nodeData.nodeName.equals(canteenName))
+            if (tempNode.firstBrother == null) return 0;
+            while(!tempNode.firstBrother.nodeData.nodeName.equals(canteenName)){
                 tempNode = tempNode.firstBrother;
+                if (tempNode.firstBrother == null) return 0;
+            }
             TreeNode deleteNode = tempNode.firstBrother;
             tempNode.firstBrother = deleteNode.firstBrother;
             return deleteNode.nodeData.idInDatabase;
@@ -364,11 +410,9 @@ public class BaseClass {
         }
     }
 
-    //-----------------------------修改-----------------------------------
-    //TODO:write update function
-
     /**
-     * ----------------------------------嵌套链表---------------------------------------
+     * @author lixiang
+     * -----------------------------------------嵌套链表---------------------------------------------
      */
     private static class TagHead{//标签链表
         String tagName;
@@ -436,7 +480,7 @@ public class BaseClass {
         }
     }
 
-    //TODO：删除链表结点
+    //删除菜品的标签下其链表结点
     private static void deleteDishFromLinkedList(int positionID){
         DishInfo dishInfo = LitePal.find(DishInfo.class, positionID);
         String[] dishTags = dishInfo.getDishTags().split("\\$");
@@ -459,22 +503,181 @@ public class BaseClass {
     }
 
     //遍历输出嵌套链表
-    public static void traversalWholeLinkedList(){
+    //遍历输出嵌套链表
+    public static List<Integer> traversalWholeLinkedList(){
         TagHead tempTagNode = tagRoot;
+        List<Integer> perId=new ArrayList<>();
         while (tempTagNode != null){
             dishNode tempDishNode = tempTagNode.firstNode;
             Log.d("LinkedList", tempTagNode.tagName);
             while (tempDishNode != null){
+                if(!perId.contains(tempDishNode.idInDatabase)){
+                    perId.add(tempDishNode.idInDatabase);
+                }
                 Log.d("LinkedList", String.valueOf(tempDishNode.idInDatabase));
                 tempDishNode = tempDishNode.nextNode;
             }
             tempTagNode = tempTagNode.nextTag;
         }
+        return perId;
+    }
+    public static List<Integer> getUnitedList(List<String> tag){//求tag的并集
+        List<Integer> perId=new ArrayList<>();
+        TagHead tempTagNode=tagRoot;
+        while(tempTagNode!=null){
+            Log.d("United", tempTagNode.tagName);
+            for(int i=0;i<tag.size();i++)
+            {
+                if(tag.get(i).equals(tempTagNode.tagName)){
+                    dishNode tempDishNode = tempTagNode.firstNode;
+                    while (tempDishNode != null){
+                        if(!perId.contains(tempDishNode.idInDatabase)){
+                            perId.add(tempDishNode.idInDatabase);
+                            Log.d("United", String.valueOf(tempDishNode.idInDatabase));
+                        }
+                        tempDishNode = tempDishNode.nextNode;
+                    }
+                }
+            }
+            tempTagNode = tempTagNode.nextTag;
+        }
+
+        return perId;
+
     }
 
     /**
-     * 计算评分，从菜品评分计算档口评分和食堂评分
-     * TODO：
+     * ---------------------------------------队列---------------------------------------------------
+     * @author Lily
+     * 队列基本操作
      */
+    public static class Queue {
+        private List<dish> data;
+        private int front;// 队列头，允许删除
+        private int rear;// 队列尾，允许插入
 
+        public Queue() {
+            data=new ArrayList<>();
+            front = rear = 0;
+        }
+
+        // 入列一个元素
+        public void offer(dish e) {
+            data.add(e);
+            rear++;
+        }
+
+        // 返回队首元素，但不删除
+        public dish peek() {
+            return (dish) data.get(front);
+        }
+
+        // 扫描队列中的元素
+        public dish display(int i){
+            return (dish) data.get(i);
+        }
+
+        // 出队排在最前面的一个元素
+        public dish poll() {
+            dish value = data.get(front);// 保留队列的front端的元素的值
+            data.remove(front);
+            front++;// 释放队列的front端的元素
+            return value;
+        }
+
+    }
+
+
+    /**
+     * ---------------------------------------评分---------------------------------------------------
+     * @author lixiang
+     * 计算评分，从菜品评分计算档口评分和食堂评分
+     * 算法：累加每个结点后的兄弟结点分数，食堂评分为档口评分平均值，档口评分为菜品评分平均值
+     */
+    public static void addDishScore(String belongToCanteenName, String belongToWindowName,
+                                    String dishName, float score){
+        float newScore;
+        newScore = findAndChangeDishNodeScore(rootNode, belongToCanteenName, belongToWindowName,
+                dishName, score);
+
+    }
+
+    //递归找到菜品在树中的位置，并在递归返回时将菜品结点及对应的档口、食堂结点的评分重新计算修改
+    private static float findAndChangeDishNodeScore(TreeNode tempNode, String belongToCanteenName,
+                                                    String belongToWindowName, String dishName, float score){
+        float returnScore;
+        if (tempNode.nodeData.nodeName.equals(dishName)){//找到该菜品结点
+            returnScore = detailChangeDishScoreInTreeAndDatabase(tempNode, score);
+        }
+        else if (tempNode.nodeData.nodeName.equals(belongToCanteenName)){//找到对应食堂
+            float changeScore = findAndChangeDishNodeScore(tempNode.firstChild,
+                    belongToCanteenName, belongToWindowName, dishName, score);
+            returnScore = detailChangeCanteenScoreInTreeAndDatabase(tempNode, changeScore);
+
+        }
+        else if (tempNode.nodeData.nodeName.equals(belongToWindowName)){//找到对应档口
+            float changeScore = findAndChangeDishNodeScore(tempNode.firstChild,
+                    belongToCanteenName, belongToWindowName, dishName, score);
+            returnScore = detailChangeWindowScoreInTreeAndDatabase(tempNode, changeScore);
+        }
+        else {//在菜品/档口/食堂兄弟结点中寻找
+            float changeScore = findAndChangeDishNodeScore(tempNode.firstBrother, belongToCanteenName,
+                    belongToWindowName, dishName, score);
+            tempNode.nodeData.sumScore = tempNode.nodeData.score + changeScore;
+            returnScore = tempNode.nodeData.sumScore;
+        }
+        return returnScore;
+    }
+
+    //计算新的结点单评分
+    private static float calculateNewScore(TreeNode tempNode, float score){
+        float number = tempNode.nodeData.childNumber;
+        float previousScore = tempNode.nodeData.score;
+        return (previousScore * (number - 1) + score) / number;
+    }
+
+    //计算变动结点的累加评分
+    private static float calculateNewSumScore(TreeNode tempNode, float newScore){
+        float previousSumScore = tempNode.nodeData.sumScore;
+        float previousScore = tempNode.nodeData.score;
+        float newSumScore = previousSumScore - previousScore + newScore;
+        tempNode.nodeData.sumScore = newSumScore;
+        return newSumScore;
+    }
+
+    //计算菜品新的评分并更新到数据库
+    private static float detailChangeDishScoreInTreeAndDatabase(TreeNode tempNode, float score){
+        tempNode.nodeData.childNumber ++;//用childNumber存评分的人数
+        float newScore = calculateNewScore(tempNode, score);//重新计算评分平均分
+        float newSumScore = calculateNewSumScore(tempNode, newScore);//计算累加评分
+        tempNode.nodeData.score = newScore;
+        int positionID = tempNode.nodeData.idInDatabase;
+        DishInfo dishInfo = LitePal.find(DishInfo.class, positionID);
+        dishInfo.setDishScore(newScore);
+        dishInfo.save();
+        return newSumScore;//返回累加评分
+    }
+
+    //计算食堂评分并更新到数据库
+    private static float detailChangeCanteenScoreInTreeAndDatabase(TreeNode tempNode, float score){
+        float newScore = score / tempNode.nodeData.childNumber;//计算食堂新评分
+        tempNode.nodeData.score = newScore;
+        int positionID = tempNode.nodeData.idInDatabase;
+        CanteenInfo canteenInfo = LitePal.find(CanteenInfo.class, positionID);
+        canteenInfo.setCanteenScore(newScore);
+        canteenInfo.save();
+        return newScore;
+    }
+
+    //计算档口评分并更新到数据库
+    private static float detailChangeWindowScoreInTreeAndDatabase(TreeNode tempNode, float score){
+        float newScore = score / tempNode.nodeData.childNumber;//计算档口新评分
+        float newSumScore = calculateNewSumScore(tempNode, newScore);//计算累加评分
+        tempNode.nodeData.score = newScore;
+        int positionID = tempNode.nodeData.idInDatabase;
+        WindowInfo windowInfo = LitePal.find(WindowInfo.class, positionID);
+        windowInfo.setWindowScore(newScore);
+        windowInfo.save();
+        return newSumScore;
+    }
 }

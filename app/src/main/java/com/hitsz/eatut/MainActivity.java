@@ -1,14 +1,27 @@
 package com.hitsz.eatut;
 
-import android.nfc.Tag;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.hitsz.eatut.adapter.canteen;
 import com.hitsz.eatut.database.CanteenInfo;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.WindowInfo;
+import com.hitsz.eatut.managerActivities.FeedbackActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.hitsz.eatut.BaseClass.addNewCanteen;
@@ -22,13 +35,32 @@ import static com.hitsz.eatut.BaseClass.deleteWindowFromDatabase;
 import static com.hitsz.eatut.BaseClass.traversalWholeLinkedList;
 import static com.hitsz.eatut.BaseClass.traversalWholeTreeNodes;
 
+/**
+ * @author lixiang
+ */
 public class MainActivity extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private List<canteen> canteenList=new ArrayList<>();
+    private BottomNavigationView navView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //test();
+        navView=findViewById(R.id.nav_view);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_search, R.id.navigation_main, R.id.navigation_order)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
 
+
+
+    }
+
+    private void test(){
         String tags1 = "tag1$tag2$tag3$tag4$tag5";
         String tags2 = "tag1$tag2$tag3";
         String tags3 = "$tag3$tag4$tag5";
@@ -70,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         dish1.setBelongToCanteen("canteen3");
         dish1.setDishTags(tags1);
         dish1.setDishPrice(12);
+        dish1.setImageID(R.drawable.dumplings);
         dish1.save();
         DishInfo dish2 = new DishInfo();
         dish2.setDishName("dish2");
@@ -127,15 +160,49 @@ public class MainActivity extends AppCompatActivity {
         traversalWholeLinkedList();
 
 
-//        //删除档口结点
-//        deleteWindowFromDatabase("window1", "canteen3");
-//        Log.d("TreeNOde", "删除档口结点后");
-//        traversalWholeTreeNodes();
-//
-//        //删除食堂结点
-//        deleteCanteenFromDatabase("canteen1");
-//        Log.d("TreeNode", "删除食堂结点后");
-//        traversalWholeTreeNodes();
+        //删除档口结点
+        deleteWindowFromDatabase("window1", "canteen3");
 
+        Log.d("TreeNOde", "删除档口结点后");
+        traversalWholeTreeNodes();
+        //删除食堂结点
+        deleteCanteenFromDatabase("canteen1");
+        Log.d("TreeNode", "删除食堂结点后");
+        traversalWholeTreeNodes();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        switch (item.getItemId()) {
+            case R.id.feedback: {
+                Intent feedback_intent = new Intent(MainActivity.this, FeedbackActivity.class);
+                startActivity(feedback_intent);
+                Toast.makeText(MainActivity.this, "跳转至设置",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            default:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_main, R.id.navigation_order, R.id.navigation_search)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navView, navController);
     }
 }

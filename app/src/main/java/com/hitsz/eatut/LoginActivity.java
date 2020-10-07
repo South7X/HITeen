@@ -4,12 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
 import android.content.CursorLoader;
@@ -33,8 +30,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.facebook.stetho.Stetho;
+import com.google.android.material.snackbar.Snackbar;
+import com.hitsz.eatut.database.CanteenInfo;
+import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.UserInfo;
+import com.hitsz.eatut.database.WindowInfo;
+import com.hitsz.eatut.managerActivities.ManagerActivity;
 
 import org.litepal.LitePal;
 
@@ -42,8 +47,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static com.hitsz.eatut.BaseClass.buildTreeFromDatabase;
+import static com.hitsz.eatut.BaseClass.createLinkedListFromDatabase;
 
 /**
+ * @author lixiang
  * A login screen that offers login via phone/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
@@ -57,6 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private String managerNumber = "88888888888";//15888858888
     public final int maxUserNum = 100000;
     private int[] itsHashCodeToID = new int[maxUserNum];
     private int countUserNumber = 0;
@@ -74,9 +83,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //Connector.getDatabase();
         Stetho.initializeWithDefaults(this);
         SQLiteDatabase db = LitePal.getDatabase();
+
+
         //TODO: remove after connect to a real server
         //TODO: 修改hashCode函数，避免地址冲突问题
-        addNewUserToDatabase("15000050000", "12345678");
+        addNewUserToDatabase(managerNumber, "12345678");
 
         mTelephoneView = (AutoCompleteTextView) findViewById(R.id.telephone);
         populateAutoComplete();
@@ -99,6 +110,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPhoneSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                OrderCount();
+                MainCount();
                 attemptLogin();
             }
         });
@@ -395,7 +408,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 //finish();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+                Intent intent2 = new Intent(LoginActivity.this, ManagerActivity.class);
+                SavePhone(mPhone);
+                if (mPhone.equals(managerNumber)&&mPassword.equals("12345678")) startActivity(intent2);//管理者界面
+                else startActivity(intent);//用户界面
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -408,5 +424,179 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+    private void SavePhone(String mPhone){
+        SharedPreferences pref=this.getSharedPreferences("CurrentPhone",MODE_PRIVATE);
+        SharedPreferences.Editor editor=pref.edit();
+        editor.putString("Phone",mPhone);
+        editor.apply();
+    }
+    private void OrderCount(){
+        SharedPreferences pref=this.getSharedPreferences("OrderCount",MODE_PRIVATE);
+        SharedPreferences.Editor editor=pref.edit();
+        Boolean isBegin=pref.getBoolean("isBegin",false);
+        if(isBegin==false)
+        {
+            editor.putInt("count",0);
+            editor.putBoolean("isBegin",true);
+            editor.apply();
+        }
+    }
+    private void MainCount(){
+        SharedPreferences pref=this.getSharedPreferences("MainCount",MODE_PRIVATE);
+        SharedPreferences.Editor editor=pref.edit();
+        Boolean isBegin=pref.getBoolean("isBegin",false);
+        if(isBegin==false)
+        {
+            initInformation();
+            editor.putBoolean("isBegin",true);
+            editor.apply();
+        }
+    }
+    private void initInformation(){
+        String[] tags = {"清淡","酸","甜","苦","辣","咸","油炸"};
+        //食堂
+        CanteenInfo canteen1 = new CanteenInfo();
+        canteen1.setCanteenName("荔园一食堂");
+        canteen1.setImageID(R.drawable.canteen1);
+        canteen1.setCanteenWindowNumber(15);
+        canteen1.save();
+        CanteenInfo canteen2 = new CanteenInfo();
+        canteen2.setCanteenName("荔园二食堂");
+        canteen2.setImageID(R.drawable.canteen2);
+        canteen2.setCanteenWindowNumber(5);
+        canteen2.save();
+        CanteenInfo canteen3 = new CanteenInfo();
+        canteen3.setCanteenName("荔园三食堂");
+        canteen3.setImageID(R.drawable.canteen3);
+        canteen3.setCanteenWindowNumber(10);
+        canteen3.save();
+        //档口
+        WindowInfo window1 = new WindowInfo();
+        window1.setWindowName("乐记水饺");
+        window1.setBelongToCanteenName("荔园三食堂");
+        window1.setImageID(R.drawable.jiaozi_window);
+        window1.setWindowDishNumber(3);
+        window1.save();
+        WindowInfo window2 = new WindowInfo();
+        window2.setWindowName("开饭了");
+        window2.setBelongToCanteenName("荔园三食堂");
+        window2.setImageID(R.drawable.kaifanle_window);
+        window2.setWindowDishNumber(10);
+        window2.save();
+        WindowInfo window3 = new WindowInfo();
+        window3.setWindowName("兰州拉面");
+        window3.setBelongToCanteenName("荔园三食堂");
+        window3.setImageID(R.drawable.lamian_window);
+        window3.setWindowDishNumber(10);
+        window3.save();
+        WindowInfo window4 = new WindowInfo();
+        window4.setWindowName("粤式烧腊");
+        window4.setBelongToCanteenName("荔园三食堂");
+        window4.setImageID(R.drawable.shaola_window);
+        window4.setWindowDishNumber(10);
+        window4.save();
+        //菜品
+        DishInfo dish1 = new DishInfo();
+        dish1.setDishName("猪肉白菜水饺");
+        dish1.setBelongToWindow("乐记水饺");
+        dish1.setBelongToCanteen("荔园三食堂");
+        dish1.setDishTags(tags[0]);
+        dish1.setDishPrice(12);
+        dish1.setImageID(R.drawable.dumplings);
+        dish1.save();
+        DishInfo dish2 = new DishInfo();
+        dish2.setDishName("猪肉玉米水饺");
+        dish2.setBelongToWindow("乐记水饺");
+        dish2.setBelongToCanteen("荔园三食堂");
+        dish2.setDishTags(tags[0]);
+        dish2.setDishPrice(9);
+        dish2.setImageID(R.drawable.dumplings);
+        dish2.save();
+        DishInfo dish3 = new DishInfo();
+        dish3.setDishName("猪肉芹菜水饺");
+        dish3.setBelongToWindow("乐记水饺");
+        dish3.setBelongToCanteen("荔园三食堂");
+        dish3.setDishTags(tags[0]);
+        dish3.setDishPrice(10);
+        dish3.setImageID(R.drawable.dumplings);
+        dish3.save();
+        DishInfo dish4 = new DishInfo();
+        dish4.setDishName("蒸南瓜");
+        dish4.setBelongToWindow("开饭了");
+        dish4.setBelongToCanteen("荔园三食堂");
+        dish4.setDishTags(tags[2]+'$'+tags[0]);
+        dish4.setDishPrice(1);
+        dish4.setImageID(R.drawable.nangua);
+        dish4.save();
+        DishInfo dish5 = new DishInfo();
+        dish5.setDishName("口水鸡");
+        dish5.setBelongToWindow("开饭了");
+        dish5.setBelongToCanteen("荔园三食堂");
+        dish5.setDishTags(tags[4]);
+        dish5.setDishPrice(8);
+        dish5.setImageID(R.drawable.koushuiji);
+        dish5.save();
+        DishInfo dish6 = new DishInfo();
+        dish6.setDishName("鸡排");
+        dish6.setBelongToWindow("开饭了");
+        dish6.setBelongToCanteen("荔园三食堂");
+        dish6.setDishTags(tags[6]);
+        dish6.setDishPrice(8);
+        dish6.setImageID(R.drawable.jipai);
+        dish6.save();
+        DishInfo dish7 = new DishInfo();
+        dish7.setDishName("番茄炒蛋");
+        dish7.setBelongToWindow("开饭了");
+        dish7.setBelongToCanteen("荔园三食堂");
+        dish7.setDishTags(tags[1]+'$'+tags[2]);
+        dish7.setDishPrice(4);
+        dish7.setImageID(R.drawable.fanqiechaodan);
+        dish7.save();
+        DishInfo dish8 = new DishInfo();
+        dish8.setDishName("土豆牛肉拌面");
+        dish8.setBelongToWindow("兰州拉面");
+        dish8.setBelongToCanteen("荔园三食堂");
+        dish8.setDishTags(tags[4]);
+        dish8.setDishPrice(15);
+        dish8.setImageID(R.drawable.tudouniuroubanmian);
+        dish8.save();
+        DishInfo dish9 = new DishInfo();
+        dish9.setDishName("传统牛肉拉面");
+        dish9.setBelongToWindow("兰州拉面");
+        dish9.setBelongToCanteen("荔园三食堂");
+        dish9.setDishTags(tags[0]);
+        dish9.setDishPrice(8);
+        dish9.setImageID(R.drawable.niuroulamian);
+        dish9.save();
+        DishInfo dish10 = new DishInfo();
+        dish10.setDishName("烧鸭饭");
+        dish10.setBelongToWindow("粤式烧腊");
+        dish10.setBelongToCanteen("荔园三食堂");
+        dish10.setDishTags(tags[5]);
+        dish10.setDishPrice(13);
+        dish10.setImageID(R.drawable.shaoyafan);
+        dish10.save();
+        DishInfo dish11 = new DishInfo();
+        dish11.setDishName("鸡腿饭");
+        dish11.setBelongToWindow("粤式烧腊");
+        dish11.setBelongToCanteen("荔园三食堂");
+        dish11.setDishTags(tags[5]);
+        dish11.setDishPrice(15);
+        dish11.setImageID(R.drawable.jituifan);
+        dish11.save();
+        DishInfo dish12 = new DishInfo();
+        dish12.setDishName("猪脚饭");
+        dish12.setBelongToWindow("粤式烧腊");
+        dish12.setBelongToCanteen("荔园三食堂");
+        dish12.setDishTags(tags[5]);
+        dish12.setDishPrice(15);
+        dish12.setImageID(R.drawable.zhujiaofan);
+        dish12.save();
+
+
+        buildTreeFromDatabase();
+        createLinkedListFromDatabase();
+    }
+
 }
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:text=""
+        android:id="@+id/text_delete_windowname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:gravity="top"
+        android:hint="请输入要删除的档口名称"/>
+
+    <EditText
+        android:text=""
+        android:id="@+id/text_delete_window_belongtocanteen"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:gravity="top"
+        android:hint="请输入删除档口所属的食堂名称"/>
+
+    <Button
+        android:text="提交"
+        android:id="@+id/button_delete_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

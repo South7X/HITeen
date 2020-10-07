@@ -9,9 +9,11 @@ public class CanteenInfo extends LitePalSupport {
 
     private String canteenAddress;  //食堂地址
 
-    private int canteenScore;       //食堂星级评分
+    private float canteenScore;       //食堂星级评分
 
     private int canteenWindowNumber;//食堂档口数量
+
+    private int ImageID;            //食堂图片id
 
 
     /**
@@ -34,8 +36,12 @@ public class CanteenInfo extends LitePalSupport {
         this.canteenAddress = canteenAddress;
     }
 
-    public void setCanteenScore(int canteenScore) {
+    public void setCanteenScore(float canteenScore) {
         this.canteenScore = canteenScore;
+    }
+
+    public void setImageID(int imageID) {
+        ImageID = imageID;
     }
 
     /**
@@ -51,7 +57,7 @@ public class CanteenInfo extends LitePalSupport {
         return canteenAddress;
     }
 
-    public int getCanteenScore() {
+    public float getCanteenScore() {
         return canteenScore;
     }
 
@@ -61,5 +67,9 @@ public class CanteenInfo extends LitePalSupport {
 
     public int getCanteenWindowNumber() {
         return canteenWindowNumber;
+    }
+
+    public int getImageID() {
+        return ImageID;
     }
 }

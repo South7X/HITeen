@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="意见反馈"
+        android:id="@+id/title_feedback"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"/>
+
+    <EditText
+        android:text=""
+        android:id="@+id/text_feedback"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:lines="5"
+        android:gravity="top"
+        android:hint="请输入您的意见反馈"/>
+
+    <Button
+        android:text="提交"
+        android:id="@+id/button_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

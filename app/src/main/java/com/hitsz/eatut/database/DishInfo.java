@@ -13,9 +13,11 @@ public class DishInfo extends LitePalSupport {
 
     private float dishPrice;        //菜品价格
 
-    private int dishScore;          //菜品星级评分
+    private float dishScore;          //菜品星级评分
 
     private String dishTags;
+
+    private int imageID;            //菜品图片ID
                                     //菜品标签
     /**
      * setting method
@@ -42,8 +44,12 @@ public class DishInfo extends LitePalSupport {
         this.dishPrice = dishPrice;
     }
 
-    public void setDishScore(int dishScore) {
+    public void setDishScore(float dishScore) {
         this.dishScore = dishScore;
+    }
+
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
     }
 
     public void setDishTags(String dishTags) {
@@ -62,7 +68,7 @@ public class DishInfo extends LitePalSupport {
         return dishPrice;
     }
 
-    public int getDishScore() {
+    public float getDishScore() {
         return dishScore;
     }
 
@@ -80,5 +86,9 @@ public class DishInfo extends LitePalSupport {
 
     public String getDishTags() {
         return dishTags;
+    }
+
+    public int getImageID() {
+        return imageID;
     }
 }
