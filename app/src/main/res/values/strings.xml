@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EatUT</string>
+    <string name="app_name">HITeen</string>
 
     <!-- Strings related to login -->
     <string name="prompt_telephone">请输入手机号码</string>

@@ -7,15 +7,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myorder_recycle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="#f0f0f0"
-        android:dividerHeight="10dp"
-        android:fadingEdge="none"
-        android:listSelector="#00000000" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myorder_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="#f0f0f0"
+            android:dividerHeight="10dp"
+            android:fadingEdge="none"
+            android:listSelector="#00000000" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
