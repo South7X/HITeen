@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#ff931f</color>
     <color name="colorPrimaryDark">#ff931f</color>
-    <color name="colorAccent">#e962d5de</color>
+    <color name="colorAccent">#E9000000</color>
     <color name="darktheme">#ff9800</color>
     <color name="lighttheme">#caffc107</color>
     <color name="comment">#CDDC39</color>
@@ -11,4 +11,5 @@
     <color name="cancel">#B9B9B9</color>
     <color name="darkbtn">#8D8D8D</color>
     <color name="gray_ce">#CECECE</color>
+    <color name="signbtn">#2C2C2C</color>
 </resources>

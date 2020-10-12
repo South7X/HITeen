@@ -3,6 +3,8 @@ package com.hitsz.eatut;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -23,6 +25,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -30,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -105,6 +109,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
+
+        /**
+         * Sign up Activity
+         */
+        Button mSignUpButton =(Button) findViewById(R.id.sign_up_button);
+        mSignUpButton.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+
+
 
         Button mPhoneSignInButton = (Button) findViewById(R.id.phone_sign_in_button);
         mPhoneSignInButton.setOnClickListener(new OnClickListener() {
@@ -351,6 +370,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         UserInfo user = LitePal.find(UserInfo.class, itsHashCodeToID[hashID]);
         return user.getTelephoneNumber().equals(phone);
     }
+//    // TODO: Delete Hash code function, input phoneNumber or studentNumber
+//    private boolean isUserExist(String phoneNumber, String studentNumber){
+//        List<UserInfo> users_phone = LitePal.where("phoneNumber = ?", phoneNumber).find(UserInfo.class);
+//        List<UserInfo> users_student = LitePal.where("studentNumber = ?", studentNumber).find(UserInfo.class);
+//        return (!users_phone.isEmpty() | !users_student.isEmpty());
+//    }
 
     private boolean isPasswordCorrect(String phone, String password) {
         int hashID = BaseClass.getHashCodeByTelephone(Long.parseLong(phone), maxUserNum);
@@ -389,12 +414,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }
             */
-            if (isUserExist(mPhone)){
+            if (isUserExist(mPhone)){  // TODO: add studentNumber Exist judge
                 return isPasswordCorrect(mPhone, mPassword);
             } else {
                 addNewUserToDatabase(mPhone, mPassword);
                 Log.d(TAG, "register new user");
                 return true;
+//                AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
+//                dialog.setTitle("咦？我好像还不认识你");
+//                dialog.setMessage("快去注册吧，这样才能登录喔！");
+//                dialog.setCancelable(false);
+//                dialog.setPositiveButton("这就去注册", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+//                        startActivity(intent);
+//                    }
+//                });
+//                dialog.setNegativeButton("算了", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                })
+//                dialog.show();
+//                return false;
             }
             // TODO: register the new account here.
 
@@ -598,5 +642,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         createLinkedListFromDatabase();
     }
 
+    /**
+     * 注册成功返回的数据
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    String returnedData = data.getStringExtra("phoneNumber");
+                    if(!TextUtils.isEmpty(returnedData)){
+                        //设置用户名到 mTelephoneView 控件
+                        mTelephoneView.setText(returnedData);
+                        //mTelephoneView 控件的setSelection()方法来设置光标位置
+                        mTelephoneView.setSelection(returnedData.length());
+                    }
+
+                }
+                break;
+            default:
+        }
+    }
 }
 
