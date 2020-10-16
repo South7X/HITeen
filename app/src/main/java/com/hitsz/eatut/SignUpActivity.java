@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hitsz.eatut.database.UserInfo;
+import com.hitsz.eatut.BaseClass;
 
 import org.litepal.LitePal;
 
@@ -80,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
                     et_user_name.setError("昵称不能为空");
                     focusView = et_user_name;
                     cancel = true;
-                } else if (!isUserNameValid(userName)){
+                } else if (!BaseClass.isUserNameValid(userName)){
                     et_user_name.setError("昵称字符长度不小于2位");
                     focusView = et_user_name;
                     cancel = true;
@@ -89,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                     et_phoneNumber.setError("请输入手机号码");
                     focusView = et_phoneNumber;
                     cancel = true;
-                }else if (!isPhoneValid(phoneNumber)) {
+                }else if (!BaseClass.isPhoneValid(phoneNumber)) {
                     et_phoneNumber.setError("手机号码格式错误");
                     focusView = et_phoneNumber;
                     cancel = true;
@@ -98,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
                     et_studentNumber.setError("请输入学号");
                     focusView = et_studentNumber;
                     cancel = true;
-                } else if (!isStudentNumberValid(studentNumber)) {
+                } else if (!BaseClass.isStudentNumberValid(studentNumber)) {
                     et_studentNumber.setError("学号格式错误（请输入9位学号）");
                     focusView = et_studentNumber;
                     cancel = true;
@@ -107,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
                     et_psw.setError("请输入密码");
                     focusView = et_psw;
                     cancel = true;
-                } else if (!isPasswordValid(psw)){
+                } else if (!BaseClass.isPasswordValid(psw)){
                     et_psw.setError("密码长度不小于8位");
                     focusView = et_psw;
                     cancel = true;
@@ -130,7 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (cancel){
                     focusView.requestFocus();
                 }
-                else if(isUserExist(phoneNumber, studentNumber)){
+                else if(BaseClass.isUserExist(phoneNumber)){
                     Toast.makeText(SignUpActivity.this, "此账户已经存在", Toast.LENGTH_SHORT).show();
                     cancel = true;
                 } else{
@@ -149,22 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-    // TODO: move these function to BaseClass to let LoginActivity use
-    private boolean isUserNameValid(String userName) {
-        return userName.length() >= 2;
-    }
 
-    private boolean isStudentNumberValid(String studentNumber) {
-        return studentNumber.length() == 9;
-    }
-
-    private boolean isPhoneValid(String phone) {
-        return phone.length() == 11;
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() >= 8;
-    }
     /**
      * 获取控件中的字符串
      */
@@ -176,14 +162,7 @@ public class SignUpActivity extends AppCompatActivity {
         studentNumber=et_studentNumber.getText().toString().trim();
         addressDormitory=et_addressDormitory.getText().toString().trim();
     }
-    /**
-     * 读取输入的用户名，判断SharedPreferences中是否有此用户名
-     */
-    private boolean isUserExist(String phoneNumber, String studentNumber){
-        List<UserInfo> users_phone = LitePal.where("phoneNumber = ?", phoneNumber).find(UserInfo.class);
-        List<UserInfo> users_student = LitePal.where("studentNumber = ?", studentNumber).find(UserInfo.class);
-        return (!users_phone.isEmpty() | !users_student.isEmpty());
-    }
+
     /**
      * 保存账号和密码到SharedPreferences中SharedPreferences
      */
