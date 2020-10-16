@@ -3,6 +3,8 @@ package com.hitsz.eatut;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.hitsz.eatut.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.hitsz.eatut.AAChartCoreLib.AAChartCreator.AASeriesElement;
@@ -10,19 +12,23 @@ import com.hitsz.eatut.AAChartCoreLib.AAChartEnum.AAChartType;
 
 import java.util.ArrayList;
 
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+        Button time = (Button) findViewById(R.id.time);
+        Button expense = (Button) findViewById(R.id.expense);
+        Button favor = (Button) findViewById(R.id.favor);
+        Button explore = (Button) findViewById(R.id.explore);
         com.hitsz.eatut.AAChartCoreLib.AAChartCreator.AAChartView aaChartView = findViewById(R.id.AAChartView);
         AAChartModel aaChartModel = new AAChartModel()
-                .chartType(AAChartType.Area)
+                .chartType(AAChartType.Column)
                 .title("THE HEAT OF PROGRAMMING LANGUAGE")
                 .subtitle("Virtual Data")
-                .backgroundColor("#4b2b7f")
-                .categories(new String[]{"Java","Swift","Python","Ruby", "PHP","Go","C","C#","C++"})
+                .backgroundColor("#fffacd")
+                .categories(new String[]{"Java", "Swift", "Python", "Ruby", "PHP", "Go", "C", "C#", "C++"})
                 .dataLabelsEnabled(false)
                 .yAxisGridLineWidth(0f)
                 .series(new AASeriesElement[]{
@@ -40,5 +46,33 @@ public class StatisticsActivity extends AppCompatActivity {
                                 .data(new Object[]{3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8})
                 });
         aaChartView.aa_drawChartWithChartModel(aaChartModel);
-}
+        time.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                aaChartModel.chartType=AAChartType.Bar;
+                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+            }
+        });
+        expense.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                aaChartModel.chartType=AAChartType.Area;
+                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+            }
+        });
+        favor.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                aaChartModel.chartType=AAChartType.Line;
+                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+            }
+        });
+        explore.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                aaChartModel.chartType=AAChartType.Pie;
+                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+            }
+        });
+    }
 }

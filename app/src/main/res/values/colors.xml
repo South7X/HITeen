@@ -11,4 +11,6 @@
     <color name="cancel">#B9B9B9</color>
     <color name="darkbtn">#8D8D8D</color>
     <color name="gray_ce">#CECECE</color>
+    <color name="clr_normal">#ff6eff2d</color>
+    <color name="clr_pressed">#669966</color>
 </resources>
