@@ -30,7 +30,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight='1'
-            android:background="@drawable/star_button_select"
+            android:background="@color/red"
             android:text="用餐时间" />
 
         <Button
@@ -38,7 +38,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight='1'
-            android:background="@drawable/star_button_select"
+            android:background="@color/yellow"
             android:text="用餐花销" />
 
         <Button
@@ -46,7 +46,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight='1'
-            android:background="@drawable/star_button_select"
+            android:background="@color/green"
             android:text="口味偏好" />
 
         <Button
@@ -54,7 +54,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight='1'
-            android:background="@drawable/star_button_select"
+            android:background="@color/blue"
             android:text="最近浏览" />
     </LinearLayout>
 
