@@ -2,9 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/sign_up"/>
     <TextView
-        android:id="@+id/show"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="这是用户中心"/>
+        android:layout_height="70dp"
+        android:gravity="center"
+        android:id="@+id/user_center_name"/>
+<!--        android:text="Hello World"-->
+
+    <Button
+        android:id="@+id/button_change"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/user"
+        android:drawablePadding="15dp"
+        android:text="修改个人信息"
+
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/button_stastic"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/stastic"
+        android:drawablePadding="15dp"
+        android:text="统计"
+        android:textSize="18sp" />
+
+
 </LinearLayout>

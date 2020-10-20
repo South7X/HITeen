@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChangeUserInfoActivity"></activity>
+        <activity android:name=".ui.UserCenter_ui.ChangeUserInfoActivity"></activity>
         <activity android:name=".ForgetPassword" />
         <activity
             android:name=".SignUpActivity"
@@ -79,6 +79,7 @@
         <activity android:name=".WindowActivity" />
         <activity android:name=".DishActivity" />
         <activity android:name=".adActivity" />
+        <activity android:name=".rankingActivities.RankActivity"/>
     </application>
 
 </manifest>

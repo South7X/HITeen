@@ -1,4 +1,4 @@
-package com.hitsz.eatut;
+package com.hitsz.eatut.ui.UserCenter_ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hitsz.eatut.BaseClass;
+import com.hitsz.eatut.R;
 import com.hitsz.eatut.database.UserInfo;
 
 import org.litepal.LitePal;
@@ -19,9 +21,9 @@ import java.util.List;
 public class ChangeUserInfoActivity extends AppCompatActivity {
 
     private Button btn_change;//注册按钮
-    //用户名，密码，再次输入的密码的控件
+    //用户名，学号，宿舍楼地址的控件
     private EditText ch_user_name,ch_studentNumber,ch_addressDormitory;
-    //用户名，密码，再次输入的密码的控件的获取值
+    //用户名，学号，宿舍楼地址的控件的获取值
     private String userName,studentNumber,addressDormitory;
     private String phoneNumber;
     @Override
@@ -30,7 +32,6 @@ public class ChangeUserInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_user_info);
         Intent intent = getIntent();
         phoneNumber = intent.getStringExtra("phoneNumber");
-        // TODO: activity switch conveys an intent with User data in LoginActivity and UserCenterActivity
         init();
     }
     private void init() {
@@ -89,7 +90,7 @@ public class ChangeUserInfoActivity extends AppCompatActivity {
                 // 成功后把账号传递到Activity.java中
                 // 返回值到Activity显示
                 Intent data = new Intent();
-                data.putExtra("phoneNumber", phoneNumber);
+                data.putExtra("userName", userName);
                 setResult(RESULT_OK, data);
                 //RESULT_OK为Activity系统常量，状态码为-1，
                 // 表示此页面下的内容操作成功将data返回到上一页面，如果是用back返回过去的则不存在用setResult传递data值
