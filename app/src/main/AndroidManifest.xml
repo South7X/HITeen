@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ForgetPassword"></activity>
+        <activity android:name=".ChangeUserInfoActivity"></activity>
+        <activity android:name=".ForgetPassword" />
         <activity
             android:name=".SignUpActivity"
             android:label="注册" />
@@ -75,9 +76,9 @@
         <activity android:name=".DishActivity" />
         <activity android:name=".adActivity" />
     </application>
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
     <uses-permission android:name="android.permission.READ_PROFILE" />
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>
