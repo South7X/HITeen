@@ -6,9 +6,17 @@ import org.litepal.crud.LitePalSupport;
 public class UserInfo extends LitePalSupport {
     private int id;             //数据ID
 
+    @Column(defaultValue = "unknown")
     private String userName;    //用户名
 
+    @Column(defaultValue = "unknown")
     private String password;    //密码
+
+    @Column(defaultValue = "unknown")
+    private String studentNumber;   //学号
+
+    @Column(defaultValue = "unknown")
+    private String addressDormitory;    //宿舍楼号
 
     @Column(defaultValue = "unknown")
     private String telephoneNumber;//手机号码
@@ -33,6 +41,13 @@ public class UserInfo extends LitePalSupport {
         return telephoneNumber;
     }
 
+    public String getStudentNumber() {
+        return studentNumber;
+    }
+
+    public String getAddressDormitory() {
+        return addressDormitory;
+    }
     /**
      * setting method
      *
@@ -51,5 +66,13 @@ public class UserInfo extends LitePalSupport {
 
     public void setTelephoneNumber(String  telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
+    }
+
+    public void setAddressDormitory(String addressDormitory) {
+        this.addressDormitory = addressDormitory;
     }
 }

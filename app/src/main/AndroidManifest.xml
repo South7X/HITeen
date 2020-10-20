@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hitsz.eatut">
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -15,8 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ChangeUserInfoActivity"></activity>
+        <activity android:name=".ForgetPassword" />
         <activity
-            android:name="com.hitsz.eatut.LoginActivity"
+            android:name=".SignUpActivity"
+            android:label="注册" />
+        <activity
+            android:name=".LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,54 +25,60 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.hitsz.eatut.MainActivity" />
+        <activity android:name=".MainActivity" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.ManagerActivity"
+            android:name=".managerActivities.ManagerActivity"
             android:label="管理者界面" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.EditActivity"
+            android:name=".managerActivities.EditActivity"
             android:label="食堂信息" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.ViewvoteActivity"
+            android:name=".managerActivities.ViewvoteActivity"
             android:label="投票结果" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.FeedInfoActivity"
+            android:name=".managerActivities.FeedInfoActivity"
             android:label="反馈信息" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.FeedbackActivity"
+            android:name=".managerActivities.FeedbackActivity"
             android:label="意见反馈" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.FeedShowActivity"
+            android:name=".managerActivities.FeedShowActivity"
             android:label="您的反馈" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.PostActivity"
+            android:name=".managerActivities.PostActivity"
             android:label="上传活动图片" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.OrderActivity"
+            android:name=".managerActivities.OrderActivity"
             android:label="订单信息" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.AdvertisementActivity"
+            android:name=".managerActivities.AdvertisementActivity"
             android:label="推广信息" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.AdddishActivity"
+            android:name=".managerActivities.AdddishActivity"
             android:label="增加菜品信息" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.AddcanteenActivity"
+            android:name=".managerActivities.AddcanteenActivity"
             android:label="增加餐厅信息" />
         <activity
-            android:name="com.hitsz.eatut.managerActivities.AddWindowActivity"
+            android:name=".managerActivities.AddWindowActivity"
             android:label="增加档口信息" />
-        <activity android:name="com.hitsz.eatut.managerActivities.DeletecanteenActivity"
-            android:label="删除餐厅信息"/>
-        <activity android:name="com.hitsz.eatut.managerActivities.DeletewindowActivity"
-            android:label="删除档口信息"/>
-        <activity android:name="com.hitsz.eatut.managerActivities.DeletedishActivity"
-            android:label="删除菜品信息"/>
-        <activity android:name="com.hitsz.eatut.CheckActivity" />
-        <activity android:name="com.hitsz.eatut.WindowActivity" />
-        <activity android:name="com.hitsz.eatut.DishActivity" />
-        <activity android:name="com.hitsz.eatut.adActivity" />
-        <activity android:name=".rankingActivities.RankActivity"/>
+        <activity
+            android:name=".managerActivities.DeletecanteenActivity"
+            android:label="删除餐厅信息" />
+        <activity
+            android:name=".managerActivities.DeletewindowActivity"
+            android:label="删除档口信息" />
+        <activity
+            android:name=".managerActivities.DeletedishActivity"
+            android:label="删除菜品信息" />
+        <activity android:name=".CheckActivity" />
+        <activity android:name=".WindowActivity" />
+        <activity android:name=".DishActivity" />
+        <activity android:name=".adActivity" />
     </application>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>
