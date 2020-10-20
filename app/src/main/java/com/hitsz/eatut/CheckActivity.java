@@ -194,6 +194,5 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         mTimerPicker.setCanShowAnim(false);
     }
 
-
 }
 
