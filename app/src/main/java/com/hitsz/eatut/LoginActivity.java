@@ -409,7 +409,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 //finish();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 Intent intent2 = new Intent(LoginActivity.this, ManagerActivity.class);
-                SavePhone(mPhone);
+//                SavePhone(mPhone);
+                int userID = (LitePal.where("telephoneNumber like ?", mPhone).find(UserInfo.class)).get(0).getId();
+                Log.d("userID", Integer.toString(userID));
+                SaveUserID(userID);
                 if (mPhone.equals(managerNumber)&&mPassword.equals("12345678")) startActivity(intent2);//管理者界面
                 else startActivity(intent);//用户界面
             } else {
@@ -424,10 +427,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
-    private void SavePhone(String mPhone){
-        SharedPreferences pref=this.getSharedPreferences("CurrentPhone",MODE_PRIVATE);
+    private void SaveUserID(int userID){
+        //保存当前用户ID
+        SharedPreferences pref=this.getSharedPreferences("currentID",MODE_PRIVATE);
         SharedPreferences.Editor editor=pref.edit();
-        editor.putString("Phone",mPhone);
+        editor.putInt("userID",userID);
         editor.apply();
     }
     private void OrderCount(){

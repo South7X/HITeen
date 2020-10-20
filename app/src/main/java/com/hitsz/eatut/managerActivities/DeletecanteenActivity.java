@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.hitsz.eatut.BaseClass.addNewCanteen;
 import static com.hitsz.eatut.BaseClass.deleteCanteenFromDatabase;
 
 /**
