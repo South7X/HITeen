@@ -10,10 +10,10 @@ import com.hitsz.eatut.datepicker.DateFormatUtils;
 
 import org.litepal.LitePal;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -21,9 +21,10 @@ import java.util.Locale;
 public class StatisticData {
     private long dayPeriod = 86400000L;
     private long weekPeriod = 604800000L;
-    private long monthPeriod = 2592000000L;
+    private long monthPeriod = 2678400000L;//31天
     private long yearPeriod = 31536000000L;
-    public ArrayList<Long> EndTimeStatistic(int userID){
+
+    public Object[] EndTimeStatistic(int userID){
         /*
         * 获取当前用户的用餐时间列表；
         * Input: userID-用户ID，可以通过下面两行代码获取：
@@ -32,47 +33,37 @@ public class StatisticData {
         * Output: 用户用餐时间List，为时间戳形式。
         * */
         List<MyOrder> myOrderList=LitePal.where("userID=?", "" + userID).find(MyOrder.class);
-        ArrayList<Long> endTimeList = new ArrayList<>();
-        for(MyOrder one: myOrderList){
-            endTimeList.add(one.getEndTime());
+        Object[] endTimes = new Object[myOrderList.size()];
+        for(int i=0;i<myOrderList.size();i++)
+        {
+            endTimes[i] = myOrderList.get(i).getEndTime();
         }
-        return endTimeList;
+        return endTimes;
     }
-    private long[] weekStamp() {
+    private long[] getWeekStamp() {
         /*
          * 返回当前周的时间戳：本周7天每天的起止时间戳共有8个
          * */
-        long[] weekStamp = new long[9];
+        long[] weekStamp = new long[8];
         //获取当前周星期一的起始时间戳
-        Calendar cal = Calendar.getInstance();
-        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0,
-                0, 0);
-        int day_of_week = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        if (day_of_week == 0) {
-            day_of_week = 7;
-        }
-        cal.add(Calendar.DATE, -day_of_week + 1);
-        weekStamp[0] = cal.getTime().getTime();
+        weekStamp[0] = DateUtils.getBeginDayOfWeek();
         //完成weekStamp
         for (int i = 1; i < 8; i++) {
             weekStamp[i] = weekStamp[i - 1] + dayPeriod;
-        }
-        for (int i = 0; i < 8; i++) {
-            Log.d("StatisticTest", DateFormatUtils.long2Str(weekStamp[i], true));
         }
         return weekStamp;
     }
     public Object[] weekCost(int userID){
         /*
-         * 返回本周七天开销数组
-         * */
+        * 返回本周七天开销数组
+        * */
         List<MyOrder> myOrderList=LitePal.where("userID=?", "" + userID).find(MyOrder.class);
         Object[] weekCost = new Object[7];
         for(int i=0;i<7;i++){
             //初始化
             weekCost[i] = 0.0F;
         }
-        long[] weekStamp = weekStamp();
+        long[] weekStamp = getWeekStamp();
         for(MyOrder one:myOrderList){
             long endTime = one.getEndTime();
             float cost = one.getCost();
@@ -87,59 +78,88 @@ public class StatisticData {
         }
         return weekCost;
     }
-    public ArrayList<Float> CostStatistic(int userID, int classifiedFlag){
+    private long[] getMonthStamp(){
         /*
-        * 获取当前用户的用餐支出列表；
-        * Input:
-        * userID-用户ID；
-        * classifiedFlag-分类方式，0-周/1-月/2-年，对应7天内、30天内、365天内的数据；
-        * Output: 用户用餐支出List;
+        * 返回本月每天的起止时间戳，因为月份的天数不一样，所以用下个月的第一天作为条件判断
         * */
-
-
-
-        List<MyOrder> myOrderList=LitePal.where("userID=?", "" + userID).find(MyOrder.class);
-        ArrayList<Float> costList = new ArrayList<>();
-        long currentTime =  System.currentTimeMillis();
-        //一周(ms): 604,800,000 一月(ms): 2,592,000,000 默认为平年(ms): 31,536,000,000
-        //下为一周前、一月前、一年前的时间节点
-
-        long weekAgo = currentTime - 604800000L;
-        long monthAgo = currentTime - 2592000000L;
-        long yearAgo = currentTime - 31536000000L;
-        switch (classifiedFlag) {
-            case 0:
-                //周
-                for(MyOrder one:myOrderList){
-                    long endTime =one.getEndTime();
-                    if(endTime >= weekAgo){
-                        costList.add(one.getCost());
-                    }
-                }
-                break;
-            case 1:
-                //月
-                for(MyOrder one:myOrderList){
-                    long endTime =one.getEndTime();
-                    if(endTime >= monthAgo){
-                        costList.add(one.getCost());
-                    }
-                }
-                break;
-            case 2:
-                //年
-                for(MyOrder one:myOrderList){
-                    long endTime =one.getEndTime();
-                    if(endTime >= yearAgo){
-                        costList.add(one.getCost());
-                    }
-                }
-                break;
-            default:
-                break;
+        long[] monthStamp = new long[32];
+        long thisMonthBeginStamp = DateUtils.getBeginDayOfMonth(DateUtils.getNowMonth());//本月第一天
+        monthStamp[0] = thisMonthBeginStamp;//第一天开始
+        long nextMonthBeginStamp = DateUtils.getBeginDayOfMonth(DateUtils.getNowMonth()+1);//下一个月第一天
+        long temp = thisMonthBeginStamp;
+        int i=1;
+        while(temp<nextMonthBeginStamp){
+            monthStamp[i] = monthStamp[i-1] + dayPeriod;
+            temp += dayPeriod;
+            Log.d("StatisticTest", DateFormatUtils.long2Str(monthStamp[i], true));
+            i+=1;
         }
-        return costList;
+        return monthStamp;
     }
+    public Object[] monthCost(int userID){
+        /*
+         * 返回本月到目前为止每天的花销
+         * */
+        List<MyOrder> myOrderList=LitePal.where("userID=?", "" + userID).find(MyOrder.class);
+        Object[] monthCost = new Object[31];//但不一定每个月份都有31天
+        for(int i=0;i<31;i++){
+            //初始化
+            monthCost[i] = 0.0F;
+        }
+        long[] monthStamp = getMonthStamp();
+        for(MyOrder one:myOrderList){
+            long endTime = one.getEndTime();
+            float cost = one.getCost();
+            for(int i=0;i<31;i++){
+                //一个月：[1, )左闭右开
+                if(endTime>=monthStamp[i] && endTime<monthStamp[i+1]){
+                    float temp = (float)monthCost[i];
+                    temp+=cost;
+                    monthCost[i]=temp;
+                }
+            }
+        }
+        return monthCost;
+    }
+    private long[] getYearStamp() {
+        /*
+         * 返回本年12个月的起止时间戳。
+         * */
+        long[] yearStamp = new long[13];
+        //获得每个月的开始时间戳
+        for(int i=0;i<12;i++){
+            yearStamp[i] = DateUtils.getBeginDayOfMonth(i+1);
+        }
+        //单独求得下一年一月开始时间戳
+        yearStamp[12] = yearStamp[11] + monthPeriod;
+        return yearStamp;
+    }
+    public Object[] yearCost(int userID){
+        /*
+         * 返回本年12个月开销数组
+         * */
+        List<MyOrder> myOrderList=LitePal.where("userID=?", "" + userID).find(MyOrder.class);
+        Object[] yearCost = new Object[12];
+        for(int i=0;i<12;i++){
+            //初始化
+            yearCost[i] = 0.0F;
+        }
+        long[] yearStamp = getYearStamp();
+        for(MyOrder one:myOrderList){
+            long endTime = one.getEndTime();
+            float cost = one.getCost();
+            for(int i=0;i<12;i++){
+                //一个月：[1, )左闭右开
+                if(endTime>=yearStamp[i] && endTime<yearStamp[i+1]){
+                    float temp = (float)yearCost[i];
+                    temp+=cost;
+                    yearCost[i]=temp;
+                }
+            }
+        }
+        return yearCost;
+    }
+
     public HashMap<String, Integer> PreferStatistic(int userID, int classifiedFlag){
         /*
         * 用餐偏好统计，返回Map<Tag, Count>
