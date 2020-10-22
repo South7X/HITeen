@@ -59,6 +59,8 @@ public class StatisticsActivity extends AppCompatActivity {
         time.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                aaChartModel.title("就餐时间展示")
+                        .subtitle("妈妈叫我回家吃饭啦！");
                 aaChartModel.chartType=AAChartType.Bar;
                 aaChartView.aa_drawChartWithChartModel(aaChartModel);
             }
@@ -68,13 +70,31 @@ public class StatisticsActivity extends AppCompatActivity {
             public void onClick(View view){
                 screenPopWindow = new ScreenPopWindow(statis, expenseList);
                 //设置多选，因为共用的一个bean，这里调用reset重置下数据
-                screenPopWindow.setSingle(false).reset().build();
+                screenPopWindow.setSingle(true).reset().build();
                 screenPopWindow.showAsDropDown(expense);
                 screenPopWindow.setOnConfirmClickListener(new ScreenPopWindow.OnConfirmClickListener() {
                     @Override
                     public void onConfirmClick(List<String> list) {
-                        aaChartModel.chartType = AAChartType.Line;
-                        aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                        String str=list.get(0);
+                        aaChartModel.title("花销展示")
+                                .subtitle("钱包不大，胃口不小");
+                        switch (str){
+                            case"周":
+                            aaChartModel.chartType = AAChartType.Line;
+                            aaChartModel.categories(new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"});
+                            aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                            break;
+                            case"月":
+                                 aaChartModel.chartType = AAChartType.Line;
+                                 aaChartModel.categories(new String[]{"第一周", "第二周", "第三周", "第四周", "第五周"});
+                                 aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                                 break;
+                            case"年":
+                                aaChartModel.chartType = AAChartType.Line;
+                                aaChartModel.categories(new String[]{"1月", "2月", "3月", "4月", "5月","6月","7月", "8月", "9月", "10月", "11月","12月"});
+                                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                                break;
+                        }
                     }
                 });
             }
@@ -84,13 +104,29 @@ public class StatisticsActivity extends AppCompatActivity {
             public void onClick(View view){
                 screenPopWindow = new ScreenPopWindow(statis, favorList);
                 //设置多选，因为共用的一个bean，这里调用reset重置下数据
-                screenPopWindow.setSingle(false).reset().build();
+                screenPopWindow.setSingle(true).reset().build();
                 screenPopWindow.showAsDropDown(favor);
                 screenPopWindow.setOnConfirmClickListener(new ScreenPopWindow.OnConfirmClickListener() {
                     @Override
                     public void onConfirmClick(List<String> list) {
-                            aaChartModel.chartType = AAChartType.Line;
-                            aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                        String str=list.get(0);
+                        aaChartModel.title("偏好展示")
+                                .subtitle("你问我为什么顽固而彻底");
+                        switch (str)
+                        {
+                            case"口味偏好": {
+                                aaChartModel.chartType = AAChartType.Line;
+                                aaChartModel.categories(new String[]{"酸","甜","苦","辣","咸","清淡","油炸"});
+                                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                                break;
+                            }
+                            case"档口偏好": {
+                                aaChartModel.chartType = AAChartType.Line;
+                                aaChartModel.categories(new String[]{"酸","甜","苦","辣","咸","清淡"});
+                                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                                break;
+                            }
+                        }
                     }
                 });
             }
@@ -98,6 +134,8 @@ public class StatisticsActivity extends AppCompatActivity {
         explore.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                aaChartModel.title("最近浏览展示")
+                        .subtitle("不买最贵的，只买最对的");
                 aaChartModel.chartType=AAChartType.Pie;
                 aaChartView.aa_drawChartWithChartModel(aaChartModel);
             }
