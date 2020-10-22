@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hitsz.eatut.ui.Search_ui.SearchFragment;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
@@ -14,16 +16,19 @@ import com.hitsz.eatut.AAChartCoreLib.AAChartCreator.AASeriesElement;
 import com.hitsz.eatut.AAChartCoreLib.AAChartEnum.AAChartType;
 import com.example.popupwindowlibrary.bean.FiltrateBean;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class StatisticsActivity extends AppCompatActivity {
     private ScreenPopWindow screenPopWindow;
     private List<FiltrateBean> expenseList = new ArrayList<>();
     private List<FiltrateBean> favorList = new ArrayList<>();
-
+    public StatisticData statisticData =new StatisticData();
+    public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        SharedPreferences pref2 = this.getSharedPreferences("currentID",MODE_PRIVATE);
+        userID = pref2.getInt("userID", -1);
         super.onCreate(savedInstanceState);
         Activity statis=this;
         setContentView(R.layout.activity_statistics);
@@ -44,7 +49,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 .series(new AASeriesElement[]{
                         new AASeriesElement()
                                 .name("Tokyo")
-                                .data(new Object[]{7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6}),
+                                .data(new Object[]{7.0, 6.9, 9.5, 14.5}),
                         new AASeriesElement()
                                 .name("NewYork")
                                 .data(new Object[]{0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5}),
@@ -65,6 +70,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 aaChartView.aa_drawChartWithChartModel(aaChartModel);
             }
         });
+
         expense.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -82,11 +88,46 @@ public class StatisticsActivity extends AppCompatActivity {
                             case"周":
                             aaChartModel.chartType = AAChartType.Line;
                             aaChartModel.categories(new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"});
+                            aaChartModel.series(new AASeriesElement[]{
+                                    new AASeriesElement()
+                                            .name("Tokyo")
+                                            .data(statisticData.weekCost(userID))
+                            });
                             aaChartView.aa_drawChartWithChartModel(aaChartModel);
                             break;
                             case"月":
+                                Object data1[]={15,2,3,6,5,4,8,3,9,11};
+                                Object data2[]={22,20,29,24,17,10,7,17,23,8};
+                                Object data3[]={11,14,15,20,19,8,5,11,16,10,29};
+                                Calendar now = Calendar.getInstance();
+                                System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+now.get(Calendar.DAY_OF_MONTH));
+                                String[] Str=new String[11];
+                                for(int i=1;i<=10;i++)
+                                {
+                                    String a="+";
+                                    String s=String.valueOf(i);
+                                    s=a.concat(s);
+                                    s=s.concat("日");
+                                    Str[i-1]=s;
+                                }
+                                Str[10]="31日";
                                  aaChartModel.chartType = AAChartType.Line;
-                                 aaChartModel.categories(new String[]{"第一周", "第二周", "第三周", "第四周", "第五周"});
+                                 aaChartModel.categories(Str);
+                                 switch (now.get(Calendar.DAY_OF_MONTH)/10){
+                                     case 0:
+                                         aaChartModel.series(new AASeriesElement[]{
+                                                 new AASeriesElement().name("0+").data(data1)});
+                                     case 1:
+                                         aaChartModel.series(new AASeriesElement[]{
+                                                 new AASeriesElement().name("0+").data(data1),
+                                                 new AASeriesElement().name("10+").data(data2)});
+                                     case 2:
+                                         aaChartModel.series(new AASeriesElement[]{
+                                                 new AASeriesElement().name("0+").data(data1),
+                                                 new AASeriesElement().name("10+").data(data2),
+                                                 new AASeriesElement().name("20+").data(data3)});
+
+                                 }
                                  aaChartView.aa_drawChartWithChartModel(aaChartModel);
                                  break;
                             case"年":

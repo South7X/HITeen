@@ -10,6 +10,7 @@ import com.hitsz.eatut.datepicker.DateFormatUtils;
 
 import org.litepal.LitePal;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,12 +62,16 @@ public class StatisticData {
         }
         return weekStamp;
     }
-    public float[] weekCost(int userID){
+    public Object[] weekCost(int userID){
         /*
-        * 返回本周七天开销数组
-        * */
+         * 返回本周七天开销数组
+         * */
         List<MyOrder> myOrderList=LitePal.where("userID=?", "" + userID).find(MyOrder.class);
-        float[] weekCost = new float[7];
+        Object[] weekCost = new Object[7];
+        for(int i=0;i<7;i++){
+            //初始化
+            weekCost[i] = 0.0F;
+        }
         long[] weekStamp = weekStamp();
         for(MyOrder one:myOrderList){
             long endTime = one.getEndTime();
@@ -74,7 +79,9 @@ public class StatisticData {
             for(int i=0;i<7;i++){
                 //一天：[0:00, 24:00)左闭右开
                 if(endTime>=weekStamp[i] && endTime<weekStamp[i+1]){
-                    weekCost[i] += cost;
+                    float temp = (float)weekCost[i];
+                    temp+=cost;
+                    weekCost[i]=temp;
                 }
             }
         }

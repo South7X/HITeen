@@ -75,6 +75,9 @@
         <activity
             android:name=".managerActivities.DeletedishActivity"
             android:label="删除菜品信息" />
+        <activity
+            android:name=".StatisticsActivity"
+            android:label="统计" />
         <activity android:name=".CheckActivity" />
         <activity android:name=".WindowActivity" />
         <activity android:name=".DishActivity" />

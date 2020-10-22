@@ -138,10 +138,10 @@ public class OrderFragment extends Fragment {
 //            Log.d("StatisticTest", tempTime);
 //        }
         //Cost
-        float[] weekCost = statisticData.weekCost(userID);
+        Object[] weekCost = statisticData.weekCost(userID);
         Log.d("StatisticTest", Integer.toString(weekCost.length));
         for(int i=0;i<7;i++){
-            Log.d("StatisticTest", (i+1) + ": " + Float.toString(weekCost[i]));
+            //Log.d("StatisticTest", (i+1) + ": " + Float.toString(weekCost[i]));
         }
 //        ArrayList<Float> weekCost = statisticData.CostStatistic(userID, 0);
 //        Log.d("StatisticTest", "weekCost:");
