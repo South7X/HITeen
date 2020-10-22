@@ -79,7 +79,7 @@
         <activity android:name=".WindowActivity" />
         <activity android:name=".DishActivity" />
         <activity android:name=".adActivity" />
-        <activity android:name=".rankingActivities.RankActivity"/>
+        <activity android:name=".RankActivity"/>
     </application>
 
 </manifest>

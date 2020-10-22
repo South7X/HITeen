@@ -1,8 +1,7 @@
-package com.hitsz.eatut.rankingActivities;
+package com.hitsz.eatut.MapRelate;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
 
 public class MapValueComparator implements Comparator<HashMap.Entry<Integer, Integer>> {
     @Override

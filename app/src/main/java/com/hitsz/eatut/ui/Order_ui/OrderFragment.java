@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hitsz.eatut.R;
+import com.hitsz.eatut.StatisticData;
 import com.hitsz.eatut.adapter.MyOrderAdapter;
 import com.hitsz.eatut.adapter.MyOrderItem;
 import com.hitsz.eatut.database.DishInfo;
@@ -27,7 +29,10 @@ import org.litepal.LitePal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -43,9 +48,14 @@ public class OrderFragment extends Fragment {
         //将购物车中提交的orderFood加入MyOrder database
         List<orderFood> list= LitePal.findAll(orderFood.class);
         ArrayList<Integer> allDishID = new ArrayList<>();// 存放该订单的菜品
+        float total = 0;
         for(orderFood one:list){
+            //产生allDishID和total
             int dishID = one.getDishID_II();
             allDishID.add(dishID);
+            List<DishInfo> temp=LitePal.where("id==?", "" + dishID).find(DishInfo.class);
+            float cost = temp.get(0).getDishPrice();
+            total += cost;
         }
         MyOrder myOrder=new MyOrder();
         myOrder.setDishID_III(allDishID);
@@ -54,6 +64,7 @@ public class OrderFragment extends Fragment {
         myOrder.setPrepared(false);
         myOrder.setEndTime(timeStamp);
         myOrder.setPick(false);
+        myOrder.setCost(total);
         myOrder.save();
     }
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,6 +73,7 @@ public class OrderFragment extends Fragment {
         recyclerView=root.findViewById(R.id.myorder_recycle);
         initMyOrder();
         initRecycle();
+        StatisticTest();
         return root;
 
     }
@@ -78,7 +90,8 @@ public class OrderFragment extends Fragment {
             boolean isPick = one.isPick();
             long endTimeStamp = one.getEndTime();
             String endTime = DateFormatUtils.long2Str(endTimeStamp, true);
-            MyOrderItem myOrderItem = new MyOrderItem(allDishID, isprepared, orderNO, myOrderID, endTime, isPick);
+            float cost = one.getCost();
+            MyOrderItem myOrderItem = new MyOrderItem(allDishID, isprepared, orderNO, myOrderID, endTime, isPick, cost);
             myOrderItemList.add(myOrderItem);
         }
         //对myOrderItemList做个排序：已取餐的放在下面；按照订单号排序
@@ -112,5 +125,58 @@ public class OrderFragment extends Fragment {
             });
         recyclerView.setAdapter(adapter);
     }
+    private void StatisticTest(){
+        /*StatisticData测试*/
+        StatisticData statisticData = new StatisticData();
+        SharedPreferences pref2 = getActivity().getSharedPreferences("currentID",MODE_PRIVATE);
+        int userID = pref2.getInt("userID",-1);
+//        //EndTime
+//        ArrayList<Long> endTime = statisticData.EndTimeStatistic(userID);
+//        Log.d("StatisticTest", "endTime:" + endTime.size());
+//        for(Long time: endTime){
+//            String tempTime = DateFormatUtils.long2Str(time, true);
+//            Log.d("StatisticTest", tempTime);
+//        }
+        //Cost
+        float[] weekCost = statisticData.weekCost(userID);
+        Log.d("StatisticTest", Integer.toString(weekCost.length));
+        for(int i=0;i<7;i++){
+            Log.d("StatisticTest", (i+1) + ": " + Float.toString(weekCost[i]));
+        }
+//        ArrayList<Float> weekCost = statisticData.CostStatistic(userID, 0);
+//        Log.d("StatisticTest", "weekCost:");
+//        for(float week:weekCost){
+//            Log.d("StatisticTest", Float.toString(week));
+//        }
+//        ArrayList<Float> monthCost = statisticData.CostStatistic(userID, 1);
+//        Log.d("StatisticTest", "monthCost:");
+//        for(float month:monthCost){
+//            Log.d("StatisticTest", Float.toString(month));
+//        }
+//        ArrayList<Float> yearCost = statisticData.CostStatistic(userID, 2);
+//        Log.d("StatisticTest", "yearCost:");
+//        for(float year:yearCost){
+//            Log.d("StatisticTest", Float.toString(year));
+//        }
+//        //Prefer
+//        HashMap<String, Integer> windowMap = statisticData.PreferStatistic(userID, 0);
+//        Log.d("StatisticTest", "windowPrefer:");
+//        List<HashMap.Entry<String, Integer>> entryList = new ArrayList<HashMap.Entry<String, Integer>>(windowMap.entrySet());
+//        Iterator<HashMap.Entry<String, Integer>> iterator = entryList.iterator();
+//        HashMap.Entry<String, Integer> tmpEntry = null;
+//        while(iterator.hasNext()){
+//            tmpEntry = iterator.next();
+//            Log.d("StatisticTest", tmpEntry.getKey() + " " + tmpEntry.getValue());
+//        }
+//        HashMap<String, Integer> tagMap = statisticData.PreferStatistic(userID, 1);
+//        Log.d("StatisticTest", "tagPrefer:");
+//        List<HashMap.Entry<String, Integer>> entryList1 = new ArrayList<HashMap.Entry<String, Integer>>(tagMap.entrySet());
+//        Iterator<HashMap.Entry<String, Integer>> iterator1 = entryList1.iterator();
+//        HashMap.Entry<String, Integer> tmpEntry1 = null;
+//        while(iterator1.hasNext()){
+//            tmpEntry1 = iterator1.next();
+//            Log.d("StatisticTest", tmpEntry1.getKey() + " " + tmpEntry1.getValue());
+//        }
 
+    }
 }

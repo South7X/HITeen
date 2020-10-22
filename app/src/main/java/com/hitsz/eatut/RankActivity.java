@@ -1,18 +1,17 @@
-package com.hitsz.eatut.rankingActivities;
+package com.hitsz.eatut;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hitsz.eatut.R;
 import com.hitsz.eatut.adapter.RankingAdapter;
 import com.hitsz.eatut.adapter.rankingItem;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.MyOrder;
+import com.hitsz.eatut.MapRelate.MapFunc;
 
 import org.litepal.LitePal;
 
@@ -41,7 +40,7 @@ public class RankActivity extends AppCompatActivity {
     }
     private void initRanking(){
         /*查询最近一周的销量前10 & 最近一个月的销量前10的菜品*/
-        RankingMapFunc rankingMapFunc = new RankingMapFunc();
+        MapFunc mapFunc = new MapFunc();
         long currentTime =  System.currentTimeMillis();
         List<MyOrder> myOrderList = LitePal.findAll(MyOrder.class);
         HashMap<Integer, Integer> weekOrderTimeMap = new HashMap<>();
@@ -52,16 +51,16 @@ public class RankActivity extends AppCompatActivity {
             long timePeriod = currentTime - endTime;
             //一周(ms): 604,800,000 一月(ms): 2,592,000,000
             if(timePeriod<=2592000000L && timePeriod >= 604800000L){
-                monthOrderTimeMap = rankingMapFunc.initMap(monthOrderTimeMap, one);
+                monthOrderTimeMap = mapFunc.initIntegerKeyMap(monthOrderTimeMap, one);
             }else if(timePeriod <= 604800000L){
-                monthOrderTimeMap = rankingMapFunc.initMap(monthOrderTimeMap, one);
-                weekOrderTimeMap = rankingMapFunc.initMap(weekOrderTimeMap, one);
+                monthOrderTimeMap = mapFunc.initIntegerKeyMap(monthOrderTimeMap, one);
+                weekOrderTimeMap = mapFunc.initIntegerKeyMap(weekOrderTimeMap, one);
             }
         }
         Log.d("RankingRelate", "Map初始化后，weekMapSize="+weekOrderTimeMap.size()+" monthMapSize="+monthOrderTimeMap.size());
         //Map排序
-        weekOrderTimeMap = rankingMapFunc.sortMap(weekOrderTimeMap);
-        monthOrderTimeMap = rankingMapFunc.sortMap(monthOrderTimeMap);
+        weekOrderTimeMap = mapFunc.sortIntegerKeyMap(weekOrderTimeMap);
+        monthOrderTimeMap = mapFunc.sortIntegerKeyMap(monthOrderTimeMap);
         Log.d("RankingRelate", "Map排序完成，weekMapSize="+weekOrderTimeMap.size()+" monthMapSize="+monthOrderTimeMap.size());
         //将Map值复制到List中
         List<HashMap.Entry<Integer, Integer>> entryList = new ArrayList<HashMap.Entry<Integer, Integer>>(weekOrderTimeMap.entrySet());

@@ -13,6 +13,7 @@ public class MyOrder extends LitePalSupport {
     private long endTime;
     private boolean isPrepared;
     private boolean isPick;
+    private float cost;
 
 
     public int getId() {
@@ -43,6 +44,10 @@ public class MyOrder extends LitePalSupport {
         return isPick;
     }
 
+    public float getCost() {
+        return cost;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -69,5 +74,9 @@ public class MyOrder extends LitePalSupport {
 
     public void setPick(boolean pick) {
         isPick = pick;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 }
