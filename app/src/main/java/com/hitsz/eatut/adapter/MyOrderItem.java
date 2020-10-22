@@ -1,20 +1,56 @@
 package com.hitsz.eatut.adapter;
 
+import java.util.ArrayList;
+
 public class MyOrderItem {
-    private int dishID_IV;
-    private String name;
+    /*
+    * 我的订单item
+    * */
+    private ArrayList<Integer> dishID_IV;
     private boolean isPrepared;
     private int orderNo_III;
     private int myOrderID;
+    private String endTime;
+    private boolean isPick;
+    private float cost;
 
 
-    public MyOrderItem(int dishID_IV,String name,boolean isPrepared,int orderNo_III,int myOrderID){
+    public MyOrderItem( ArrayList<Integer> dishID_IV, boolean isPrepared,int orderNo_III,int myOrderID,String endTime, boolean isPick, float cost){
         this.dishID_IV=dishID_IV;
-        this.name=name;
         this.isPrepared=isPrepared;
         this.orderNo_III=orderNo_III;
         this.myOrderID=myOrderID;
+        this.endTime=endTime;
+        this.isPick=isPick;
+        this.cost=cost;
 
+    }
+
+
+
+    public int getMyOrderID() {
+        return myOrderID;
+    }
+
+
+    public boolean getIsPrepared() {
+        return isPrepared;
+    }
+
+    public int getOrderNo_III() {
+        return orderNo_III;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public boolean isPick() {
+        return isPick;
+    }
+
+    public float getCost() {
+        return cost;
     }
 
     public void setIsPrepared(boolean isPrepared) {
@@ -25,36 +61,27 @@ public class MyOrderItem {
         this.myOrderID = myOrderID;
     }
 
-    public int getMyOrderID() {
-        return myOrderID;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean getIsPrepared() {
-        return isPrepared;
-    }
-
-
-    public int getDishID_IV() {
+    public  ArrayList<Integer> getDishID_IV() {
         return dishID_IV;
     }
 
-    public void setDishID_IV(int dishID_IV) {
+    public void setDishID_IV( ArrayList<Integer> dishID_IV) {
         this.dishID_IV = dishID_IV;
-    }
-
-    public int getOrderNo_III() {
-        return orderNo_III;
     }
 
     public void setOrderNo_III(int orderNo_III) {
         this.orderNo_III = orderNo_III;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setPick(boolean pick) {
+        isPick = pick;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 }

@@ -22,14 +22,15 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/filter_btn"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:background="@color/white"
                 android:gravity="center"
                 android:padding="0dp"
-                android:text="筛选标签"
-                android:background="@color/white"/>
+                android:text="筛选标签" />
         </LinearLayout>
         <View
             android:layout_width="1dp"

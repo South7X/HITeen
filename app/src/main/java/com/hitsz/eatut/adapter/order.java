@@ -1,6 +1,9 @@
 package com.hitsz.eatut.adapter;
 
 public class order {
+    /*
+    * 购物车item
+    * */
     private String name;
     private float dishPrice;
     private float dishScore;

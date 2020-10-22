@@ -13,42 +13,59 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hitsz.eatut.R;
+import com.hitsz.eatut.StatisticData;
 import com.hitsz.eatut.adapter.MyOrderAdapter;
 import com.hitsz.eatut.adapter.MyOrderItem;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.MyOrder;
 import com.hitsz.eatut.database.orderFood;
-import com.hitsz.eatut.managerActivities.AddWindowActivity;
+import com.hitsz.eatut.datepicker.DateFormatUtils;
 import com.hitsz.eatut.managerActivities.OrderActivity;
 
 import org.litepal.LitePal;
-import org.litepal.exceptions.DataSupportException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-
-import javax.sql.DataSource;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.hitsz.eatut.managerActivities.OrderActivity.haveOrderPrepared;
 
 
 public class OrderFragment extends Fragment {
+    /*
+    * 我的订单页面
+    * 功能：显示所有订单（订单号、菜品、截止时间、准备状态）
+    * */
     private RecyclerView recyclerView;
     private List<MyOrderItem> myOrderItemList= new ArrayList<>();
-    private String currentPhone;
-    public static void saveOrderToMyOrder(int i,String phone){
+    public static void saveOrderToMyOrder(int i, long timeStamp){
+        //将购物车中提交的orderFood加入MyOrder database
         List<orderFood> list= LitePal.findAll(orderFood.class);
+        ArrayList<Integer> allDishID = new ArrayList<>();// 存放该订单的菜品
+        float total = 0;
         for(orderFood one:list){
-            Log.d("myorderitem", one.getName());
-            MyOrder myOrder=new MyOrder();
-            myOrder.setDishID_III(one.getDishID_II());
-            myOrder.setOrderNo_II(i);
-            myOrder.setPhone(phone);
-            myOrder.setPrepared(false);
-            myOrder.save();
+            //产生allDishID和total
+            int dishID = one.getDishID_II();
+            allDishID.add(dishID);
+            List<DishInfo> temp=LitePal.where("id==?", "" + dishID).find(DishInfo.class);
+            float cost = temp.get(0).getDishPrice();
+            total += cost;
         }
+        MyOrder myOrder=new MyOrder();
+        myOrder.setDishID_III(allDishID);
+        myOrder.setOrderNo_II(i);
+        myOrder.setUserID(list.get(0).getUserID());
+        myOrder.setPrepared(false);
+        myOrder.setEndTime(timeStamp);
+        myOrder.setPick(false);
+        myOrder.setCost(total);
+        myOrder.save();
     }
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,28 +73,44 @@ public class OrderFragment extends Fragment {
         recyclerView=root.findViewById(R.id.myorder_recycle);
         initMyOrder();
         initRecycle();
+        StatisticTest();
         return root;
 
     }
     private void initMyOrder(){
-        SharedPreferences pref2=getActivity().getSharedPreferences("CurrentPhone",MODE_PRIVATE);
-        currentPhone=pref2.getString("Phone","Get_Phone_Fail");
-        List<MyOrder> myOrderList=LitePal.where("phone==?",currentPhone).find(MyOrder.class);
+        SharedPreferences pref2 = getActivity().getSharedPreferences("currentID",MODE_PRIVATE);
+        int userID = pref2.getInt("userID", -1);
+        List<MyOrder> myOrderList=LitePal.where("userID==?", "" + userID).find(MyOrder.class);
         myOrderItemList.clear();
         for(MyOrder one:myOrderList){
-            int id=one.getDishID_III();
+            ArrayList<Integer> allDishID =one.getDishID_III();
             int orderNO=one.getOrderNo_II();
             int myOrderID=one.getId();
-            List<DishInfo> temp= LitePal.where("id==?",String.valueOf(id)).find(DishInfo.class);
-            Log.d("mytemp", temp.toString());
-            String name=temp.get(0).getDishName();
-            Log.d("single", name);
-            boolean isprepared;
-            isprepared= OrderActivity.haveOrderPrepared(myOrderID);
-            MyOrderItem myOrderItem=new MyOrderItem(id,name,isprepared,orderNO,myOrderID);
+            boolean isprepared = OrderActivity.haveOrderPrepared(myOrderID);
+            boolean isPick = one.isPick();
+            long endTimeStamp = one.getEndTime();
+            String endTime = DateFormatUtils.long2Str(endTimeStamp, true);
+            float cost = one.getCost();
+            MyOrderItem myOrderItem = new MyOrderItem(allDishID, isprepared, orderNO, myOrderID, endTime, isPick, cost);
             myOrderItemList.add(myOrderItem);
-
         }
+        //对myOrderItemList做个排序：已取餐的放在下面；按照订单号排序
+        Collections.sort(myOrderItemList, new Comparator<MyOrderItem>() {
+                    @Override
+                    public int compare(MyOrderItem m1, MyOrderItem m2) {
+                        boolean isPick1 = m1.isPick();
+                        boolean isPick2 = m2.isPick();
+                        int orderNo1 = m1.getOrderNo_III();
+                        int orderNo2 = m2. getOrderNo_III();
+                        if(isPick1 && !isPick2)
+                            return 1;
+                        else if(!isPick1 && isPick2)
+                            return -1;
+                        else{
+                            return orderNo2 - orderNo1;
+                        }
+                    }
+                });
     }
     private void initRecycle(){
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
@@ -92,5 +125,58 @@ public class OrderFragment extends Fragment {
             });
         recyclerView.setAdapter(adapter);
     }
+    private void StatisticTest(){
+        /*StatisticData测试*/
+        StatisticData statisticData = new StatisticData();
+        SharedPreferences pref2 = getActivity().getSharedPreferences("currentID",MODE_PRIVATE);
+        int userID = pref2.getInt("userID",-1);
+//        //EndTime
+//        ArrayList<Long> endTime = statisticData.EndTimeStatistic(userID);
+//        Log.d("StatisticTest", "endTime:" + endTime.size());
+//        for(Long time: endTime){
+//            String tempTime = DateFormatUtils.long2Str(time, true);
+//            Log.d("StatisticTest", tempTime);
+//        }
+        //Cost
+        float[] weekCost = statisticData.weekCost(userID);
+        Log.d("StatisticTest", Integer.toString(weekCost.length));
+        for(int i=0;i<7;i++){
+            Log.d("StatisticTest", (i+1) + ": " + Float.toString(weekCost[i]));
+        }
+//        ArrayList<Float> weekCost = statisticData.CostStatistic(userID, 0);
+//        Log.d("StatisticTest", "weekCost:");
+//        for(float week:weekCost){
+//            Log.d("StatisticTest", Float.toString(week));
+//        }
+//        ArrayList<Float> monthCost = statisticData.CostStatistic(userID, 1);
+//        Log.d("StatisticTest", "monthCost:");
+//        for(float month:monthCost){
+//            Log.d("StatisticTest", Float.toString(month));
+//        }
+//        ArrayList<Float> yearCost = statisticData.CostStatistic(userID, 2);
+//        Log.d("StatisticTest", "yearCost:");
+//        for(float year:yearCost){
+//            Log.d("StatisticTest", Float.toString(year));
+//        }
+//        //Prefer
+//        HashMap<String, Integer> windowMap = statisticData.PreferStatistic(userID, 0);
+//        Log.d("StatisticTest", "windowPrefer:");
+//        List<HashMap.Entry<String, Integer>> entryList = new ArrayList<HashMap.Entry<String, Integer>>(windowMap.entrySet());
+//        Iterator<HashMap.Entry<String, Integer>> iterator = entryList.iterator();
+//        HashMap.Entry<String, Integer> tmpEntry = null;
+//        while(iterator.hasNext()){
+//            tmpEntry = iterator.next();
+//            Log.d("StatisticTest", tmpEntry.getKey() + " " + tmpEntry.getValue());
+//        }
+//        HashMap<String, Integer> tagMap = statisticData.PreferStatistic(userID, 1);
+//        Log.d("StatisticTest", "tagPrefer:");
+//        List<HashMap.Entry<String, Integer>> entryList1 = new ArrayList<HashMap.Entry<String, Integer>>(tagMap.entrySet());
+//        Iterator<HashMap.Entry<String, Integer>> iterator1 = entryList1.iterator();
+//        HashMap.Entry<String, Integer> tmpEntry1 = null;
+//        while(iterator1.hasNext()){
+//            tmpEntry1 = iterator1.next();
+//            Log.d("StatisticTest", tmpEntry1.getKey() + " " + tmpEntry1.getValue());
+//        }
 
+    }
 }

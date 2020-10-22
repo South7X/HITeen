@@ -23,4 +23,9 @@
         android:name="com.hitsz.eatut.ui.Order_ui.OrderFragment"
         android:label="@string/title_order"
         tools:layout="@layout/fragment_order" />
+    <fragment
+        android:id="@+id/navigation_user_center"
+        android:name="com.hitsz.eatut.ui.UserCenter_ui.UserCenterFragment"
+        android:label="@string/title_user_center"
+        tools:layout="@layout/fragment_user_center"/>
 </navigation>

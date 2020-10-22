@@ -1,16 +1,30 @@
 package com.hitsz.eatut;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class adActivity extends AppCompatActivity {
-
+public class adActivity extends AppCompatActivity implements View.OnClickListener{
+    private Button rankingEntryButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
-        ImageView imageView = findViewById(R.id.ad_image);
+        rankingEntryButton = findViewById(R.id.ranking_entry_btn);
+        rankingEntryButton.setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.ranking_entry_btn:
+                Log.d("RankingEntryBtn", "Click");
+                Intent intent = new Intent(this, RankActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

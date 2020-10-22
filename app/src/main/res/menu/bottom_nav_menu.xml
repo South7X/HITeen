@@ -13,6 +13,10 @@
         android:id="@+id/navigation_order"
         android:icon="@drawable/ic_content_paste_black_24dp"
         android:title="@string/title_order" />
+    <item
+        android:id="@id/navigation_user_center"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/title_user_center"/>
 
 
 </menu>

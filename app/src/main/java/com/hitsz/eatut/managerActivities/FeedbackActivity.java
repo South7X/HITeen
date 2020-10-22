@@ -1,9 +1,7 @@
 package com.hitsz.eatut.managerActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ViewUtils;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.hitsz.eatut.managerActivities.FeedShowActivity;
 import com.hitsz.eatut.R;
 import com.hitsz.eatut.database.FeedInfo;
 import com.facebook.stetho.Stetho;

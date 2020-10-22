@@ -1,6 +1,7 @@
 package com.hitsz.eatut.ui.Search_ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,10 +27,9 @@ import com.hitsz.eatut.database.DishInfo;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.hitsz.eatut.BaseClass.createLinkedListFromDatabase;
 import static com.hitsz.eatut.BaseClass.getUnitedList;
 import static com.hitsz.eatut.BaseClass.traversalWholeLinkedList;
@@ -84,9 +84,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
         }
     }
     private void initRecycle(){
+        SharedPreferences pref2 = getActivity().getSharedPreferences("currentID",MODE_PRIVATE);
+        int userID = pref2.getInt("userID",-1);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        DishAdapter adapter=new DishAdapter(foodsList, new DishAdapter.daListener() {
+        DishAdapter adapter=new DishAdapter(userID, foodsList, new DishAdapter.daListener() {
             @Override
             public void da() {
                 foodsList.clear();
@@ -213,26 +215,32 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                 screenPopWindow.setOnConfirmClickListener(new ScreenPopWindow.OnConfirmClickListener() {
                     @Override
                     public void onConfirmClick(List<String> list) {
-                        String str=list.get(0);
-                        Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
-                        switch(str){
-                            case "价格升序":
-                                quickSort(0,0,foodsList,0,foodsList.size()-1);
-                                initRecycle();
-                                break;
-                            case "价格降序":
-                                quickSort(1,0,foodsList,0,foodsList.size()-1);
-                                initRecycle();
-                                break;
-                            case "评分升序":
-                                quickSort(0,1,foodsList,0,foodsList.size()-1);
-                                initRecycle();
-                                break;
-                            case "默认(评分降序)":
-                            case "评分降序":
-                                quickSort(1,1,foodsList,0,foodsList.size()-1);
-                                initRecycle();
-                                break;
+                        if(list.size()==0)//没有选择的情况
+                        {
+                            quickSort(1,1,foodsList,0,foodsList.size()-1);
+                            initRecycle();
+                        }else {
+                            String str=list.get(0);
+                            Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
+                            switch (str) {
+                                case "价格升序":
+                                    quickSort(0, 0, foodsList, 0, foodsList.size() - 1);
+                                    initRecycle();
+                                    break;
+                                case "价格降序":
+                                    quickSort(1, 0, foodsList, 0, foodsList.size() - 1);
+                                    initRecycle();
+                                    break;
+                                case "评分升序":
+                                    quickSort(0, 1, foodsList, 0, foodsList.size() - 1);
+                                    initRecycle();
+                                    break;
+                                case "默认(评分降序)":
+                                case "评分降序":
+                                    quickSort(1, 1, foodsList, 0, foodsList.size() - 1);
+                                    initRecycle();
+                                    break;
+                            }
                         }
                     }
                 });
