@@ -130,19 +130,32 @@ public class OrderFragment extends Fragment {
         StatisticData statisticData = new StatisticData();
         SharedPreferences pref2 = getActivity().getSharedPreferences("currentID",MODE_PRIVATE);
         int userID = pref2.getInt("userID",-1);
-//        //EndTime
-//        ArrayList<Long> endTime = statisticData.EndTimeStatistic(userID);
-//        Log.d("StatisticTest", "endTime:" + endTime.size());
-//        for(Long time: endTime){
-//            String tempTime = DateFormatUtils.long2Str(time, true);
+////        //EndTime
+//        Object[] endTime = statisticData.EndTimeStatistic(userID);
+//        Log.d("StatisticTest", "endTime:" + endTime.length);
+//        for(Object time: endTime){
+//            String tempTime = DateFormatUtils.long2Str((long)time, true);
 //            Log.d("StatisticTest", tempTime);
 //        }
-        //Cost
-        float[] weekCost = statisticData.weekCost(userID);
-        Log.d("StatisticTest", Integer.toString(weekCost.length));
-        for(int i=0;i<7;i++){
-            Log.d("StatisticTest", (i+1) + ": " + Float.toString(weekCost[i]));
+//        //Cost
+//        //week
+//        Object[] weekCost = statisticData.weekCost(userID);
+//        Log.d("StatisticTest", Integer.toString(weekCost.length));
+//        for(int i=0;i<7;i++){
+//            Log.d("StatisticTest", (i+1) + ": " + (weekCost[i]));
+//        }
+        //month
+        Object[] monthCost = statisticData.monthCost(userID);
+        Log.d("StatisticTest", Integer.toString(monthCost.length));
+        for(int i=0;i<31;i++){
+            Log.d("StatisticTest", (i+1) + ": " + (monthCost[i]));
         }
+//        //year
+//        Object[] yearCost = statisticData.yearCost(userID);
+//        Log.d("StatisticTest", Integer.toString(yearCost.length));
+//        for(int i=0;i<12;i++){
+//            Log.d("StatisticTest", (i+1) + ": " + (yearCost[i]));
+//        }
 //        ArrayList<Float> weekCost = statisticData.CostStatistic(userID, 0);
 //        Log.d("StatisticTest", "weekCost:");
 //        for(float week:weekCost){
