@@ -80,6 +80,7 @@
         <activity android:name=".DishActivity" />
         <activity android:name=".adActivity" />
         <activity android:name=".RankActivity"/>
+        <activity android:name=".CommentActivity"/>
     </application>
 
 </manifest>
