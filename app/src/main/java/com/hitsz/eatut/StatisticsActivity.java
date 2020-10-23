@@ -30,12 +30,10 @@ public class StatisticsActivity extends AppCompatActivity {
     public StatisticData statisticData =new StatisticData();
     public HashMap<String, Integer> taste_hash=new HashMap<>();
     public HashMap<String, Integer> window_hash=new HashMap<>();
-    public Object[] time;
+    public Object[] times;
     public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        time=statisticData.EndTimeStatistic(userID);
-        //System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+time[0]);
         SharedPreferences pref2 = this.getSharedPreferences("currentID",MODE_PRIVATE);
         userID = pref2.getInt("userID", -1);
         taste_hash=statisticData.PreferStatistic(userID,1);
@@ -49,37 +47,52 @@ public class StatisticsActivity extends AppCompatActivity {
         Button explore = (Button) findViewById(R.id.explore);
         com.hitsz.eatut.AAChartCoreLib.AAChartCreator.AAChartView aaChartView = findViewById(R.id.AAChartView);
         initParam();
-        AAChartModel aaChartModel = new AAChartModel()
-                .chartType(AAChartType.Column)
-                .title("THE HEAT OF PROGRAMMING LANGUAGE")
-                .subtitle("Virtual Data")
-                .backgroundColor("#fffacd")
-                .categories(new String[]{"Java", "Swift", "Python", "Ruby", "PHP", "Go", "C", "C#", "C++"})
-                .dataLabelsEnabled(false)
-                .yAxisGridLineWidth(0f)
-                .series(new AASeriesElement[]{
-                        new AASeriesElement()
-                                .name("Tokyo")
-                                .data(new Object[]{7.0, 6.9, 9.5, 14.5}),
-                        new AASeriesElement()
-                                .name("NewYork")
-                                .data(new Object[]{0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5}),
-                        new AASeriesElement()
-                                .name("London")
-                                .data(new Object[]{0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0}),
-                        new AASeriesElement()
-                                .name("Berlin")
-                                .data(new Object[]{3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8})
-                });
+        AAChartModel aaChartModel = new AAChartModel();
         aaChartView.aa_drawChartWithChartModel(aaChartModel);
         time.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                String[] s=new String[]{"6:00-7:00", "7:00-8:00", "11:00-12:00", "12:00-13:00", "17:00-18:00","18:00-19:00","其他"};
                 aaChartModel.xAxisTickInterval=0;
                 aaChartModel.polar=Boolean.FALSE;
                 aaChartModel.title("就餐时间展示")
-                        .subtitle("妈妈叫我回家吃饭啦！");
+                        .subtitle("妈妈叫我吃饭啦！");
                 aaChartModel.chartType=AAChartType.Bar;
+                aaChartModel.categories(s);
+                times=statisticData.EndTimeStatistic(userID);
+                Object[]data =new Object[]{0,0,0,0,0,0,0};
+                for (Object o : times) {
+                    if (o.toString().equals("6")) {
+                        data[0] = (int) data[0] + 1;
+                        continue;
+                    }
+                    if (o.toString().equals("7")) {
+                        data[1] = (int) data[1] + 1;
+                        continue;
+                    }
+                    if (o.toString().equals("11")) {
+                        data[2] = (int) data[2] + 1;
+                        continue;
+                    }
+                    if (o.toString().equals("12")) {
+                        data[3] = (int) data[3] + 1;
+                        continue;
+                    }
+                    if (o.toString().equals("17")) {
+                        data[4] = (int) data[4] + 1;
+                        continue;
+                    }
+                    if (o.toString().equals("18")) {
+                        data[5] = (int) data[5] + 1;
+                        continue;
+                    }
+                    data[6] = (int) data[6] + 1;
+                }
+                aaChartModel.series(new AASeriesElement[]{
+                        new AASeriesElement()
+                                .name("时段用餐次数")
+                                .data(data)
+                });
                 aaChartView.aa_drawChartWithChartModel(aaChartModel);
             }
         });
@@ -111,7 +124,7 @@ public class StatisticsActivity extends AppCompatActivity {
                             break;
                             case"月":
                                 //Object data1[]={15,2,3,6,5,4,8,3,9,11};
-                                // data2[]={22,20,29,24,17,10,7,17,23,8};
+                                //Obiect data2[]={22,20,29,24,17,10,7,17,23,8};
                                 //Object data3[]={11,14,15,20,19,8,5,11,16,10,29};
                                 aaChartModel.polar=Boolean.FALSE;
                                 aaChartModel.xAxisTickInterval=0;

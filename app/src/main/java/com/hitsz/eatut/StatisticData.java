@@ -36,10 +36,12 @@ public class StatisticData {
         Object[] endTimes = new Object[myOrderList.size()];
         for(int i=0;i<myOrderList.size();i++)
         {
-            endTimes[i] = myOrderList.get(i).getEndTime();
+            long temp = myOrderList.get(i).getEndTime();
+            endTimes[i] = DateFormatUtils.long2StrOnlyGetHour(temp);
         }
         return endTimes;
     }
+
     private long[] getWeekStamp() {
         /*
          * 返回当前周的时间戳：本周7天每天的起止时间戳共有8个
