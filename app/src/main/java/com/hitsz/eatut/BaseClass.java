@@ -1,13 +1,11 @@
 package com.hitsz.eatut;
 
 import android.util.Log;
-import android.widget.TextView;
 
-import com.hitsz.eatut.adapter.order;
 import com.hitsz.eatut.database.CanteenInfo;
 import com.hitsz.eatut.database.DishInfo;
+import com.hitsz.eatut.database.UserInfo;
 import com.hitsz.eatut.database.WindowInfo;
-import com.hitsz.eatut.database.orderFood;
 import com.hitsz.eatut.adapter.dish;
 
 import org.litepal.LitePal;
@@ -16,6 +14,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseClass {
+
+    /**
+     * 读取输入的手机号或学号，判断SharedPreferences中是否有此用户名
+     */
+    public static boolean isUserExist(String phoneNumber){
+        List<UserInfo> users_phone = LitePal.where("telephoneNumber = ?", phoneNumber).find(UserInfo.class);
+        return (!users_phone.isEmpty());
+    }
+
+    /**
+     * 判断输入是否合法
+     */
+    public static boolean isUserNameValid(String userName) {
+        return userName.length() >= 2;
+    }
+
+    public static boolean isStudentNumberValid(String studentNumber) {
+        return studentNumber.length() == 9;
+    }
+
+    public static boolean isPhoneValid(String phone) {
+        return phone.length() == 11;
+    }
+
+    public static boolean isPasswordValid(String password) {
+        return password.length() >= 8;
+    }
+
+
+
 
     /**
      * -----------------------------------------哈希部分---------------------------------------------

@@ -3,6 +3,8 @@ package com.hitsz.eatut;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -18,11 +20,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -30,6 +36,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,6 +56,8 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.hitsz.eatut.BaseClass.buildTreeFromDatabase;
 import static com.hitsz.eatut.BaseClass.createLinkedListFromDatabase;
+import static com.hitsz.eatut.BaseClass.isPasswordValid;
+import static com.hitsz.eatut.BaseClass.isUserExist;
 
 /**
  * @author lixiang
@@ -79,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         // Set up the login form.
         //Connector.getDatabase();
         Stetho.initializeWithDefaults(this);
@@ -86,8 +96,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
         //TODO: remove after connect to a real server
-        //TODO: 修改hashCode函数，避免地址冲突问题
-        addNewUserToDatabase(managerNumber, "12345678");
+        addManagerToDatabase(managerNumber, "12345678");
 
         mTelephoneView = (AutoCompleteTextView) findViewById(R.id.telephone);
         populateAutoComplete();
@@ -98,13 +107,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
                     attemptLogin();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                    startActivity(intent);
                     return true;
                 }
                 return false;
             }
         });
+
+        /**
+         * 忘记密码
+         */
+        TextView forgetPsd = findViewById(R.id.forget_psd);
+        forgetPsd.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(LoginActivity.this, ForgetPassword.class);
+                startActivity(intent);
+            }
+
+        });
+
+        /**
+         * Sign up Activity
+         */
+        Button mSignUpButton =(Button) findViewById(R.id.sign_up_button);
+        mSignUpButton.setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
 
         Button mPhoneSignInButton = (Button) findViewById(R.id.phone_sign_in_button);
         mPhoneSignInButton.setOnClickListener(new OnClickListener() {
@@ -120,17 +155,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    private void addNewUserToDatabase(String phone, String password) {
+    private void addManagerToDatabase(String phone, String password) {
         UserInfo user1 = new UserInfo();
-        countUserNumber = countUserNumber + 1;
-        int hashID;
-        hashID = BaseClass.getHashCodeByTelephone(Long.parseLong(phone), maxUserNum);
-        itsHashCodeToID[hashID] = countUserNumber;
         user1.setTelephoneNumber(phone);
         user1.setPassword(password);
-        user1.setId(hashID);
         user1.save();
-
     }
 
     private void populateAutoComplete() {
@@ -221,7 +250,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mTelephoneView.setError(getString(R.string.error_field_required));
             focusView = mTelephoneView;
             cancel = true;
-        } else if (!isPhoneValid(phone)) {
+        } else if (!BaseClass.isPhoneValid(phone)) {
+            // 输入不是手机号的格式
             mTelephoneView.setError(getString(R.string.error_invalid_phone));
             focusView = mTelephoneView;
             cancel = true;
@@ -240,15 +270,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private boolean isPhoneValid(String phone) {
-        //TODO: Replace this with your own logic
-        return phone.length() == 11;
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() >= 8;
-    }
+//    private boolean isInputValid(String phone) {
+//        return (phone.length() == 11 | phone.length() == 9);
+//    }
+//
+//    private boolean isPasswordValid(String password) {
+//        return password.length() >= 8;
+//    }
 
     /**
      * Shows the progress UI and hides the login form.
@@ -341,22 +369,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    private boolean isUserExist(String phone) {
-        int hashID = BaseClass.getHashCodeByTelephone(Long.parseLong(phone), maxUserNum);
-        if (itsHashCodeToID[hashID] == 0) return false;
-        UserInfo user = LitePal.find(UserInfo.class, itsHashCodeToID[hashID]);
-        return user.getTelephoneNumber().equals(phone);
-    }
+//    /**
+//     * Represents an asynchronous login/registration task used to authenticate
+//     * the user.
+//     */
+//    private boolean isUserExist(String phone) {
+//        int hashID = BaseClass.getHashCodeByTelephone(Long.parseLong(phone), maxUserNum);
+//        if (itsHashCodeToID[hashID] == 0) return false;
+//        UserInfo user = LitePal.find(UserInfo.class, itsHashCodeToID[hashID]);
+//        return user.getTelephoneNumber().equals(phone);
+//    }
 
-    private boolean isPasswordCorrect(String phone, String password) {
-        int hashID = BaseClass.getHashCodeByTelephone(Long.parseLong(phone), maxUserNum);
-        if (itsHashCodeToID[hashID] == 0) return false;
-        UserInfo user = LitePal.find(UserInfo.class, itsHashCodeToID[hashID]);
-        return user.getPassword().equals(password);
+
+    /**
+     * Check if password correct compared with dataset, input can be phone
+     * @param input: input phoneNumber
+     * @param password: input password
+     * @return True , False
+     */
+    private boolean isPasswordCorrect(String input, String password) {
+        List<UserInfo> users;
+        users = LitePal.where("telephoneNumber = ?", input).find(UserInfo.class);
+        for (UserInfo user: users) {
+            return user.getPassword().equals(password);
+        }
+        return false;
     }
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
@@ -389,14 +426,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }
             */
-            if (isUserExist(mPhone)){
+            if (BaseClass.isUserExist(mPhone)){
+                Log.v(TAG, "background: user exist");
                 return isPasswordCorrect(mPhone, mPassword);
             } else {
-                addNewUserToDatabase(mPhone, mPassword);
-                Log.d(TAG, "register new user");
                 return true;
             }
-            // TODO: register the new account here.
 
         }
 
@@ -407,12 +442,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 //finish();
+                Log.v(TAG, "onPostExecute: in success");
+                if (!isUserExist(mPhone)) {
+                    Log.v(TAG, "onPostExecute: user not exist");
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(LoginActivity.this);
+                    dialog.setTitle("来啦老铁！");
+                    dialog.setMessage("快去注册吧，这样才能登录喔～");
+                    dialog.setCancelable(false);
+                    dialog.setPositiveButton("注册", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    dialog.setNegativeButton("算了", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dialog.show();
+                    return;
+                }
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 Intent intent2 = new Intent(LoginActivity.this, ManagerActivity.class);
-                SavePhone(mPhone);
+//                SavePhone(mPhone);
+                int userID = (LitePal.where("telephoneNumber like ?", mPhone).find(UserInfo.class)).get(0).getId();
+                Log.d("userID", Integer.toString(userID));
+                SaveUserID(userID);
                 if (mPhone.equals(managerNumber)&&mPassword.equals("12345678")) startActivity(intent2);//管理者界面
                 else startActivity(intent);//用户界面
             } else {
+                Log.v(TAG, "onPostExecute: in else");
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
@@ -424,10 +486,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
-    private void SavePhone(String mPhone){
-        SharedPreferences pref=this.getSharedPreferences("CurrentPhone",MODE_PRIVATE);
+    private void SaveUserID(int userID){
+        //保存当前用户ID
+        SharedPreferences pref=this.getSharedPreferences("currentID",MODE_PRIVATE);
         SharedPreferences.Editor editor=pref.edit();
-        editor.putString("Phone",mPhone);
+        editor.putInt("userID",userID);
         editor.apply();
     }
     private void OrderCount(){
@@ -598,5 +661,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         createLinkedListFromDatabase();
     }
 
+    /**
+     * 注册成功返回的数据
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    String returnedData = data.getStringExtra("phoneNumber");
+                    if(!TextUtils.isEmpty(returnedData)){
+                        //设置用户名到 mTelephoneView 控件
+                        mTelephoneView.setText(returnedData);
+                        //mTelephoneView 控件的setSelection()方法来设置光标位置
+                        mTelephoneView.setSelection(returnedData.length());
+                    }
+
+                }
+                break;
+            default:
+        }
+    }
 }
 

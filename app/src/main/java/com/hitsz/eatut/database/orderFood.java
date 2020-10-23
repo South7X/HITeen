@@ -1,52 +1,25 @@
 package com.hitsz.eatut.database;
-import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
 /**
  * @author zhang
  */
 public class orderFood extends LitePalSupport {
+    //购物车内容，即CheckActivity的item
     private int id;
-    private String name;
-    private float dishPrice;
-    private float dishScore;
     private int dishID_II;
-//    private int hour;
-//    private int minute;
-//    private int second;
-
-
-    public int getDishID_II() {
-        return dishID_II;
-    }
-
-    public float getDishScore() {
-        return dishScore;
-    }
-
-    public float getDishPrice() {
-        return dishPrice;
-    }
-
-    public String getName() {
-        return name;
-    }
-
+    private int userID;
 
     public int getId() {
         return id;
     }
 
-    public void setDishPrice(float dishPrice) {
-        this.dishPrice = dishPrice;
+    public int getDishID_II() {
+        return dishID_II;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDishScore(float dishScore) {
-        this.dishScore = dishScore;
+    public int getUserID() {
+        return userID;
     }
 
 
@@ -57,4 +30,9 @@ public class orderFood extends LitePalSupport {
     public void setDishID_II(int dishID_II) {
         this.dishID_II = dishID_II;
     }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
 }

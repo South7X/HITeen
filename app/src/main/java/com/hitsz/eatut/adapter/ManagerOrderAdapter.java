@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.hitsz.eatut.R;
 import com.hitsz.eatut.database.ManagerOrderInfo;
-import com.hitsz.eatut.database.orderFood;
+
 import org.litepal.LitePal;
 import java.util.List;
 /**

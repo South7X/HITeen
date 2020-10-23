@@ -2,6 +2,8 @@ package com.hitsz.eatut.adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +35,9 @@ import java.lang.String;
  */
 public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
     private List<dish> mFoodList;
-    private List<order> morderFoodList;
     private AlertDialog.Builder builder;
     private int chedkedItem = 0;
+    private int userID;
     private daListener listener;
     //创建队列
     Queue queue = new Queue();
@@ -58,15 +60,16 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
             commentBtn=view.findViewById(R.id.cmt_btn);
         }
     }
-    public DishAdapter(List<dish> foodsList,daListener listener){
+    public DishAdapter(int userID, List<dish> foodsList,daListener listener){
+        this.userID = userID;
         mFoodList=foodsList;
         this.listener=listener;
+        Log.d("DishAdapterUserID", Integer.toString(userID));
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.dish,parent,false);
-        final Calendar calendar=Calendar.getInstance();
         final ViewHolder holder=new ViewHolder(view);
         holder.foodview.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -120,21 +123,17 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
             }
         });
         holder.orderBtn.setOnClickListener(new View.OnClickListener(){
+            //点击“加入订单”按钮，将菜品加入orderFood database
             @Override
             public void onClick(View v){
                 int position=holder.getAdapterPosition();
                 dish food=mFoodList.get(position);
                 //入队操作
                 queue.offer(food);
-
-//                int hour=calendar.get(Calendar.HOUR_OF_DAY);
-//                int minute=calendar.get(Calendar.MINUTE);
-//                int second=calendar.get(Calendar.SECOND);
                 orderFood one=new orderFood();
-                one.setName(food.getName());
-                one.setDishPrice(food.getDishPrice());
-                one.setDishScore(food.getDishScore());
                 one.setDishID_II(food.getDishID_I());
+                one.setUserID(userID);
+                Log.d("DishAdapterOrder", one.getDishID_II() + " " + one.getUserID());
                 one.save();
                 Toast.makeText(v.getContext(),"已添加到订单",Toast.LENGTH_SHORT).show();
             }
@@ -158,4 +157,5 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
     public interface daListener{
         void da();
     }
+
 }
