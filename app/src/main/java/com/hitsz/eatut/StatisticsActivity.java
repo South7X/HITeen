@@ -15,8 +15,12 @@ import com.hitsz.eatut.AAChartCoreLib.AAChartCreator.AAChartModel;
 import com.hitsz.eatut.AAChartCoreLib.AAChartCreator.AASeriesElement;
 import com.hitsz.eatut.AAChartCoreLib.AAChartEnum.AAChartType;
 import com.example.popupwindowlibrary.bean.FiltrateBean;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class StatisticsActivity extends AppCompatActivity {
@@ -24,11 +28,18 @@ public class StatisticsActivity extends AppCompatActivity {
     private List<FiltrateBean> expenseList = new ArrayList<>();
     private List<FiltrateBean> favorList = new ArrayList<>();
     public StatisticData statisticData =new StatisticData();
+    public HashMap<String, Integer> taste_hash=new HashMap<>();
+    public HashMap<String, Integer> window_hash=new HashMap<>();
+    public Object[] time;
     public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        time=statisticData.EndTimeStatistic(userID);
+        //System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+time[0]);
         SharedPreferences pref2 = this.getSharedPreferences("currentID",MODE_PRIVATE);
         userID = pref2.getInt("userID", -1);
+        taste_hash=statisticData.PreferStatistic(userID,1);
+        window_hash=statisticData.PreferStatistic(userID,0);
         super.onCreate(savedInstanceState);
         Activity statis=this;
         setContentView(R.layout.activity_statistics);
@@ -64,6 +75,8 @@ public class StatisticsActivity extends AppCompatActivity {
         time.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                aaChartModel.xAxisTickInterval=0;
+                aaChartModel.polar=Boolean.FALSE;
                 aaChartModel.title("就餐时间展示")
                         .subtitle("妈妈叫我回家吃饭啦！");
                 aaChartModel.chartType=AAChartType.Bar;
@@ -85,22 +98,28 @@ public class StatisticsActivity extends AppCompatActivity {
                         aaChartModel.title("花销展示")
                                 .subtitle("钱包不大，胃口不小");
                         switch (str){
-                            case"周":
+                            case"周": aaChartModel.xAxisTickInterval=0;
                             aaChartModel.chartType = AAChartType.Line;
+                            aaChartModel.polar=Boolean.FALSE;
                             aaChartModel.categories(new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday","Saturday","Sunday"});
                             aaChartModel.series(new AASeriesElement[]{
                                     new AASeriesElement()
-                                            .name("Tokyo")
+                                            .name("本周花销")
                                             .data(statisticData.weekCost(userID))
                             });
                             aaChartView.aa_drawChartWithChartModel(aaChartModel);
                             break;
                             case"月":
-                                Object data1[]={15,2,3,6,5,4,8,3,9,11};
-                                Object data2[]={22,20,29,24,17,10,7,17,23,8};
-                                Object data3[]={11,14,15,20,19,8,5,11,16,10,29};
+                                //Object data1[]={15,2,3,6,5,4,8,3,9,11};
+                                // data2[]={22,20,29,24,17,10,7,17,23,8};
+                                //Object data3[]={11,14,15,20,19,8,5,11,16,10,29};
+                                aaChartModel.polar=Boolean.FALSE;
+                                aaChartModel.xAxisTickInterval=0;
+                                Object[] total =statisticData.monthCost(userID);
+                                Object[] data1= Arrays.copyOfRange(total,0,10);
+                                Object[] data2= Arrays.copyOfRange(total,10,20);
+                                Object[] data3= Arrays.copyOfRange(total,20,31);
                                 Calendar now = Calendar.getInstance();
-                                System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+now.get(Calendar.DAY_OF_MONTH));
                                 String[] Str=new String[11];
                                 for(int i=1;i<=10;i++)
                                 {
@@ -115,13 +134,16 @@ public class StatisticsActivity extends AppCompatActivity {
                                  aaChartModel.categories(Str);
                                  switch (now.get(Calendar.DAY_OF_MONTH)/10){
                                      case 0:
+                                         data1=Arrays.copyOfRange(data1,0,now.get(Calendar.DAY_OF_MONTH));
                                          aaChartModel.series(new AASeriesElement[]{
                                                  new AASeriesElement().name("0+").data(data1)});
                                      case 1:
+                                         data2=Arrays.copyOfRange(data2,0,now.get(Calendar.DAY_OF_MONTH)%10);
                                          aaChartModel.series(new AASeriesElement[]{
                                                  new AASeriesElement().name("0+").data(data1),
                                                  new AASeriesElement().name("10+").data(data2)});
                                      case 2:
+                                         data3=Arrays.copyOfRange(data3,0,now.get(Calendar.DAY_OF_MONTH)%10);
                                          aaChartModel.series(new AASeriesElement[]{
                                                  new AASeriesElement().name("0+").data(data1),
                                                  new AASeriesElement().name("10+").data(data2),
@@ -131,8 +153,14 @@ public class StatisticsActivity extends AppCompatActivity {
                                  aaChartView.aa_drawChartWithChartModel(aaChartModel);
                                  break;
                             case"年":
-                                aaChartModel.chartType = AAChartType.Line;
+                                aaChartModel.chartType = AAChartType.Column;
+                                //aaChartModel.polar=Boolean.TRUE;
                                 aaChartModel.categories(new String[]{"1月", "2月", "3月", "4月", "5月","6月","7月", "8月", "9月", "10月", "11月","12月"});
+                                aaChartModel.series(new AASeriesElement[]{
+                                        new AASeriesElement()
+                                                .name("年度花销")
+                                                .data(statisticData.yearCost(userID))
+                                });
                                 aaChartView.aa_drawChartWithChartModel(aaChartModel);
                                 break;
                         }
@@ -143,6 +171,8 @@ public class StatisticsActivity extends AppCompatActivity {
         favor.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                aaChartModel.xAxisTickInterval=0;
+                aaChartModel.polar=Boolean.FALSE;
                 screenPopWindow = new ScreenPopWindow(statis, favorList);
                 //设置多选，因为共用的一个bean，这里调用reset重置下数据
                 screenPopWindow.setSingle(true).reset().build();
@@ -156,14 +186,36 @@ public class StatisticsActivity extends AppCompatActivity {
                         switch (str)
                         {
                             case"口味偏好": {
-                                aaChartModel.chartType = AAChartType.Line;
-                                aaChartModel.categories(new String[]{"酸","甜","苦","辣","咸","清淡","油炸"});
+                                String[]s=new String[]{"酸","甜","苦","辣","咸","清淡","油炸"};
+                                Object[]data=new Object[7];
+                                for(int i=0;i<7;i++)
+                                {
+                                    data[i]=taste_hash.get(s[i]);
+                                }
+                                aaChartModel.chartType = AAChartType.Column;
+                                //aaChartModel.polar=Boolean.TRUE;
+                                aaChartModel.categories(s);
+                                aaChartModel.series(new AASeriesElement[]{
+                                        new AASeriesElement()
+                                                .name("品尝次数")
+                                                .data(data)
+                                });
                                 aaChartView.aa_drawChartWithChartModel(aaChartModel);
                                 break;
                             }
                             case"档口偏好": {
-                                aaChartModel.chartType = AAChartType.Line;
-                                aaChartModel.categories(new String[]{"酸","甜","苦","辣","咸","清淡"});
+                                String[]s=new String[]{"荔园三食堂-乐记水饺","荔园三食堂-开饭了","荔园三食堂-兰州拉面","荔园三食堂-粤式烧腊"};
+                                Object[]data=new Object[4];
+                                for(int i=0;i<4;i++)
+                                {
+                                    data[i]=window_hash.get(s[i]);
+                                }
+                                aaChartModel.chartType = AAChartType.Column;
+                                aaChartModel.categories(s);
+                                aaChartModel.series(new AASeriesElement[]{
+                                        new AASeriesElement()
+                                                .name("光顾次数")
+                                                .data(data)});
                                 aaChartView.aa_drawChartWithChartModel(aaChartModel);
                                 break;
                             }
