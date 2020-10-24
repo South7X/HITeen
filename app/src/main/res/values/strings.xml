@@ -15,14 +15,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-<!--    fragment和action bar相关-->
+    <!--    fragment和action bar相关-->
     <string name="action_settings">设置</string>
     <string name="advertisement">"What's New"</string>
     <string name="title_search">搜索</string>
     <string name="title_order">我的订单</string>
     <string name="title_main">主页</string>
     <string name="title_user_center">用户中心</string>
-<!--    排行榜相关-->
+    <!--    排行榜相关-->
     <string name="week_ranking">周销量Top 10</string>
     <string name="month_ranking">月销量Top 10</string>
     <string name="ranking_entry">销量排行榜</string>
@@ -30,7 +30,7 @@
     <string name="title_window">食堂档口</string>
     <string name="title_dish">菜品</string>
     <string name="title_sale_num">销量</string>
-<!--    时间选择控件相关-->
+    <!--    时间选择控件相关-->
     <string name="cancel">取消</string>
     <string name="title">请选择时间</string>
     <string name="confirm">确定</string>
