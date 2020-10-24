@@ -1,7 +1,6 @@
-package com.hitsz.eatut.rankingActivities;
+package com.hitsz.eatut.MapRelate;
 
 import com.hitsz.eatut.database.MyOrder;
-import com.hitsz.eatut.rankingActivities.MapValueComparator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,11 +8,11 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class RankingMapFunc {
+public class MapFunc {
 
-    public HashMap<Integer, Integer> initMap(HashMap<Integer, Integer>map, MyOrder myOrder) {
+    public HashMap<Integer, Integer> initIntegerKeyMap(HashMap<Integer, Integer>map, MyOrder myOrder) {
         /*
-        * 将MyOrder中的dishID放入Map
+        * 输入订单对象，返回<dishID, count>Map
         *  */
             ArrayList<Integer> dishIDs = myOrder.getDishID_III();
             for (int i = 0; i < dishIDs.size(); i++) {
@@ -30,9 +29,21 @@ public class RankingMapFunc {
             }
             return map;
     }
-    public HashMap<Integer, Integer> sortMap(HashMap<Integer, Integer> map){
+    public HashMap<String, Integer> initStringKeyMap(HashMap<String, Integer>map, String key) {
         /*
-        * HashMap根据value排序
+         * 输入String，返回<String, count>Map
+         *  */
+        if(map.containsKey(key)){
+            int currentValue = map.get(key);
+            map.put(key, currentValue + 1);
+        }else{
+            map.put(key, 1);
+        }
+        return map;
+    }
+    public HashMap<Integer, Integer> sortIntegerKeyMap(HashMap<Integer, Integer> map){
+        /*
+        * <Integer, Integer>HashMap根据value排序
         * */
         if(map == null||map.isEmpty()){
             return null;
@@ -48,4 +59,5 @@ public class RankingMapFunc {
         }
         return sortedMap;
     }
+
 }

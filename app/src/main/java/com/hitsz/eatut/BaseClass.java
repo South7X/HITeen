@@ -549,7 +549,8 @@ public class BaseClass {
         }
         return perId;
     }
-    public static List<Integer> getUnitedList(List<String> tag){//求tag的并集
+    public static List<Integer> getUnitedList(List<String> tag){
+        //求tag的并集
         List<Integer> perId=new ArrayList<>();
         TagHead tempTagNode=tagRoot;
         while(tempTagNode!=null){

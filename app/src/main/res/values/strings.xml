@@ -23,6 +23,9 @@
     <string name="title_main">主页</string>
     <string name="title_user_center">用户中心</string>
     <!--    排行榜相关-->
+    <string name="search_tag_filter">筛选标签</string>
+    <string name="search_order_filter">排序方式</string>
+<!--    排行榜相关-->
     <string name="week_ranking">周销量Top 10</string>
     <string name="month_ranking">月销量Top 10</string>
     <string name="ranking_entry">销量排行榜</string>
@@ -43,5 +46,14 @@
     <string name="current_date">当前日期</string>
     <string name="select_time">选择取餐时间</string>
     <string name="current_time">取餐时间</string>
-
+<!--    食堂信息展示相关-->
+    <string name="intro_score">评分: </string>
+    <string name="intro_sale">销量: </string>
+    <string name="intro_address">地址: </string>
+    <string name="intro_comment">评价</string>
+<!--    食堂评价相关-->
+    <string name="comment_keyword">关键词: </string>
+    <string name="submit">提交</string>
+    <string name="comment_hint">请输入您的评价</string>
+    <string name="anonymous">匿名评论</string>
 </resources>
