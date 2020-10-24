@@ -31,6 +31,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.hitsz.eatut.BaseClass.getCanteenCommentKeyword;
+
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
     private String canteenName;
     private int userID;
@@ -100,7 +102,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
     private void initCanteenIntro(){
         canCommentName.setText(canteenName);
-        canCommentKeyWord.setText("无");
+        canCommentKeyWord.setText(getCanteenCommentKeyword(canteenName));
     }
     private void initComment(){
         //找到当前食堂对应的评论数据
@@ -157,5 +159,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
         builder.show();
+        canCommentKeyWord.setText(getCanteenCommentKeyword(canteenName));
     }
 }

@@ -3,13 +3,13 @@ package com.hitsz.eatut;
 import android.util.Log;
 
 import com.hitsz.eatut.database.CanteenInfo;
-import com.hitsz.eatut.database.Comments;
+import com.hitsz.eatut.database.Comment;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.UserInfo;
 import com.hitsz.eatut.database.WindowInfo;
 import com.hitsz.eatut.adapter.dish;
 import com.hankcs.hanlp.HanLP;
-import com.hankcs.hanlp.summary.TextRankKeyword;
+
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class BaseClass {
         List<String> keywordList = HanLP.extractKeyword(comments, 5);
         String keywords = "";
         for (String keyword: keywordList){
-            keywords = keywords.concat(keyword+'$');
+            keywords = keywords.concat(keyword+' ');
         }
         return keywords;
     }
@@ -65,9 +65,9 @@ public class BaseClass {
      * 从食堂的所有commnets中提取关键词
      */
     public static String getCanteenCommentKeyword(String canteen){
-        List<Comments> comments = LitePal.where("canteenName = ?", canteen).find(Comments.class);
+        List<Comment> comments = LitePal.where("commentCanteen = ?", canteen).find(Comment.class);
         String allComment = "";
-        for (Comments comments1: comments){
+        for (Comment comments1: comments){
             allComment = allComment.concat(comments1.getCommentText());
         }
         return getCommentKeyword(allComment);
@@ -638,6 +638,7 @@ public class BaseClass {
     private static float findAndChangeDishNodeScore(TreeNode tempNode, String belongToCanteenName,
                                                     String belongToWindowName, String dishName, float score){
         float returnScore;
+        Log.d("Score dish:", dishName);
         if (tempNode.nodeData.nodeName.equals(dishName)){//找到该菜品结点
             returnScore = detailChangeDishScoreInTreeAndDatabase(tempNode, score);
         }

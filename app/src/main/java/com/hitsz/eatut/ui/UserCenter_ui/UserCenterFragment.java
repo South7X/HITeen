@@ -40,6 +40,7 @@ public class UserCenterFragment extends Fragment {
 
     private Button change_btn;
     private Button stastic_btn;
+    private Button about_btn;
     private String phoneNumber;
     private String name;
     private TextView user_name;
@@ -49,6 +50,7 @@ public class UserCenterFragment extends Fragment {
         change_btn=root.findViewById(R.id.button_change);
         stastic_btn=root.findViewById(R.id.button_stastic);
         user_name=root.findViewById(R.id.user_center_name);
+        about_btn=root.findViewById(R.id.about);
         init();
         return root;
     }
@@ -78,6 +80,14 @@ public class UserCenterFragment extends Fragment {
             public void onClick(View v){
                 Intent Statistics_intent = new Intent(getActivity(), StatisticsActivity.class);
                 startActivity(Statistics_intent);
+            }
+        });
+        about_btn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                Intent About_intent = new Intent(getActivity(), AboutActivity.class);
+                startActivity(About_intent);
             }
         });
     }
