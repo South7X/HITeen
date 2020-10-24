@@ -168,7 +168,7 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
     private void initTimerPicker() {
         /*时间选择控件初始化*/
         //时间范围：[beginTime, endTime]
-        String beginTime = "2020-1-1 00:00";
+        String beginTime = "2019-1-1 00:00";
         String endTime = "2020-12-31 00:00";
         String currentTime = DateFormatUtils.long2Str(System.currentTimeMillis(), true);
         //默认初始时间为当前时间

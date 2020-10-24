@@ -184,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "跳转至设置",
                         Toast.LENGTH_SHORT).show();
             }
-
             default:
         }
         return super.onOptionsItemSelected(item);

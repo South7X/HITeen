@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hitsz.eatut">
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
@@ -11,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.UserCenter_ui.ChangeUserInfoActivity" />
+        <activity android:name=".ui.UserCenter_ui.ChangeUserInfoActivity"></activity>
         <activity android:name=".ForgetPassword" />
         <activity
             android:name=".SignUpActivity"
@@ -71,15 +75,15 @@
         <activity
             android:name=".managerActivities.DeletedishActivity"
             android:label="删除菜品信息" />
+        <activity
+            android:name=".StatisticsActivity"
+            android:label="统计" />
         <activity android:name=".CheckActivity" />
         <activity android:name=".WindowActivity" />
         <activity android:name=".DishActivity" />
         <activity android:name=".adActivity" />
-        <activity android:name=".rankingActivities.RankActivity" />
+        <activity android:name=".RankActivity"/>
+        <activity android:name=".CommentActivity"/>
     </application>
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
 </manifest>

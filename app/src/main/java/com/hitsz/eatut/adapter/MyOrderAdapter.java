@@ -88,15 +88,13 @@ public class MyOrderAdapter  extends RecyclerView.Adapter<MyOrderAdapter.ViewHol
         holder.endTime.setText(String.valueOf(food.getEndTime()));
         ArrayList<Integer> allDishID = food.getDishID_IV();
         StringBuilder nameValue = new StringBuilder();
-        float total = 0;
         for(int i=0;i<allDishID.size();i++){
             List<DishInfo> temp=LitePal.where("id==?", "" + allDishID.get(i)).find(DishInfo.class);
             String name = temp.get(0).getDishName();
-            float price = temp.get(0).getDishPrice();
             nameValue.append(name);
             nameValue.append("\n");//菜品名之间换行
-            total += price;
         }
+        float total = food.getCost();
         //订单菜品内容和花费
         holder.myOrderName.setText(nameValue.toString());
         String costValue = "共" + allDishID.size() + "件商品，实付￥" + total;
