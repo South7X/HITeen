@@ -15,6 +15,7 @@ public class DateFormatUtils {
 
     private static final String DATE_FORMAT_PATTERN_YMD = "yyyy-MM-dd";
     private static final String DATE_FORMAT_PATTERN_YMD_HM = "yyyy-MM-dd HH:mm";
+    private static final String DATE_FORMAT_ONLY_HOUR = "HH";
 
     /**
      * 时间戳转字符串
@@ -31,6 +32,10 @@ public class DateFormatUtils {
         return new SimpleDateFormat(pattern, Locale.CHINA).format(new Date(timestamp));
     }
 
+    public static String long2StrOnlyGetHour(long timestamp){
+        //只要小时
+        return new SimpleDateFormat(DATE_FORMAT_ONLY_HOUR, Locale.CHINA).format(new Date(timestamp));
+    }
     /**
      * 字符串转时间戳
      *

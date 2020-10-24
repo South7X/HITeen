@@ -36,7 +36,8 @@ public class StatisticData {
         Object[] endTimes = new Object[myOrderList.size()];
         for(int i=0;i<myOrderList.size();i++)
         {
-            endTimes[i] = myOrderList.get(i).getEndTime();
+            long temp = myOrderList.get(i).getEndTime();
+            endTimes[i] = DateFormatUtils.long2StrOnlyGetHour(temp);
         }
         return endTimes;
     }

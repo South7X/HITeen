@@ -130,13 +130,12 @@ public class OrderFragment extends Fragment {
         StatisticData statisticData = new StatisticData();
         SharedPreferences pref2 = getActivity().getSharedPreferences("currentID",MODE_PRIVATE);
         int userID = pref2.getInt("userID",-1);
-////        //EndTime
-//        Object[] endTime = statisticData.EndTimeStatistic(userID);
-//        Log.d("StatisticTest", "endTime:" + endTime.length);
-//        for(Object time: endTime){
-//            String tempTime = DateFormatUtils.long2Str((long)time, true);
-//            Log.d("StatisticTest", tempTime);
-//        }
+//        //EndTime
+        Object[] endTime = statisticData.EndTimeStatistic(userID);
+        Log.d("StatisticTest", "endTime:" + endTime.length);
+        for(Object time: endTime){
+            Log.d("StatisticTest", time.toString());
+        }
 //        //Cost
 //        //week
 //        Object[] weekCost = statisticData.weekCost(userID);
@@ -145,11 +144,11 @@ public class OrderFragment extends Fragment {
 //            Log.d("StatisticTest", (i+1) + ": " + (weekCost[i]));
 //        }
         //month
-        Object[] monthCost = statisticData.monthCost(userID);
-        Log.d("StatisticTest", Integer.toString(monthCost.length));
-        for(int i=0;i<31;i++){
-            Log.d("StatisticTest", (i+1) + ": " + (monthCost[i]));
-        }
+//        Object[] monthCost = statisticData.monthCost(userID);
+//        Log.d("StatisticTest", Integer.toString(monthCost.length));
+//        for(int i=0;i<31;i++){
+//            Log.d("StatisticTest", (i+1) + ": " + (monthCost[i]));
+//        }
 //        //year
 //        Object[] yearCost = statisticData.yearCost(userID);
 //        Log.d("StatisticTest", Integer.toString(yearCost.length));
