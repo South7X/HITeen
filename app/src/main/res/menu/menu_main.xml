@@ -11,4 +11,8 @@
     <item
         android:title="反馈"
         android:id="@+id/feedback"/>
+    <item
+        android:title="统计"
+        android:id="@+id/Statistics"/>
+
 </menu>
