@@ -184,12 +184,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "跳转至设置",
                         Toast.LENGTH_SHORT).show();
             }
-            case R.id.Statistics: {
-                Intent Statistics_intent = new Intent(MainActivity.this, StatisticsActivity.class);
-                startActivity(Statistics_intent);
-                Toast.makeText(MainActivity.this, "跳转至统计",
-                        Toast.LENGTH_SHORT).show();
-            }
             default:
         }
         return super.onOptionsItemSelected(item);

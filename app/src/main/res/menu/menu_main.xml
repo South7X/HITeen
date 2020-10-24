@@ -4,15 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.hitsz.EatUT.DishActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
-        android:title="反馈"
+        android:title="@string/feedback"
         android:id="@+id/feedback"/>
-    <item
-        android:title="统计"
-        android:id="@+id/Statistics"/>
 
 </menu>

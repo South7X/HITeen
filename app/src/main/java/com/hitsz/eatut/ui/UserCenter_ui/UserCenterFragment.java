@@ -18,8 +18,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.popupwindowlibrary.view.ScreenPopWindow;
 import com.hitsz.eatut.LoginActivity;
+import com.hitsz.eatut.MainActivity;
 import com.hitsz.eatut.R;
 import com.hitsz.eatut.SignUpActivity;
+import com.hitsz.eatut.StatisticsActivity;
 import com.hitsz.eatut.adapter.dish;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.UserInfo;
@@ -68,6 +70,14 @@ public class UserCenterFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ChangeUserInfoActivity.class);
                 intent.putExtra("phoneNumber", phoneNumber);
                 startActivityForResult(intent, 1);
+            }
+        });
+        stastic_btn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                Intent Statistics_intent = new Intent(getActivity(), StatisticsActivity.class);
+                startActivity(Statistics_intent);
             }
         });
     }
