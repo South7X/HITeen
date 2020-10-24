@@ -4,24 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.SharedPreferences;
-import android.net.sip.SipSession;
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.view.View.OnClickListener;
+
 import com.hitsz.eatut.R;
 import com.hitsz.eatut.adapter.ManagerOrderAdapter;
 import com.hitsz.eatut.adapter.OrderItem;
-import com.hitsz.eatut.adapter.order;
+import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.ManagerOrderInfo;
+import com.hitsz.eatut.database.MyOrder;
+import com.hitsz.eatut.database.UserInfo;
 import com.hitsz.eatut.database.orderFood;
+import com.hitsz.eatut.ui.Main_ui.MainFragment;
 
 import org.litepal.LitePal;
-import java.sql.Ref;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -37,19 +35,41 @@ public class OrderActivity extends AppCompatActivity {
                 isprepared=false;
             }
         }
+        if(isprepared)
+        {
+            //若已经完成订单，修改MyOrder中的isPrepared
+            ContentValues values = new ContentValues();
+            values.put("isPrepared", true);
+            LitePal.update(MyOrder.class, values, id);
+        }
         return isprepared;
     }
 
-    public static void saveOrderToManager(int OrderNo,String phone){
+    public static void saveOrderToManager(int OrderNo){
+        //将购物车中提交的orderFood加入ManagerOrderInfo database
         List<orderFood> orderFoodsList=LitePal.findAll(orderFood.class);
         for(orderFood per:orderFoodsList){
-            Log.d("manager", per.getName());
-            ManagerOrderInfo info=new ManagerOrderInfo();
-            info.setDishPrice(per.getDishPrice());
-            info.setDishScore(per.getDishScore());
-            info.setName(per.getName());
-            info.setPhone(phone);
+            int dishID = per.getDishID_II();
+            int userID = per.getUserID();
+            Log.d("OrderActivityDishID", Integer.toString(dishID));
+            DishInfo dishInfo = (LitePal.where("id = ?", "" + dishID).find(DishInfo.class)).get(0);//int型要加""转成string
+            Log.d("OrderActivityDishInfo", dishInfo.getDishName() + " "  + dishInfo.getDishPrice() + " " + dishInfo.getDishScore());
+            Log.d("OrderActivityUserID", Integer.toString(userID));
+            UserInfo userInfo = (LitePal.where("id = ?", "" + userID).find(UserInfo.class)).get(0);
+            Log.d("OrderActivityUserInfo", userInfo.getTelephoneNumber());
+            ManagerOrderInfo info  = new ManagerOrderInfo();
+            info.setDishPrice(dishInfo.getDishPrice());
+            info.setDishScore(dishInfo.getDishScore());
+            info.setName(dishInfo.getDishName());
+            info.setPhone(userInfo.getTelephoneNumber());
             info.setOrderNo(OrderNo);
+//            Log.d("manager", per.getName());
+//            ManagerOrderInfo info=new ManagerOrderInfo();
+//            info.setDishPrice(per.getDishPrice());
+//            info.setDishScore(per.getDishScore());
+//            info.setName(per.getName());
+//            info.setPhone(phone);
+//            info.setOrderNo(OrderNo);
             info.save();
         }
     }
