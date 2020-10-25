@@ -1,5 +1,6 @@
 package com.hitsz.eatut;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.hitsz.eatut.database.CanteenInfo;
@@ -12,8 +13,12 @@ import com.hankcs.hanlp.HanLP;
 
 import org.litepal.LitePal;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class BaseClass {
 
@@ -73,6 +78,33 @@ public class BaseClass {
         return getCommentKeyword(allComment);
     }
 
+    /**
+     * MD5码加密用户密码
+     * @author Lixiang
+     */
+    @NonNull
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        }
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            StringBuilder result = new StringBuilder();
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result.append(temp);
+            }
+            return result.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     /**
      * @author lixiang
