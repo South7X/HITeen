@@ -78,13 +78,20 @@
         <activity
             android:name=".StatisticsActivity"
             android:label="统计" />
-        <activity android:name=".CheckActivity" />
-        <activity android:name=".WindowActivity" />
-        <activity android:name=".DishActivity" />
-        <activity android:name=".adActivity" />
-        <activity android:name=".RankActivity"/>
-        <activity android:name=".CommentActivity"/>
-        <activity android:name=".RecentVisitActivity"/>
+        <activity android:name=".CheckActivity"
+            android:label="购物车"/>
+        <activity android:name=".WindowActivity"
+            android:label="档口"/>
+        <activity android:name=".DishActivity"
+            android:label="菜品"/>
+        <activity android:name=".adActivity"
+            android:label="活动"/>
+        <activity android:name=".RankActivity"
+            android:label="排行榜"/>
+        <activity android:name=".CommentActivity"
+            android:label="评论"/>
+        <activity android:name=".RecentVisitActivity"
+            android:label="最近浏览"/>
     </application>
 
 </manifest>

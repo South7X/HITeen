@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseClass {
-
     /**
      * 读取输入的手机号或学号，判断SharedPreferences中是否有此用户名
      */
