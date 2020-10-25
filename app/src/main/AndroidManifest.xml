@@ -29,7 +29,10 @@
             android:name=".managerActivities.EditActivity"
             android:label="食堂信息" />
         <activity
-            android:name=".managerActivities.ViewvoteActivity"
+            android:name=".managerActivities.AddVoteActivity"
+            android:label="发起投票" />
+        <activity
+            android:name=".ViewVoteActivity"
             android:label="投票结果" />
         <activity
             android:name=".managerActivities.FeedInfoActivity"

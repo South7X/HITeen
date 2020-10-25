@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.hitsz.eatut.adapter.order;
 import com.hitsz.eatut.database.CanteenInfo;
 import com.hitsz.eatut.database.DishInfo;
+import com.hitsz.eatut.database.VoteInfo;
 import com.hitsz.eatut.database.WindowInfo;
 import com.hitsz.eatut.database.orderFood;
 import com.hitsz.eatut.adapter.dish;
@@ -680,4 +681,13 @@ public class BaseClass {
         windowInfo.save();
         return newSumScore;
     }
+
+//    public static boolean addNewVote(String voteName){
+//        VoteInfo newvote = new VoteInfo();
+//        newvote.setVoteName(voteName);
+////        newvote.setVoteAgree();
+////        newvote.setVoteDisagree();
+//        newvote.save();
+//        return true;
+//    }
 }
