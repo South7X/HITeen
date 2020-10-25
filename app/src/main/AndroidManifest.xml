@@ -84,6 +84,7 @@
         <activity android:name=".adActivity" />
         <activity android:name=".RankActivity"/>
         <activity android:name=".CommentActivity"/>
+        <activity android:name=".RecentVisitActivity"/>
     </application>
 
 </manifest>

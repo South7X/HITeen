@@ -37,4 +37,17 @@
         android:drawablePadding="15dp"
         android:text="统计"
         android:textSize="18sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E2E2" />
+    <Button
+        android:id="@+id/button_recent_visit"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/stastic"
+        android:drawablePadding="15dp"
+        android:text="最近浏览"
+        android:textSize="18sp" />
 </LinearLayout>
