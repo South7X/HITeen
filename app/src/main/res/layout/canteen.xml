@@ -35,13 +35,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:textColor="@color/red"
                     android:text="0.0分"/>
         </LinearLayout>
     </LinearLayout>
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E2E2E2"
-        android:layout_marginTop="5dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="4dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="1dp"
+            android:visibility="invisible"
+            android:layout_marginTop="5dp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="1dp"
+            android:background="#E2E2E2"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
 </LinearLayout>

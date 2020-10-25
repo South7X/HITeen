@@ -62,7 +62,7 @@ public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder
         holder.windowImage.setImageResource(win.getImageID());
         holder.windowName.setText(win.getName());
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
-        String score = decimalFormat.format(win.getScore());
+        String score = decimalFormat.format(win.getScore()) + "分";
         holder.windowScore.setText(score);
     }
     @Override

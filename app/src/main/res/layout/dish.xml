@@ -48,7 +48,7 @@
                 android:gravity="start"
                 android:textSize="17sp"
                 android:textStyle="bold"
-                android:textColor="@color/red"
+                android:textColor="@color/dark_orange"
                 android:text="￥15.0"/>
             <Button
                 android:id="@+id/cmt_btn"
@@ -57,7 +57,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/radius_btn_comment"
-                android:minHeight="30dp"
+                android:minHeight="40dp"
                 android:text="评价" />
 
             <Button
@@ -67,7 +67,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/radius_btn_lighttheme"
-                android:minHeight="35dp"
+                android:minHeight="40dp"
                 android:text="点餐" />
         </LinearLayout>
     </LinearLayout>

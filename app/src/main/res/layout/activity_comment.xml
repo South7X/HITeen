@@ -97,7 +97,8 @@
                 android:id="@+id/comment_submit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/square_btn_lighttheme"/>
+                android:minHeight="35dp"
+                android:background="@drawable/radius_btn_lighttheme"/>
         </LinearLayout>
 
     </LinearLayout>
