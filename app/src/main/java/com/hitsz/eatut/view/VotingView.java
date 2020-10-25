@@ -197,6 +197,7 @@ public class VotingView extends View{
 
                 break;
             case 2:     //点击右边
+            case 3:
                 //画半圆
                 leftOval = new RectF(0, 10, getHeight() - 10, getHeight() - 10);
                 mPath.moveTo(getHeight() / 2 - 5, getHeight() / 2);
@@ -263,6 +264,7 @@ public class VotingView extends View{
                 mPath.lineTo(getWidth() - getHeight() / 2, getHeight());
                 mPath.lineTo(leftLength - mInclination + 10, getHeight());
             case 1:     //点击左边
+            case 3:
                 rightOval = new RectF(getWidth() - getHeight(), 10, getWidth() - 10, getHeight() - 10);
                 mPath.moveTo(getWidth() - getHeight() / 2 - 5, getHeight() / 2);
                 mPath.arcTo(rightOval, -90, 180);
@@ -304,9 +306,10 @@ public class VotingView extends View{
         switch (clickMode){
             case 1:
             case 2:
+            case 3:
                 //左边
-                canvas.drawText(leftText, getHeight() / 2 + 6, getHeight() / 2 - 30 + mBound.height() / 2, mPaint);
-                canvas.drawText("支持", getHeight() / 2 + 6, getHeight() / 2 + 14 + mBound.height() / 2, mPaint);
+                canvas.drawText(leftText, getHeight() / 2 + 6, getHeight() / 2 - 24 + mBound.height() / 2, mPaint);
+                canvas.drawText("支持", getHeight() / 2 + 6, getHeight() / 2 + 20 + mBound.height() / 2, mPaint);
                 break;
             case 0:
             default:
@@ -320,6 +323,7 @@ public class VotingView extends View{
         switch (clickMode){
             case 1:
             case 2:
+            case 3:
                 //右边文字
                 canvas.drawText(rightText, getWidth() - getHeight() / 2 - 6, getHeight() / 2 - 30 + mBound.height() / 2, mPaint);
                 canvas.drawText("不支持", getWidth() - getHeight() / 2 - 6, getHeight() / 2 + 14 + mBound.height() / 2, mPaint);

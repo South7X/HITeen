@@ -40,7 +40,7 @@
         <mapping class="com.hitsz.eatut.database.FeedInfo"></mapping>
         <mapping class="com.hitsz.eatut.database.ManagerOrderInfo"></mapping>
         <mapping class="com.hitsz.eatut.database.MyOrder"></mapping>
-        <mapping class="com.hitsz.eatut.database.VoteInfo"></mapping>
+        <mapping class="com.hitsz.eatut.database.PostImg"></mapping>
     </list>
 
     <!--

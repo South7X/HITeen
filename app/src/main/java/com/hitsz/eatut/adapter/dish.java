@@ -1,7 +1,5 @@
 package com.hitsz.eatut.adapter;
 
-import com.hitsz.eatut.database.DishInfo;
-
 /**
  * @author zhang
  */

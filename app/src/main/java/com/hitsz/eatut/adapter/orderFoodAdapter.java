@@ -1,6 +1,5 @@
 package com.hitsz.eatut.adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,9 @@ import java.util.List;
  * @author zhang
  */
 public class orderFoodAdapter  extends RecyclerView.Adapter<orderFoodAdapter.ViewHolder> {
+    /*
+    * 购物车item Adapter
+    * */
     private List<order> morderFoodList;
     private ofaListener listener;
     static class ViewHolder extends RecyclerView.ViewHolder{

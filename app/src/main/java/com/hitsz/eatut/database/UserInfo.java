@@ -6,12 +6,16 @@ import org.litepal.crud.LitePalSupport;
 public class UserInfo extends LitePalSupport {
     private int id;             //数据ID
 
+    @Column(defaultValue = "unknown")
     private String userName;    //用户名
 
+    @Column(defaultValue = "unknown")
     private String password;    //密码
 
+    @Column(defaultValue = "unknown")
     private String studentNumber;   //学号
 
+    @Column(defaultValue = "unknown")
     private String addressDormitory;    //宿舍楼号
 
     @Column(defaultValue = "unknown")

@@ -5,19 +5,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.hitsz.eatut.managerActivities.FeedInfoActivity;
+import com.hitsz.eatut.managerActivities.ManagerActivity;
+import com.hitsz.eatut.rankingActivities.RankActivity;
 
 // TODO：查看投票button，查看宣传海报
 // what‘s new 页面内部
 public class adActivity extends AppCompatActivity{
     private Button rankingEntryButton;
     private Button showPostButton;
+    private Button viewVoteButton;
 
     protected void findView() {
         showPostButton = findViewById(R.id.showpost_btn);
         rankingEntryButton = findViewById(R.id.ranking_entry_btn);
+        viewVoteButton = findViewById(R.id.viewvote_btn);
     }
 
     @Override
@@ -41,6 +47,15 @@ public class adActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+
+        viewVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(adActivity.this, ViewVoteActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 
 }

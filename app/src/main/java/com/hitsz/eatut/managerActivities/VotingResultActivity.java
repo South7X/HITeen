@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hitsz.eatut.R;
-import com.hitsz.eatut.adapter.ViewVoteAdapter;
+import com.hitsz.eatut.adapter.VotingResultsAdapter;
 import com.hitsz.eatut.adapter.vote;
 import com.hitsz.eatut.database.VoteInfo;
 
@@ -26,7 +26,7 @@ public class VotingResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewvote);
+        setContentView(R.layout.activity_votresults);
         Intent intent = getIntent();
         findView();
         initVotes();
@@ -34,7 +34,7 @@ public class VotingResultActivity extends AppCompatActivity {
     }
 
     protected void findView(){
-        recyclerView = (RecyclerView)findViewById(R.id.vote_recycle);
+        recyclerView = (RecyclerView)findViewById(R.id.mvote_recycle);
     }
 
     //初始化投票信息
@@ -49,12 +49,13 @@ public class VotingResultActivity extends AppCompatActivity {
         }
     }
 
-    private void initRecycle(){
+    public void initRecycle(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         voteList.clear();
         initVotes();
-        ViewVoteAdapter adapter = new ViewVoteAdapter(voteList);
+        VotingResultsAdapter adapter = new VotingResultsAdapter(voteList);
         recyclerView.setAdapter(adapter);
+
     }
 }
