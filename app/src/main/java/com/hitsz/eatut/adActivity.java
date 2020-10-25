@@ -8,9 +8,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hitsz.eatut.managerActivities.FeedInfoActivity;
-import com.hitsz.eatut.managerActivities.ManagerActivity;
-import com.hitsz.eatut.rankingActivities.RankActivity;
 
 // TODO：查看投票button，查看宣传海报
 // what‘s new 页面内部
@@ -45,6 +42,5 @@ public class adActivity extends AppCompatActivity{
             }
         });
     }
-
 
 }

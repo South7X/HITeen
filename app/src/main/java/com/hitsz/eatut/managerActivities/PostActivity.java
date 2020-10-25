@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hitsz.eatut.R;
@@ -45,7 +46,8 @@ public class PostActivity extends AppCompatActivity {
     public static final int TAKE_PHOTO = 1;
     public static final int CHOOSE_PHOTO = 2;
     // 拍照，相册 按钮
-    private Button paizhao, xiangce;
+    private Button xiangce;
+    private TextView post_text;
     private Uri imageUri;
     private byte[]images=new byte[1024];
     // 从相册获得图片
@@ -62,8 +64,11 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        paizhao=(Button)findViewById(R.id.paizhao);
+        //paizhao=(Button)findViewById(R.id.paizhao);
         xiangce=(Button)findViewById(R.id.xiangce) ;
+        // 显示文字
+        post_text=(TextView)findViewById(R.id.text_post);
+        post_text.setText("  上传并展示一张图片 "+"\n"+"  新图片将覆盖旧图片 ");
         //img = (ImageView)this.findViewById(R.id.img);
 
         // 相册点击事件
@@ -79,36 +84,36 @@ public class PostActivity extends AppCompatActivity {
         });
 
         // 拍照点击事件
-        paizhao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //创建file对象，用于存储拍照后的图片；
-                File outputImage = new File(getExternalCacheDir(), "output_image.png");
-
-                try {
-                    if (outputImage.exists()) {
-                        outputImage.delete();
-                    }
-                    outputImage.createNewFile();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                // TODO: 查看authority用处，后面接什么？
-                if (VERSION.SDK_INT >= 24) {
-                    imageUri = FileProvider.getUriForFile(PostActivity.this,
-                            "com.example.userlogin.fileprovider", outputImage);
-                } else {
-                    imageUri = Uri.fromFile(outputImage);
-                }
-
-                //启动相机程序
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(intent, TAKE_PHOTO);
-            }
-        });
+//        paizhao.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //创建file对象，用于存储拍照后的图片；
+//                File outputImage = new File(getExternalCacheDir(), "output_image.png");
+//
+//                try {
+//                    if (outputImage.exists()) {
+//                        outputImage.delete();
+//                    }
+//                    outputImage.createNewFile();
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//
+//                // TODO: 查看authority用处，后面接什么？
+//                if (VERSION.SDK_INT >= 24) {
+//                    imageUri = FileProvider.getUriForFile(PostActivity.this,
+//                            "com.example.userlogin.fileprovider", outputImage);
+//                } else {
+//                    imageUri = Uri.fromFile(outputImage);
+//                }
+//
+//                //启动相机程序
+//                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//                startActivityForResult(intent, TAKE_PHOTO);
+//            }
+//        });
     }
 
 
@@ -147,6 +152,7 @@ public class PostActivity extends AppCompatActivity {
     private void displayImage(String imagePath) {
         if (imagePath != null) {
             bitmap = BitmapFactory.decodeFile(imagePath);;
+            Toast.makeText(this, "上传成功", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
         }

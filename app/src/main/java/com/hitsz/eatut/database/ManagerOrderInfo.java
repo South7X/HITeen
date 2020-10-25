@@ -11,10 +11,6 @@ public class ManagerOrderInfo extends LitePalSupport {
     private float dishPrice;
     private float dishScore;
     private int orderNo;
-//    private int hour;
-//    private int minute;
-//    private int second;
-
 
     public String getPhone() {
         return phone;

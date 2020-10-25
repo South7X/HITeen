@@ -79,7 +79,6 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
                     }
                     OrderFragment.saveOrderToMyOrder(i, mTimeStamp);
                     Log.d("CheckActivityTimeStamp", Long.toString(mTimeStamp));
-                    OrderActivity.saveOrderToManager(i);
                     LitePal.deleteAll(orderFood.class);
                     DialogSuccess();
                 }
