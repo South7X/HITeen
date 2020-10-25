@@ -86,7 +86,7 @@ public class OrderFragment extends Fragment {
             ArrayList<Integer> allDishID =one.getDishID_III();
             int orderNO=one.getOrderNo_II();
             int myOrderID=one.getId();
-            boolean isprepared = OrderActivity.haveOrderPrepared(myOrderID);
+            boolean isprepared = one.isPrepared();
             boolean isPick = one.isPick();
             long endTimeStamp = one.getEndTime();
             String endTime = DateFormatUtils.long2Str(endTimeStamp, true);

@@ -71,6 +71,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:background="@drawable/square_btn_lighttheme"
+            android:minHeight="35dp"
             android:text="确认取餐"/>
     </LinearLayout>
     <View

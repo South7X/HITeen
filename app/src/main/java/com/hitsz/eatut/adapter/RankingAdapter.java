@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hitsz.eatut.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -26,6 +27,8 @@ public class RankingAdapter  extends RecyclerView.Adapter<RankingAdapter.ViewHol
         TextView rankingCanteen;
         TextView rankingDish;
         TextView rankingOrderTimes;
+        TextView rankingScore;
+        TextView rankingPrice;
         View rankingView;
         public ViewHolder(View view){
             super(view);
@@ -35,6 +38,8 @@ public class RankingAdapter  extends RecyclerView.Adapter<RankingAdapter.ViewHol
             rankingCanteen = view.findViewById(R.id.ranking_canteen);
             rankingDish = view.findViewById(R.id.ranking_dish);
             rankingOrderTimes = view.findViewById(R.id.ranking_order_times);
+            rankingScore = view.findViewById(R.id.ranking_score);
+            rankingPrice = view.findViewById(R.id.ranking_price);
         }
     }
     public RankingAdapter(List<rankingItem> rankingList){
@@ -57,6 +62,11 @@ public class RankingAdapter  extends RecyclerView.Adapter<RankingAdapter.ViewHol
         holder.rankingDish.setText(ra.getDish());
         String orderTimes = String.valueOf(ra.getOrderTimes()) + "份";
         holder.rankingOrderTimes.setText(orderTimes);
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        String score = decimalFormat.format(ra.getDishScore()) + "分";
+        holder.rankingScore.setText(score);
+        String price ="￥" + decimalFormat.format(ra.getDishPrice());
+        holder.rankingPrice.setText(price);
     }
     @Override
     public int getItemCount(){

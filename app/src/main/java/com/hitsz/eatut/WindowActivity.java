@@ -97,7 +97,8 @@ public class WindowActivity extends AppCompatActivity implements View.OnClickLis
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         canIntroScore.setText(decimalFormat.format(canteenInfo.getCanteenScore()));
         canIntroAddr.setText(canteenInfo.getCanteenAddress());
-        canIntroSale.setText(decimalFormat.format(canteenMonthlySale()));
+        String sale = "￥" + decimalFormat.format(canteenMonthlySale());
+        canIntroSale.setText(sale);
     }
 
     //初始化档口信息

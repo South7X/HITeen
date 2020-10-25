@@ -63,7 +63,7 @@ public class CanteenAdapter extends RecyclerView.Adapter<CanteenAdapter.ViewHold
         holder.canteenImage.setImageResource(can.getImageID());
         holder.canteenName.setText(can.getName());
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
-        String score = decimalFormat.format(can.getScore());
+        String score = decimalFormat.format(can.getScore()) + "分";
         holder.canteenScore.setText(score);
     }
     @Override

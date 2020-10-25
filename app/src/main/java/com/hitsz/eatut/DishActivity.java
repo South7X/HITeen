@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,8 +50,19 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void findView(){
         recyclerView=(RecyclerView)findViewById(R.id.dish_recycle);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            //设置fab下滑消失上滑显示
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy > 0 && fab.getVisibility() == View.VISIBLE){
+                    fab.hide();
+                }else if(dy < 0 && fab.getVisibility() != View.VISIBLE){
+                    fab.show();
+                }
+            }
+        });
         fab=(FloatingActionButton)findViewById(R.id.fab);
-
         fab.setOnClickListener(this);
     }
     //初始化菜品信息
