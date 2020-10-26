@@ -34,6 +34,4 @@ public class ShowPostActivity extends AppCompatActivity {
         }
     }
 
-
-
 }

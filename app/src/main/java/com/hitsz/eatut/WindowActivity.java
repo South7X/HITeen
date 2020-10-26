@@ -108,7 +108,8 @@ public class WindowActivity extends AppCompatActivity implements View.OnClickLis
             String name = windowInfo.getWindowName();
             int image = windowInfo.getImageID();
             float score = windowInfo.getWindowScore();
-            window addWindow = new window(name, score, image);
+            byte[] winshot = windowInfo.getWindowshot();
+            window addWindow = new window(name, score, image, winshot);
             windowList.add(addWindow);
         }
     }

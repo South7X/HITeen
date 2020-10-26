@@ -50,6 +50,17 @@
         android:hint="请输入新增菜品标签"/>
 
     <Button
+        android:text="上传菜品图片"
+        android:id="@+id/button_postimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/img_dish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
         android:text="提交"
         android:id="@+id/button_submit"
         android:layout_width="match_parent"

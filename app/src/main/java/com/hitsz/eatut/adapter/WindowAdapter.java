@@ -1,6 +1,8 @@
 package com.hitsz.eatut.adapter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,7 @@ import java.lang.String;
 //档口适配器
 
 /**
- * @author lixiang
+ * @author lixiang，Lily
  */
 public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder> {
     private List<window> mWindowList;
@@ -59,11 +61,23 @@ public class WindowAdapter extends RecyclerView.Adapter<WindowAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
         window win=mWindowList.get(position);
-        holder.windowImage.setImageResource(win.getImageID());
+        //holder.windowImage.setImageResource(win.getImageID());
         holder.windowName.setText(win.getName());
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         String score = decimalFormat.format(win.getScore());
         holder.windowScore.setText(score);
+
+        /*
+        Lily
+        判断图片ID是否为0，不为0用drawable图片，否则用bitmap图片
+        */
+        if(win.getImageID() == 0){
+            byte[] imagess = win.getWinShot();
+            Bitmap bms = BitmapFactory.decodeByteArray(imagess, 0, imagess.length);
+            holder.windowImage.setImageBitmap(bms);
+        }else{
+            holder.windowImage.setImageResource(win.getImageID());
+        }
     }
     @Override
     public int getItemCount(){

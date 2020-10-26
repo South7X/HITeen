@@ -19,6 +19,8 @@ public class DishInfo extends LitePalSupport {
 
     private int imageID;            //菜品图片ID
                                     //菜品标签
+
+    private byte[] dishshot;        //菜品图片
     /**
      * setting method
      *
@@ -55,6 +57,10 @@ public class DishInfo extends LitePalSupport {
     public void setDishTags(String dishTags) {
         this.dishTags = dishTags;
     }
+
+    public void setDishshot(byte[] dishshot) {
+        this.dishshot = dishshot;
+    }
     /**
      * getting method
      *
@@ -90,5 +96,9 @@ public class DishInfo extends LitePalSupport {
 
     public int getImageID() {
         return imageID;
+    }
+
+    public byte[] getDishshot() {
+        return dishshot;
     }
 }

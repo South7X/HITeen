@@ -222,12 +222,13 @@ public class BaseClass {
      * @param windowNum 下属档口数量
      * @param canteenAddress 食堂地址
      */
-    public static void addNewCanteen(String canteenName, String canteenAddress, int windowNum){
+    public static void addNewCanteen(String canteenName, String canteenAddress, int windowNum,byte[] canteen_img){
         //向数据库增加食堂
         CanteenInfo newCanteen = new CanteenInfo();
         newCanteen.setCanteenName(canteenName);
         newCanteen.setCanteenAddress(canteenAddress);
         newCanteen.setCanteenWindowNumber(windowNum);
+        newCanteen.setCanteenshot(canteen_img);
         newCanteen.save();
         //向树添加食堂结点
         addNewCanteenTreeNode(newCanteen);
@@ -259,12 +260,13 @@ public class BaseClass {
      * @param belongToCanteenName 所属食堂
      */
     public static boolean addNewWindow(String windowName, String windowAddress,
-                                       String belongToCanteenName, int dishNum){
+                                       String belongToCanteenName, int dishNum, byte[] window_img){
         WindowInfo newWindow = new WindowInfo();
         newWindow.setBelongToCanteenName(belongToCanteenName);
         newWindow.setWindowAddress(windowAddress);
         newWindow.setWindowDishNumber(dishNum);
         newWindow.setWindowName(windowName);
+        newWindow.setWindowshot(window_img);
         if(addNewWindowTreeNode(newWindow)){//若为false，则说明未找到所属食堂
             newWindow.save();//存入数据库
             return true;
@@ -293,12 +295,13 @@ public class BaseClass {
      * @param tags 标签
      */
     public static boolean addNewDish(String dishName, String belongToCanteenName,
-                                     String belongToWindowName, float price, String tags){
+                                     String belongToWindowName, float price, String tags, byte[] dish_img){
         DishInfo newDish = new DishInfo();
         newDish.setBelongToCanteen(belongToCanteenName);
         newDish.setBelongToWindow(belongToWindowName);
         newDish.setDishName(dishName);
         newDish.setDishPrice(price);
+        newDish.setDishshot(dish_img);
         newDish.setDishTags(tags);
         if (addNewDishTreeNode(newDish)){//增加到树
             newDish.save();
@@ -530,7 +533,6 @@ public class BaseClass {
         }
     }
 
-    //遍历输出嵌套链表
     //遍历输出嵌套链表
     public static List<Integer> traversalWholeLinkedList(){
         TagHead tempTagNode = tagRoot;

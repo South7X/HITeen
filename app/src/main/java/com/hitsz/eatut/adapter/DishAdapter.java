@@ -3,6 +3,8 @@ package com.hitsz.eatut.adapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,15 +142,28 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
         });
         return holder;
     }
+
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
         dish food=mFoodList.get(position);
-        holder.foodImage.setImageResource(food.getImageId());
+//        holder.foodImage.setImageResource(food.getImageId());
         holder.foodName.setText(food.getName());
         holder.foodPrice.setText(String.valueOf(food.getDishPrice()));
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         String score = decimalFormat.format(food.getDishScore());
         holder.foodScore.setText(score);
+
+        /*
+        Lily
+        判断图片ID是否为0，不为0用drawable图片，否则用bitmap图片
+        */
+        if(food.getImageId() == 0){
+            byte[] imagess = food.getDishSot();
+            Bitmap bms = BitmapFactory.decodeByteArray(imagess, 0, imagess.length);
+            holder.foodImage.setImageBitmap(bms);
+        }else{
+            holder.foodImage.setImageResource(food.getImageId());
+        }
     }
     @Override
     public int getItemCount(){

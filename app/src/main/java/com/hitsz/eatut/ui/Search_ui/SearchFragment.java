@@ -79,7 +79,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
             float price = dishInfo.getDishPrice();
             float score = dishInfo.getDishScore();
             int dishID=dishInfo.getId();
-            dish addDish = new dish(name, image, price, score,dishID);
+
+            byte[] dishshot= dishInfo.getDishshot();
+            dish addDish = new dish(name, image, price, score,dishID, dishshot);
             foodsList.add(addDish);
         }
     }
@@ -275,7 +277,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                             float price = dishInfo.getDishPrice();
                             float score = dishInfo.getDishScore();
                             int dishID=dishInfo.getId();
-                            dish addFood=new dish(name,image,price,score,dishID);
+
+                            byte[] dishshot= dishInfo.getDishshot();
+                            dish addFood = new dish(name, image, price, score,dishID, dishshot);
                             foodsList.add(addFood);
                         }
                         initRecycle();

@@ -65,7 +65,7 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         //paizhao=(Button)findViewById(R.id.paizhao);
-        xiangce=(Button)findViewById(R.id.xiangce) ;
+        xiangce=(Button)findViewById(R.id.xiangce);
         // 显示文字
         post_text=(TextView)findViewById(R.id.text_post);
         post_text.setText("  上传并展示一张图片 "+"\n"+"  新图片将覆盖旧图片 ");

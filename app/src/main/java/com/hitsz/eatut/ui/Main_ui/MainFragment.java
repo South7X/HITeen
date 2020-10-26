@@ -57,7 +57,8 @@ public class MainFragment extends Fragment {
             String name = canteenInfo.getCanteenName();
             int image = canteenInfo.getImageID();
             float score = canteenInfo.getCanteenScore();
-            canteen can = new canteen(name, score, image);
+            byte[] canteenshot = canteenInfo.getCanteenshot();
+            canteen can = new canteen(name, score, image, canteenshot);
             canteenList.add(can);
         }
     }

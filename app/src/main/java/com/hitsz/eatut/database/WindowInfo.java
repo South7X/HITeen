@@ -17,6 +17,8 @@ public class WindowInfo extends LitePalSupport {
 
     private int ImageID;                //档口图片ID
 
+    private byte[] windowshot;          //档口照片
+
     /**
      * setting method
      *
@@ -49,6 +51,10 @@ public class WindowInfo extends LitePalSupport {
         ImageID = imageID;
     }
 
+    public void setWindowshot(byte[] windowshot) {
+        this.windowshot = windowshot;
+    }
+
     /**
      * getting method
      *
@@ -79,5 +85,9 @@ public class WindowInfo extends LitePalSupport {
 
     public int getImageID() {
         return ImageID;
+    }
+
+    public byte[] getWindowshot() {
+        return windowshot;
     }
 }

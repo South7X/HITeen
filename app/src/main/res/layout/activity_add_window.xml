@@ -40,6 +40,12 @@
         android:hint="请输入新增档口菜品数"/>
 
     <Button
+        android:text="上传档口图片"
+        android:id="@+id/button_postimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
         android:text="提交"
         android:id="@+id/button_submit_win"
         android:layout_width="match_parent"

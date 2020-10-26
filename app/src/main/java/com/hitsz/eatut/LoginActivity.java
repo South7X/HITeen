@@ -14,6 +14,8 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -50,6 +52,7 @@ import com.hitsz.eatut.managerActivities.ManagerActivity;
 
 import org.litepal.LitePal;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -515,6 +518,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             editor.apply();
         }
     }
+
     private void initInformation(){
         String[] tags = {"清淡","酸","甜","苦","辣","咸","油炸"};
         //食堂
