@@ -349,5 +349,7 @@ public class VotingView extends View{
     }
     public void setClickMode(int clickMode){
         this.clickMode = clickMode;
+        mPath.reset();
+        mPaint.reset();
     }
 }

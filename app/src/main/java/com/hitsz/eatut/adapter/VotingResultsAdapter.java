@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hitsz.eatut.R;
 import com.hitsz.eatut.database.VoteInfo;
+import com.hitsz.eatut.database.orderFood;
 import com.hitsz.eatut.managerActivities.VotingResultActivity;
 import com.hitsz.eatut.view.VotingView;
 import org.litepal.LitePal;
@@ -22,6 +23,8 @@ import java.lang.String;
 public class VotingResultsAdapter extends RecyclerView.Adapter<VotingResultsAdapter.ViewHolder> {
     private List<vote> mVoteList;
     public boolean isChanged;
+    private VotingResultsAdapter.vraListener listener;
+
 
     static class ViewHolder extends  RecyclerView.ViewHolder {
         TextView votename;
@@ -34,7 +37,8 @@ public class VotingResultsAdapter extends RecyclerView.Adapter<VotingResultsAdap
             votingView = view.findViewById(R.id.mvotingview);
         }
     }
-    public VotingResultsAdapter(List<vote> voteList){
+    public VotingResultsAdapter(List<vote> voteList, vraListener listener){
+        this.listener = listener;
         mVoteList = voteList;
     }
     @Override
@@ -57,6 +61,9 @@ public class VotingResultsAdapter extends RecyclerView.Adapter<VotingResultsAdap
                     voteInfo.delete();
                 }
                 Toast.makeText(v.getContext(),"删除成功",Toast.LENGTH_SHORT).show();
+                if(listener!=null){
+                    listener.vra(position);
+                }
             }
         });
         return holder;
@@ -76,7 +83,9 @@ public class VotingResultsAdapter extends RecyclerView.Adapter<VotingResultsAdap
         return mVoteList.size();
     }
 
-
+    public interface vraListener{
+        void vra(int position);
+    }
 
 }
 

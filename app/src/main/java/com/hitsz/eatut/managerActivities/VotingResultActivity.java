@@ -54,7 +54,13 @@ public class VotingResultActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         voteList.clear();
         initVotes();
-        VotingResultsAdapter adapter = new VotingResultsAdapter(voteList);
+        VotingResultsAdapter adapter = new VotingResultsAdapter(voteList, new VotingResultsAdapter.vraListener(){
+                @Override
+                public void vra(int position) {
+                    voteList.remove(position);
+                    initRecycle();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
     }
