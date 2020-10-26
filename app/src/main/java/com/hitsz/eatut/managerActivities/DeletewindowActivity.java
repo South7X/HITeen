@@ -30,7 +30,7 @@ public class DeletewindowActivity extends AppCompatActivity implements View.OnCl
                 if(delete_window)
                     Toast.makeText(this,"删除档口成功",Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(this,"删除档口失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"删除档口失败，请确认输入",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             default:

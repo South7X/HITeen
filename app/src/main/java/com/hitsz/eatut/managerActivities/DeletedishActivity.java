@@ -31,7 +31,7 @@ public class DeletedishActivity extends AppCompatActivity implements View.OnClic
                 if(delete_dish)
                     Toast.makeText(this,"删除菜品成功",Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(this,"删除菜品失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"删除菜品失败，请确认输入",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             default:

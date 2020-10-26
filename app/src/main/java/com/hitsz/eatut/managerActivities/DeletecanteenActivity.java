@@ -28,7 +28,7 @@ public class DeletecanteenActivity extends AppCompatActivity implements View.OnC
                 if(delete_canteen)
                     Toast.makeText(this,"删除食堂成功",Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(this,"删除食堂失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"删除食堂失败，请确认输入",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             default:
