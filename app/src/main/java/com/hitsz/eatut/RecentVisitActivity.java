@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -55,6 +56,11 @@ public class RecentVisitActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_recent_visit);
         SharedPreferences pref2=this.getSharedPreferences("currentID",MODE_PRIVATE);
         userID = pref2.getInt("userID", -1);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         findView();
         initfoods();
         initRecycle();
@@ -146,5 +152,14 @@ public class RecentVisitActivity extends AppCompatActivity implements View.OnCli
             }
         });
         recyclerView.setAdapter(adapter);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

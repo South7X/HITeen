@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,7 +63,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         canteenName = intent.getStringExtra("extra_data");
         SharedPreferences pref2 = this.getSharedPreferences("currentID",MODE_PRIVATE);
         userID = pref2.getInt("userID", -1);
-
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         findView();
         //食堂信息
         initCanteenIntro();
@@ -222,5 +228,14 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         });
         builder.show();
         initKeyWords();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -8,7 +8,41 @@
     tools:context=".DishActivity"
     tools:showIn="@layout/activity_dish"
     >
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <Button
+            android:id="@+id/time"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight='1'
+            android:background="@drawable/radius_btn_lighttheme"
+            android:text="用餐时间" />
+
+        <Button
+            android:id="@+id/expense"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight='1'
+            android:background="@color/yellow"
+            android:text="用餐花销" />
+
+        <Button
+            android:id="@+id/favor"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight='1'
+            android:background="@color/green"
+            android:text="口味偏好" />
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dish_recycle"
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +28,6 @@ public class orderFoodAdapter  extends RecyclerView.Adapter<orderFoodAdapter.Vie
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView orderfoodName;
         TextView orderfoodPrice;
-        TextView orderfoodScore;
         Button cancelbtn;
         View orderfoodview;
         public ViewHolder(View view){
@@ -35,7 +35,6 @@ public class orderFoodAdapter  extends RecyclerView.Adapter<orderFoodAdapter.Vie
             orderfoodview=view;
             orderfoodName=view.findViewById(R.id.orderfood_name);
             orderfoodPrice=view.findViewById(R.id.orderfood_price);
-            orderfoodScore=view.findViewById(R.id.orderfood_score);
             cancelbtn=view.findViewById(R.id.cancel_btn);
         }
     }
@@ -65,8 +64,8 @@ public class orderFoodAdapter  extends RecyclerView.Adapter<orderFoodAdapter.Vie
     public void onBindViewHolder(ViewHolder holder,int position){
         order food=morderFoodList.get(position);
         holder.orderfoodName.setText(food.getName());
-        holder.orderfoodPrice.setText(String.valueOf(food.getDishPrice()));
-        holder.orderfoodScore.setText(String.valueOf(food.getDishScore()));
+        String price = "￥" + String.valueOf(food.getDishPrice());
+        holder.orderfoodPrice.setText(price);
     }
     @Override
     public int getItemCount(){

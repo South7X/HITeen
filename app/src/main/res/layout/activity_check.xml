@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:layout_margin="4dp"
+    android:background="@drawable/radius_stroke_linearlayout">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/check_recycle"
         android:layout_width="match_parent"
@@ -14,7 +17,36 @@
         android:divider="#f0f0f0"
         android:dividerHeight="10dp"
         android:fadingEdge="none"
-        android:listSelector="#00000000" />
+        android:listSelector="#00000000"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/current_time_bg"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:text="总计"
+            android:textColor="@color/select_title_text"
+            android:textSize="15sp" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/orderno_total"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="15dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+    </LinearLayout>
     <!--    时间选择控件-->
     <LinearLayout
         android:id="@+id/ll_time"
@@ -75,7 +107,7 @@
                 android:layout_marginEnd="15dp"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:textColor="@color/selected_time_text"
+                android:textColor="@color/black"
                 android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
@@ -103,7 +135,7 @@
                 android:layout_marginEnd="15dp"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:textColor="@color/selected_time_text"
+                android:textColor="@color/black"
                 android:textSize="15sp"/>
         </LinearLayout>
     <Button
@@ -112,6 +144,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="bottom"
-        android:background="@color/darktheme"
+        android:background="@drawable/radius_btn_lighttheme"
         android:text="提交订单" />
 </LinearLayout>
