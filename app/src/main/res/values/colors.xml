@@ -6,6 +6,7 @@
     <color name="darktheme">#ff9800</color>
     <color name="lighttheme">#caffc107</color>
     <color name="comment">#CDDC39</color>
+    <color name="background">#A4F3E677</color>
     <color name="fontcolor">#505050</color>
     <color name="Stressfont">#3F51B5</color>
     <color name="cancel">#B9B9B9</color>
