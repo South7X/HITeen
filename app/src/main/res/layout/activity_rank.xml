@@ -25,18 +25,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 app:layout_scrollFlags="scroll|enterAlways"/>
-<!--            <TextView-->
-<!--                android:id="@+id/rank_sub_title"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text = "@string/ranking_entry"-->
-<!--                android:gravity="center_horizontal"-->
-<!--                android:layout_gravity="top"-->
-<!--                android:textSize="14sp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textColor="@color/white"-->
-<!--                app:layout_scrollFlags="scroll|enterAlways"/>-->
         </LinearLayout>
 
         <LinearLayout
@@ -55,8 +43,6 @@
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="1dp"
-                android:layout_marginBottom="1dp"
                 android:background="@color/gray_ce"/>
             <Button
                 android:id="@+id/month_ranking_btn"

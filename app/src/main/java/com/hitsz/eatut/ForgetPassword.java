@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.hitsz.eatut.database.UserInfo;
 
+import static com.hitsz.eatut.BaseClass.md5;
+
 public class ForgetPassword extends AppCompatActivity {
 
     private Button btn_change_psw;
@@ -96,10 +98,9 @@ public class ForgetPassword extends AppCompatActivity {
      * 保存账号和密码到SharedPreferences中SharedPreferences
      */
     private void updateInfo(String phoneNumber, String psw){
-        // String md5Psw = MD5Utils.md5(psw);//把密码用MD5加密
-        // TODO: MD5 encode
+        String md5Psw = md5(psw);//把密码用MD5加密
         UserInfo newUser = new UserInfo();
-        newUser.setPassword(psw);
+        newUser.setPassword(md5Psw);
         newUser.updateAll("telephoneNumber = ?", phoneNumber);
     }
 }

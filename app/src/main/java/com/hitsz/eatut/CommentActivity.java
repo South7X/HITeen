@@ -31,16 +31,24 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.hitsz.eatut.BaseClass.deleteCanteenFromDatabase;
+import static com.hitsz.eatut.BaseClass.getCanteenCommentKeyword;
+
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
     private String canteenName;
     private int userID;
 
     private RecyclerView recyclerView;
     private TextView canCommentName;
-    private TextView canCommentKeyWord;
     private EditText commentInput;
     private RadioButton anonymousFlag;
     private Button commentSubmit;
+
+    private TextView canCommentKeyWord1;
+    private TextView canCommentKeyWord2;
+    private TextView canCommentKeyWord3;
+    private TextView canCommentKeyWord4;
+    private TextView canCommentKeyWord5;
 
     private AlertDialog.Builder builder;
     private List<commentItem> commentItemList = new ArrayList<>();
@@ -91,17 +99,73 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private void findView(){
         recyclerView=findViewById(R.id.comment_recycle);
         canCommentName=findViewById(R.id.canteen_comment_name);
-        canCommentKeyWord=findViewById(R.id.canteen_comment_keyword);
         commentInput=findViewById(R.id.comment_input);
         anonymousFlag=findViewById(R.id.anonymous_flag);
         commentSubmit=findViewById(R.id.comment_submit_btn);
         commentSubmit.setOnClickListener(this);
         builder=new AlertDialog.Builder(CommentActivity.this);
+
+        canCommentKeyWord1=findViewById(R.id.canteen_comment_keyword_1);
+        canCommentKeyWord2=findViewById(R.id.canteen_comment_keyword_2);
+        canCommentKeyWord3=findViewById(R.id.canteen_comment_keyword_3);
+        canCommentKeyWord4=findViewById(R.id.canteen_comment_keyword_4);
+        canCommentKeyWord5=findViewById(R.id.canteen_comment_keyword_5);
+
+    }
+    private void initKeyWords(){
+        String AllkeyWord = getCanteenCommentKeyword(canteenName);
+        if(!AllkeyWord.isEmpty()) {
+            String[] keyWords = AllkeyWord.split(" ");
+            switch (keyWords.length) {
+                case 1:
+                    canCommentKeyWord1.setText(keyWords[0]);
+                    canCommentKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                case 2:
+                    canCommentKeyWord1.setText(keyWords[0]);
+                    canCommentKeyWord2.setText(keyWords[1]);
+                    canCommentKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord2.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                case 3:
+                    canCommentKeyWord1.setText(keyWords[0]);
+                    canCommentKeyWord2.setText(keyWords[1]);
+                    canCommentKeyWord3.setText(keyWords[2]);
+                    canCommentKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord2.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord3.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                case 4:
+                    canCommentKeyWord1.setText(keyWords[0]);
+                    canCommentKeyWord2.setText(keyWords[1]);
+                    canCommentKeyWord3.setText(keyWords[2]);
+                    canCommentKeyWord4.setText(keyWords[3]);
+                    canCommentKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord2.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord3.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord4.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                case 5:
+                    canCommentKeyWord1.setText(keyWords[0]);
+                    canCommentKeyWord2.setText(keyWords[1]);
+                    canCommentKeyWord3.setText(keyWords[2]);
+                    canCommentKeyWord4.setText(keyWords[3]);
+                    canCommentKeyWord5.setText(keyWords[4]);
+                    canCommentKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord2.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord3.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord4.setBackgroundResource(R.drawable.radius_text_view);
+                    canCommentKeyWord5.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
     private void initCanteenIntro(){
         canCommentName.setText(canteenName);
-        canCommentKeyWord.setText("无");
-    }
+        initKeyWords();
+        }
     private void initComment(){
         //找到当前食堂对应的评论数据
         List<Comment> comments = LitePal.where("commentCanteen=?", canteenName).find(Comment.class);
@@ -157,5 +221,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
         builder.show();
+        initKeyWords();
     }
 }

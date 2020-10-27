@@ -1,20 +1,28 @@
 package com.hitsz.eatut;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.hitsz.eatut.database.CanteenInfo;
+import com.hitsz.eatut.database.Comment;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.UserInfo;
 import com.hitsz.eatut.database.WindowInfo;
 import com.hitsz.eatut.adapter.dish;
+import com.hankcs.hanlp.HanLP;
 
 import org.litepal.LitePal;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 public class BaseClass {
     /**
+     * @author  lixiang
      * 读取输入的手机号或学号，判断SharedPreferences中是否有此用户名
      */
     public static boolean isUserExist(String phoneNumber){
@@ -23,6 +31,7 @@ public class BaseClass {
     }
 
     /**
+     * @author  lixiang
      * 判断输入是否合法
      */
     public static boolean isUserNameValid(String userName) {
@@ -42,33 +51,59 @@ public class BaseClass {
     }
 
 
-
-
     /**
-     * -----------------------------------------哈希部分---------------------------------------------
-     */
-
-    /**
-     * 函数功能：折叠哈希函数法通过用户手机号计算哈希Key值
      * @author  lixiang
-     * @param userTelephone 用户手机号码
-     * @param maxUserNum 用户数量
-     * @return 返回计算得到的hash值
+     * 评论分析： HanLP中的TextRank关键词提取
      */
-    public static int getHashCodeByTelephone(long userTelephone, int maxUserNum){
-        long currentNumber = userTelephone;
-        long modResult;
-        int hashCodeResult = 0;
-        while (currentNumber > maxUserNum){     //循环除以100000
-            modResult = currentNumber % maxUserNum;
-            currentNumber = currentNumber / maxUserNum;
-            hashCodeResult += (int)modResult;   //取余数，实现五位数折叠相加
+    public static String getCommentKeyword(String comments){
+        List<String> keywordList = HanLP.extractKeyword(comments, 5);
+        String keywords = "";
+        for (String keyword: keywordList){
+            keywords = keywords.concat(keyword+' ');
         }
-        hashCodeResult += (int)currentNumber;   //加上最后一位
-        Log.d("HashCode", userTelephone + ":" + String.valueOf(hashCodeResult%maxUserNum));
-        return (hashCodeResult % maxUserNum);   //取余，防止超出最大用户数
+        return keywords;
     }
 
+    /**
+     * @author  lixiang
+     * 从食堂的所有commnets中提取关键词
+     */
+    public static String getCanteenCommentKeyword(String canteen){
+        List<Comment> comments = LitePal.where("commentCanteen = ?", canteen).find(Comment.class);
+        String allComment = "";
+        for (Comment comments1: comments){
+            allComment = allComment.concat(comments1.getCommentText());
+        }
+        return getCommentKeyword(allComment);
+    }
+
+    /**
+     * MD5码加密用户密码
+     * @author Lixiang
+     */
+    @NonNull
+    public static String md5(String string) {
+        if (TextUtils.isEmpty(string)) {
+            return "";
+        }
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+            byte[] bytes = md5.digest(string.getBytes());
+            StringBuilder result = new StringBuilder();
+            for (byte b : bytes) {
+                String temp = Integer.toHexString(b & 0xff);
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result.append(temp);
+            }
+            return result.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     /**
      * @author lixiang
@@ -634,6 +669,7 @@ public class BaseClass {
     private static float findAndChangeDishNodeScore(TreeNode tempNode, String belongToCanteenName,
                                                     String belongToWindowName, String dishName, float score){
         float returnScore;
+        Log.d("Score dish:", dishName);
         if (tempNode.nodeData.nodeName.equals(dishName)){//找到该菜品结点
             returnScore = detailChangeDishScoreInTreeAndDatabase(tempNode, score);
         }

@@ -42,10 +42,14 @@ public class RankActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.week_ranking_btn:
                 initWeekRanking();
                 initWeekRecycle();
+                weekBtn.setTextColor(this.getResources().getColor(R.color.colorPrimary));
+                monthBtn.setTextColor(this.getResources().getColor(R.color.black));
                 break;
             case R.id.month_ranking_btn:
                 initMonthRanking();
                 initMonthRecycle();
+                monthBtn.setTextColor(this.getResources().getColor(R.color.colorPrimary));
+                weekBtn.setTextColor(this.getResources().getColor(R.color.black));
                 break;
         }
     }
