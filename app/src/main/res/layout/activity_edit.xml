@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:text="增加餐厅"
+        android:text="增加食堂"
         android:id="@+id/button_addcanteen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

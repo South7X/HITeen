@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hitsz.eatut">
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="org.litepal.LitePalApplication"
@@ -11,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChangeUserInfoActivity"></activity>
+        <activity android:name=".ShowPostActivity"></activity>
+        <activity android:name=".ui.UserCenter_ui.ChangeUserInfoActivity" />
         <activity android:name=".ForgetPassword" />
         <activity
             android:name=".SignUpActivity"
@@ -33,8 +39,11 @@
             android:name=".managerActivities.EditActivity"
             android:label="食堂信息" />
         <activity
-            android:name=".managerActivities.ViewvoteActivity"
-            android:label="投票结果" />
+            android:name=".managerActivities.AddVoteActivity"
+            android:label="发起投票" />
+        <activity
+            android:name=".ViewVoteActivity"
+            android:label="参与投票" />
         <activity
             android:name=".managerActivities.FeedInfoActivity"
             android:label="反馈信息" />
@@ -71,14 +80,14 @@
         <activity
             android:name=".managerActivities.DeletedishActivity"
             android:label="删除菜品信息" />
+        <activity
+            android:name=".managerActivities.VotingResultActivity"
+            android:label="查看投票结果"/>
         <activity android:name=".CheckActivity" />
         <activity android:name=".WindowActivity" />
         <activity android:name=".DishActivity" />
         <activity android:name=".adActivity" />
+        <activity android:name=".rankingActivities.RankActivity" />
     </application>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>

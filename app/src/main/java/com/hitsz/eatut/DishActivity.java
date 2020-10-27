@@ -1,9 +1,9 @@
 package com.hitsz.eatut;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,9 +68,11 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initRecycle(){
+        SharedPreferences pref2 = this.getSharedPreferences("currentID",MODE_PRIVATE);
+        int userID = pref2.getInt("userID", -1);
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        DishAdapter adapter=new DishAdapter(foodsList, new DishAdapter.daListener() {
+        DishAdapter adapter=new DishAdapter(userID, foodsList, new DishAdapter.daListener() {
             @Override
             public void da() {
                 foodsList.clear();

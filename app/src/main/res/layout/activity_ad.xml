@@ -2,11 +2,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-
-    <ImageView
-        android:id="@+id/ad_image"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <Button
+        android:id="@+id/ranking_entry_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="80dp"
+        android:layout_margin="20dp"
+        android:text="@string/ranking_entry"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:background="@drawable/radius_btn_lighttheme"/>
+
+    <Button
+        android:id="@+id/showpost_btn"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="20dp"
+        android:text="查看海报"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:background="@drawable/radius_btn_lighttheme"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/ad_image"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
+
+    <Button
+        android:id="@+id/viewvote_btn"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="20dp"
+        android:text="参与投票"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:background="@drawable/radius_btn_lighttheme"
+        />
 </LinearLayout>
