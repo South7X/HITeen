@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewVoteActivity">
+    tools:context=".managerActivities.VotingResultActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/vote_recycle"
+        android:id="@+id/mvote_recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"

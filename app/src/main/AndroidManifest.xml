@@ -40,8 +40,11 @@
             android:name=".managerActivities.EditActivity"
             android:label="食堂信息" />
         <activity
-            android:name=".managerActivities.ViewvoteActivity"
-            android:label="投票结果" />
+            android:name=".managerActivities.AddVoteActivity"
+            android:label="发起投票" />
+        <activity
+            android:name=".ViewVoteActivity"
+            android:label="参与投票" />
         <activity
             android:name=".managerActivities.FeedInfoActivity"
             android:label="反馈信息" />
@@ -78,6 +81,9 @@
         <activity
             android:name=".managerActivities.DeletedishActivity"
             android:label="删除菜品信息" />
+        <activity
+            android:name=".managerActivities.VotingResultActivity"
+            android:label="查看投票结果"/>
         <activity
             android:name=".StatisticsActivity"
             android:label="统计" />

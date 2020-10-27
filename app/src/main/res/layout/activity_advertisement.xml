@@ -5,6 +5,12 @@
     android:layout_height="match_parent">
 
     <Button
+        android:text="发起投票"
+        android:id="@+id/button_initvote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
         android:text="查看投票"
         android:id="@+id/button_viewvote"
         android:layout_width="match_parent"
@@ -15,6 +21,5 @@
         android:id="@+id/button_postimg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
 
 </LinearLayout>

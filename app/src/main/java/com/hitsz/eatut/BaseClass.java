@@ -2,12 +2,15 @@ package com.hitsz.eatut;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.hitsz.eatut.adapter.order;
 import com.hitsz.eatut.database.CanteenInfo;
 import com.hitsz.eatut.database.Comment;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.UserInfo;
 import com.hitsz.eatut.database.WindowInfo;
+import com.hitsz.eatut.database.orderFood;
 import com.hitsz.eatut.adapter.dish;
 import com.hankcs.hanlp.HanLP;
 
