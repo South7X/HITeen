@@ -5,11 +5,13 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +28,7 @@ import com.hitsz.eatut.ui.Order_ui.OrderFragment;
 
 import org.litepal.LitePal;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +48,9 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
     private AlertDialog.Builder builder;
     private TextView orderNO;//订单号
     private TextView phonenum;//用户电话号码
+    private TextView orderTotal;//订单总价
+    private float total;
+
     //时间选择
     private TextView mTvSelectedTime;
     private CustomDatePicker mTimerPicker;
@@ -54,11 +60,17 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_check);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         findView();
         initOrder();
         initRecycle();
         initTimerPicker();
     }
+
     public void onClick(View v){
         switch(v.getId()){
             case R.id.confirm_btn:
@@ -97,6 +109,7 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         confirmbtn.setOnClickListener(this);
         orderNO=findViewById(R.id.orderno_textview);
         phonenum=findViewById(R.id.phone_textview);
+        orderTotal=findViewById(R.id.orderno_total);
 
         findViewById(R.id.ll_time).setOnClickListener(this);
         mTvSelectedTime = findViewById(R.id.tv_selected_time);
@@ -111,7 +124,6 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         String phoneNumber = userInfo.getTelephoneNumber();
         phonenum.setText(phoneNumber);
         Log.d("CheckActivityIDnPhone", userID + " " + phoneNumber);
-
     }
     private void DialogEmpty(){
         builder.setTitle("不想吃饭？");
@@ -142,15 +154,21 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
     private void initOrder(){
         List<orderFood> orderFoods = LitePal.findAll(orderFood.class);
         orderFoodsList.clear();
+        total = 0;
         for (orderFood orderfood:orderFoods){
             int dishID = orderfood.getDishID_II();
             Log.d("CheckActivityDishID", Integer.toString(dishID));
             DishInfo dishInfo = (LitePal.where("id = ?","" + dishID).find(DishInfo.class)).get(0);//int型要加""转成string
             Log.d("CheckActivityDishInfo", dishInfo.getDishName() + " "  + dishInfo.getDishPrice() + " " + dishInfo.getDishScore());
+            total += dishInfo.getDishPrice();
             order newOrder = new order(dishInfo.getDishName(), dishInfo.getDishPrice(),
                     dishInfo.getDishScore(), orderfood.getId());
             orderFoodsList.add(newOrder);
         }
+        //订单总价和订单内容直接关联，所以赋值放在这。
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        String totalValue = "￥" + decimalFormat.format(total);
+        orderTotal.setText(totalValue);
     }
     private void initRecycle(){
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
@@ -159,6 +177,7 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void ofa(int position) {
                 orderFoodsList.remove(position);
+                initOrder();
                 initRecycle();
             }
         });
@@ -191,6 +210,15 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         mTimerPicker.setScrollLoop(true);
         // 不允许滚动动画
         mTimerPicker.setCanShowAnim(false);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

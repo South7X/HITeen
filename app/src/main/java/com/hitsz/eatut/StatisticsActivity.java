@@ -1,5 +1,6 @@
 package com.hitsz.eatut;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hitsz.eatut.ui.Search_ui.SearchFragment;
 
@@ -7,6 +8,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
@@ -34,6 +36,11 @@ public class StatisticsActivity extends AppCompatActivity {
     public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         SharedPreferences pref2 = this.getSharedPreferences("currentID",MODE_PRIVATE);
         userID = pref2.getInt("userID", -1);
         taste_hash=statisticData.PreferStatistic(userID,1);
@@ -44,15 +51,14 @@ public class StatisticsActivity extends AppCompatActivity {
         Button time = (Button) findViewById(R.id.time);
         Button expense = (Button) findViewById(R.id.expense);
         Button favor = (Button) findViewById(R.id.favor);
-        Button explore = (Button) findViewById(R.id.explore);
         com.hitsz.eatut.AAChartCoreLib.AAChartCreator.AAChartView aaChartView = findViewById(R.id.AAChartView);
         initParam();
-        AAChartModel aaChartModel = new AAChartModel();
-        aaChartView.aa_drawChartWithChartModel(aaChartModel);
-        aaChartModel.backgroundColor="#fffff0";
         time.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                AAChartModel aaChartModel = new AAChartModel();
+                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                aaChartModel.backgroundColor="#fffff0";
                 String[] s=new String[]{"6:00-7:00", "7:00-8:00", "11:00-12:00", "12:00-13:00", "17:00-18:00","18:00-19:00","其他"};
                 aaChartModel.dataLabelsEnabled     = false;
                 aaChartModel.colorsTheme           = new String[]{"#fe117c","#ffc069","#06caf4","#7dffc0"};
@@ -103,6 +109,9 @@ public class StatisticsActivity extends AppCompatActivity {
         expense.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                AAChartModel aaChartModel = new AAChartModel();
+                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                aaChartModel.backgroundColor="#fffff0";
                 aaChartModel.colorsTheme = new String[]{"#00ffff","#fe117c","#ffc069","#06caf4","#3CB371","#FFFF00","#FF4500","#9400D3","#FF00FF","#FFB6C1","#00008B","#FFD700"};
                 screenPopWindow = new ScreenPopWindow(statis, expenseList);
                 //设置多选，因为共用的一个bean，这里调用reset重置下数据
@@ -195,6 +204,9 @@ public class StatisticsActivity extends AppCompatActivity {
         favor.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                AAChartModel aaChartModel = new AAChartModel();
+                aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                aaChartModel.backgroundColor="#fffff0";
                 aaChartModel.xAxisTickInterval=0;
                 aaChartModel.dataLabelsEnabled= false;
                 aaChartModel.polar=Boolean.FALSE;
@@ -253,15 +265,6 @@ public class StatisticsActivity extends AppCompatActivity {
                 });
             }
         });
-        explore.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                aaChartModel.title("最近浏览展示")
-                        .subtitle("不买最贵的，只买最对的");
-                aaChartModel.chartType=AAChartType.Pie;
-                aaChartView.aa_drawChartWithChartModel(aaChartModel);
-            }
-        });
     }
     private void initParam() {
         String[] filter = {"周","月","年"};
@@ -289,5 +292,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
         expenseList.add(fb1);
         favorList.add(fb2);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

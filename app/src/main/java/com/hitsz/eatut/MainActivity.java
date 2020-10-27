@@ -179,10 +179,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.feedback: {
                 Intent feedback_intent = new Intent(MainActivity.this, FeedbackActivity.class);
                 startActivity(feedback_intent);
-                Toast.makeText(MainActivity.this, "跳转至设置",
-                        Toast.LENGTH_SHORT).show();
             }
-            default:
         }
         return super.onOptionsItemSelected(item);
     }

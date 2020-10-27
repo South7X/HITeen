@@ -26,7 +26,7 @@
             android:gravity="start"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:text="鸡腿饭"/>
         <TextView
             android:id="@+id/food_score"

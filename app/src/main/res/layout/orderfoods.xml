@@ -10,32 +10,27 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/Stressfont"/>
-    <TextView
-        android:id="@+id/orderfood_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/fontcolor"/>
-    <TextView
-        android:id="@+id/orderfood_score"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/fontcolor"/>
-    <Button
-        android:id="@+id/cancel_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:minHeight="40dp"
-        android:background="@drawable/radius_btn_lighttheme"
-        android:layout_gravity="center_horizontal"
-        android:text="取消订单"/>
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="10dp"
+        android:text="蒸南瓜"/>
+        <TextView
+            android:id="@+id/orderfood_price"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/fontcolor"
+            android:textSize="16sp"
+            android:text="￥1.0"/>
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:minHeight="40dp"
+            android:background="@drawable/radius_btn_lighttheme"
+            android:layout_gravity="end"
+            android:text="取消"/>
 </LinearLayout>
