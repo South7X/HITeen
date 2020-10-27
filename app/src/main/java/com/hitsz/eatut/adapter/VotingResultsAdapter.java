@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hitsz.eatut.R;
 import com.hitsz.eatut.database.VoteInfo;
 import com.hitsz.eatut.database.orderFood;
+import com.hitsz.eatut.datepicker.DateFormatUtils;
 import com.hitsz.eatut.managerActivities.VotingResultActivity;
 import com.hitsz.eatut.view.VotingView;
 import org.litepal.LitePal;
@@ -24,17 +25,19 @@ public class VotingResultsAdapter extends RecyclerView.Adapter<VotingResultsAdap
     private List<vote> mVoteList;
     public boolean isChanged;
     private VotingResultsAdapter.vraListener listener;
-
+    private long currenttime = System.currentTimeMillis();
 
     static class ViewHolder extends  RecyclerView.ViewHolder {
         TextView votename;
         View voteView;
         VotingView votingView;
+        TextView ddl;
         public ViewHolder(View view){
             super(view);
             voteView = view;
             votename = view.findViewById(R.id.mvotename_textview);
             votingView = view.findViewById(R.id.mvotingview);
+            ddl = view.findViewById(R.id.tv_ddl);
         }
     }
     public VotingResultsAdapter(List<vote> voteList, vraListener listener){
@@ -75,6 +78,13 @@ public class VotingResultsAdapter extends RecyclerView.Adapter<VotingResultsAdap
         String delString = " " +vot.getName() + "  [删除] ";
         holder.votename.setText(delString);
         holder.votingView.setNum(vot.getAgreeNum(), vot.getDisagreeNum());
+        String str_ddl = "截止时间：" + DateFormatUtils.long2Str(System.currentTimeMillis(), true);
+        if(vot.getVoteDdl()-currenttime < 0){
+            holder.ddl.setText("已截止");
+        }
+        else {
+            holder.ddl.setText(str_ddl);
+        }
 
     }
 

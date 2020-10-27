@@ -43,6 +43,7 @@
         app:textSize="12dp" />
 
     <LinearLayout
+        android:id="@+id/ll_vote"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -65,5 +66,17 @@
             android:background="@drawable/btn_disagree"
             android:text="disagree" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/tv_voted"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/gray_f3"
+        android:textSize="14dp"
+        />
+
 
 </LinearLayout>

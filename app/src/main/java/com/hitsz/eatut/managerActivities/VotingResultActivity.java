@@ -44,7 +44,9 @@ public class VotingResultActivity extends AppCompatActivity {
             String name = voteInfo.getVoteName();
             int agreeNum = voteInfo.getVoteAgree();
             int disagreeNum = voteInfo.getVoteDisagree();
-            vote addVote = new vote(name, agreeNum, disagreeNum);
+            long voteDdl = voteInfo.getVoteDdl();
+//            String[] votedID =voteInfo.getVotedId();
+            vote addVote = new vote(name, agreeNum, disagreeNum, voteDdl, true);
             voteList.add(addVote);
         }
     }
@@ -55,10 +57,10 @@ public class VotingResultActivity extends AppCompatActivity {
         voteList.clear();
         initVotes();
         VotingResultsAdapter adapter = new VotingResultsAdapter(voteList, new VotingResultsAdapter.vraListener(){
-                @Override
-                public void vra(int position) {
-                    voteList.remove(position);
-                    initRecycle();
+            @Override
+            public void vra(int position) {
+                voteList.remove(position);
+                initRecycle();
             }
         });
         recyclerView.setAdapter(adapter);

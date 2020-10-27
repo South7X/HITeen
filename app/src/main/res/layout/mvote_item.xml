@@ -42,4 +42,15 @@
         app:textColor="#fff"
         app:textSize="12dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/tv_ddl"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/gray_ce"
+        android:textSize="14dp"
+        />
+
 </LinearLayout>
