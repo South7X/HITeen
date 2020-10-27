@@ -127,7 +127,8 @@ public class RecentVisitActivity extends AppCompatActivity implements View.OnCli
                 float price = dishInfo.getDishPrice();
                 float score = dishInfo.getDishScore();
                 int dishID = dishInfo.getId();
-                dish addDish = new dish(name, image, price, score, dishID);
+                byte[] imgs = dishInfo.getDishshot();
+                dish addDish = new dish(name, image, price, score, dishID, imgs);
                 dishList.add(addDish);
                 i+=1;
             }
