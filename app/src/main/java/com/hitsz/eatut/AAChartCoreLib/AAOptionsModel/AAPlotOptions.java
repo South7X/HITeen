@@ -3,7 +3,7 @@ package com.hitsz.eatut.AAChartCoreLib.AAOptionsModel;
 public class AAPlotOptions {
     public com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AAColumn column;
     public com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AALine line;
-    public com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel.AAPie pie;
+    public AAPie pie;
     public com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel.AABar bar;
     public com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel.AASpline spline;
     public com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel.AAArea area;
@@ -23,7 +23,7 @@ public class AAPlotOptions {
         return this;
     }
 
-    public AAPlotOptions pie(com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel.AAPie prop) {
+    public AAPlotOptions pie(com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AAPie prop) {
         pie = prop;
         return this;
     }

@@ -1,4 +1,4 @@
-package com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel;
+package com.hitsz.eatut.AAChartCoreLib.AAOptionsModel;
 
 import com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AADataLabels;
 

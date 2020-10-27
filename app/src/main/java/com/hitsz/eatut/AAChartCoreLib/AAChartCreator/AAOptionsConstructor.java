@@ -49,7 +49,8 @@ import com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AALabels;
 import com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AALegend;
 import com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel.AAMarker;
 import com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AAOptions;
-import com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel.AAPie;
+import com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AAPie;
+import com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AAPie;
 import com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AAPlotOptions;
 import com.hitsz.eatut.AAChartCoreLib.AAOptionsModel.AASeries;
 import com.example.anan.AAChartCore.AAChartCoreLib.AAOptionsModel.AAStyle;
@@ -228,8 +229,7 @@ public class AAOptionsConstructor
     ) {
         String chartType = aaChartModel.chartType;
         //x 轴和 Y 轴的相关配置,扇形图、金字塔图和漏斗图则不需要设置 X 轴和 Y 轴的相关内容
-        if (       !chartType.equals(AAChartType.Pie)
-                && !chartType.equals(AAChartType.Pyramid)
+        if (       !chartType.equals(AAChartType.Pyramid)
                 && !chartType.equals(AAChartType.Funnel)
         ) {
             Boolean aaXAxisLabelsEnabled = aaChartModel.xAxisLabelsEnabled;
