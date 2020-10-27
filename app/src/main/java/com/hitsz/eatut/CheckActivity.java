@@ -1,5 +1,6 @@
 package com.hitsz.eatut;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -103,7 +104,7 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         mTvSelectedTime = findViewById(R.id.tv_selected_time);
 
         SharedPreferences pref=this.getSharedPreferences("OrderCount",MODE_PRIVATE);
-        SharedPreferences.Editor editor=pref.edit();
+        @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor=pref.edit();
         i=pref.getInt("count",-1);
         orderNO.setText(String.valueOf(i+1));
         SharedPreferences pref2=this.getSharedPreferences("currentID",MODE_PRIVATE);
@@ -193,6 +194,5 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         // 不允许滚动动画
         mTimerPicker.setCanShowAnim(false);
     }
-
 }
 
