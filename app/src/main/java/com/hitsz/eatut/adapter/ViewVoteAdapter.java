@@ -125,7 +125,6 @@ public class ViewVoteAdapter extends RecyclerView.Adapter<ViewVoteAdapter.ViewHo
         boolean flag = vot.getIsVoted();
         if(flag){
             holder.cantVot.setVisibility(View.VISIBLE);
-            holder.cantVot.setText("已投票");
             holder.btnBar.setVisibility(View.INVISIBLE);
             holder.btn_agree.setEnabled(false);
             holder.btn_disagree.setEnabled(false);
