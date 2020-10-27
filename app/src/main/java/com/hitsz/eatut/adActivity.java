@@ -8,23 +8,39 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class adActivity extends AppCompatActivity implements View.OnClickListener{
+
+// TODO：查看投票button，查看宣传海报
+// what‘s new 页面内部
+public class adActivity extends AppCompatActivity{
     private Button rankingEntryButton;
+    private Button showPostButton;
+
+    protected void findView() {
+        showPostButton = findViewById(R.id.showpost_btn);
+        rankingEntryButton = findViewById(R.id.ranking_entry_btn);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad);
-        rankingEntryButton = findViewById(R.id.ranking_entry_btn);
-        rankingEntryButton.setOnClickListener(this);
-    }
-    @Override
-    public void onClick(View v){
-        switch(v.getId()){
-            case R.id.ranking_entry_btn:
-                Log.d("RankingEntryBtn", "Click");
-                Intent intent = new Intent(this, RankActivity.class);
+
+        findView();
+        rankingEntryButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent=new Intent(adActivity.this, RankActivity.class);
                 startActivity(intent);
-                break;
-        }
+            }
+        });
+
+        showPostButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent=new Intent(adActivity.this, ShowPostActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
 }

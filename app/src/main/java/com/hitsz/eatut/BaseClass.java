@@ -228,6 +228,7 @@ public class BaseClass {
     private static NodeElement createNewDishNodeDataFromDatabase(DishInfo dishInfo){
         NodeElement dishNode = new NodeElement();
         dishNode.idInDatabase = dishInfo.getId();
+        Log.d("add dish",Integer.toString(dishNode.idInDatabase));
         dishNode.nodeName = dishInfo.getDishName();
         dishNode.childNumber = 0;
         return dishNode;
@@ -256,12 +257,13 @@ public class BaseClass {
      * @param windowNum 下属档口数量
      * @param canteenAddress 食堂地址
      */
-    public static void addNewCanteen(String canteenName, String canteenAddress, int windowNum){
+    public static void addNewCanteen(String canteenName, String canteenAddress, int windowNum,byte[] canteen_img){
         //向数据库增加食堂
         CanteenInfo newCanteen = new CanteenInfo();
         newCanteen.setCanteenName(canteenName);
         newCanteen.setCanteenAddress(canteenAddress);
         newCanteen.setCanteenWindowNumber(windowNum);
+        newCanteen.setCanteenshot(canteen_img);
         newCanteen.save();
         //向树添加食堂结点
         addNewCanteenTreeNode(newCanteen);
@@ -293,17 +295,21 @@ public class BaseClass {
      * @param belongToCanteenName 所属食堂
      */
     public static boolean addNewWindow(String windowName, String windowAddress,
-                                       String belongToCanteenName, int dishNum){
+                                       String belongToCanteenName, int dishNum, byte[] window_img){
         WindowInfo newWindow = new WindowInfo();
         newWindow.setBelongToCanteenName(belongToCanteenName);
         newWindow.setWindowAddress(windowAddress);
         newWindow.setWindowDishNumber(dishNum);
         newWindow.setWindowName(windowName);
+        newWindow.setWindowshot(window_img);
+        newWindow.save();//存入数据库
         if(addNewWindowTreeNode(newWindow)){//若为false，则说明未找到所属食堂
-            newWindow.save();//存入数据库
             return true;
         }
-        else return false;
+        else {
+            newWindow.delete();
+            return false;
+        }
     }
     //增加档口结点到树
     private static boolean addNewWindowTreeNode(WindowInfo windowInfo){
@@ -327,19 +333,23 @@ public class BaseClass {
      * @param tags 标签
      */
     public static boolean addNewDish(String dishName, String belongToCanteenName,
-                                     String belongToWindowName, float price, String tags){
+                                     String belongToWindowName, float price, String tags, byte[] dish_img){
         DishInfo newDish = new DishInfo();
         newDish.setBelongToCanteen(belongToCanteenName);
         newDish.setBelongToWindow(belongToWindowName);
         newDish.setDishName(dishName);
         newDish.setDishPrice(price);
+        newDish.setDishshot(dish_img);
         newDish.setDishTags(tags);
+        newDish.save();  //先save了才有分配数据库id
         if (addNewDishTreeNode(newDish)){//增加到树
-            newDish.save();
             addLinkedListFromDatabase(newDish);//增加到链表
             return true;
         }
-        else return false;
+        else {
+            newDish.delete();
+            return false;
+        }
     }
     //增加菜品结点到树
     private static boolean addNewDishTreeNode(DishInfo dishInfo){
@@ -347,6 +357,7 @@ public class BaseClass {
         if (parentNode == null) return false;
         else {
             TreeNode newNode = new TreeNode(createNewDishNodeDataFromDatabase(dishInfo));
+            Log.d("add dish",Integer.toString(newNode.nodeData.idInDatabase));
             addNewNodeFromParentNode(parentNode, newNode);//加到该档口下的子结点
             return true;
         }
@@ -380,7 +391,10 @@ public class BaseClass {
                                                  String belongToWindowName){
         //利用树存储的映射结点信息找到要删除的菜品在数据库中的ID，并在树中删除
         int positionID = deleteDishNode(dishName, belongToCanteenName, belongToWindowName);
-        if (positionID == 0) return false;
+        if (positionID == 0) {
+            Log.d("delete","dishid=0");
+            return false;
+        }
         deleteDishFromLinkedList(positionID);//从链表中删除
         LitePal.delete(DishInfo.class, positionID);//从数据库中删除
         return true;
@@ -413,6 +427,7 @@ public class BaseClass {
         int positionID = deleteWindowNode(windowName, belongToCanteenName);
         if (positionID == 0) return false;
         LitePal.delete(WindowInfo.class, positionID);//从数据库中删除
+        LitePal.deleteAll(DishInfo.class, "belongToCanteen = ? and belongToWindow = ?", belongToCanteenName, windowName);
         createLinkedListFromDatabase();//重新生成链表
         return true;
     }
@@ -435,6 +450,8 @@ public class BaseClass {
         int positionID = deleteCanteenNode(canteenName);
         if (positionID == 0) return false;
         LitePal.delete(CanteenInfo.class, positionID);//从数据库中删除
+        LitePal.deleteAll(WindowInfo.class, "belongToCanteenName = ?", canteenName);
+        LitePal.deleteAll(DishInfo.class, "belongToCanteen = ?", canteenName);
         createLinkedListFromDatabase();//重新建立链表
         return true;
     }
@@ -460,6 +477,9 @@ public class BaseClass {
         if (tempNode.firstChild.nodeData.nodeName.equals(name)){//档口下第一个结点便是要删除的结点
             TreeNode deleteNode = tempNode.firstChild;
             tempNode.firstChild = deleteNode.firstBrother;//链接到第二个结点
+            Log.d("delete", "is first node");
+            int iid = deleteNode.nodeData.idInDatabase;
+            Log.d("delete",Integer.toString(iid));
             return deleteNode.nodeData.idInDatabase;//返回在数据库中的id
         }
         else {
@@ -564,7 +584,6 @@ public class BaseClass {
         }
     }
 
-    //遍历输出嵌套链表
     //遍历输出嵌套链表
     public static List<Integer> traversalWholeLinkedList(){
         TagHead tempTagNode = tagRoot;

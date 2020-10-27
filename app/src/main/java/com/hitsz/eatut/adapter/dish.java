@@ -9,12 +9,14 @@ public class dish {
     private float dishScore;
     private int imageId;
     private int dishID_I;
-    public dish(String name, int imageId,float dishPrice,float dishScore,int dishID_I){
+    private byte[] dishShot;
+    public dish(String name, int imageId,float dishPrice,float dishScore,int dishID_I,byte[] dishShot){
         this.name=name;
         this.imageId=imageId;
         this.dishPrice=dishPrice;
         this.dishScore=dishScore;
         this.dishID_I=dishID_I;
+        this.dishShot=dishShot;
     }
     public String getName(){
         return name;
@@ -33,4 +35,6 @@ public class dish {
     public float getDishScore() {
         return dishScore;
     }
+
+    public byte[] getDishSot(){return dishShot;}
 }

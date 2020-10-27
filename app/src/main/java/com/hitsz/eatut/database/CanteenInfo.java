@@ -15,6 +15,11 @@ public class CanteenInfo extends LitePalSupport {
 
     private int ImageID;            //食堂图片id
 
+    private byte[] canteenshot;     //食堂照片
+
+    public CanteenInfo() {
+        super();
+    }
 
     /**
      * setting method
@@ -38,6 +43,10 @@ public class CanteenInfo extends LitePalSupport {
 
     public void setCanteenScore(float canteenScore) {
         this.canteenScore = canteenScore;
+    }
+
+    public void setCanteenshot(byte[] canteenshot) {
+        this.canteenshot = canteenshot;
     }
 
     public void setImageID(int imageID) {
@@ -67,6 +76,10 @@ public class CanteenInfo extends LitePalSupport {
 
     public int getCanteenWindowNumber() {
         return canteenWindowNumber;
+    }
+
+    public byte[] getCanteenshot() {
+        return canteenshot;
     }
 
     public int getImageID() {

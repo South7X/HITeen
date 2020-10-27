@@ -30,7 +30,8 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
-        final Button adButton=root.findViewById(R.id.button);
+        // 跳转至 what’s new
+        final Button adButton=root.findViewById(R.id.button_whatsnew);
         recyclerView=root.findViewById(R.id.canteen_recycle);
         initRecycle();
         initCanteen();
@@ -56,7 +57,8 @@ public class MainFragment extends Fragment {
             String name = canteenInfo.getCanteenName();
             int image = canteenInfo.getImageID();
             float score = canteenInfo.getCanteenScore();
-            canteen can = new canteen(name, score, image);
+            byte[] canteenshot = canteenInfo.getCanteenshot();
+            canteen can = new canteen(name, score, image, canteenshot);
             canteenList.add(can);
         }
     }

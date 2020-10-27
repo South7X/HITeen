@@ -74,7 +74,8 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
             float price = dishInfo.getDishPrice();
             float score = dishInfo.getDishScore();
             int dishID=dishInfo.getId();
-            dish addDish = new dish(name, image, price, score,dishID);
+            byte[] dishshot= dishInfo.getDishshot();
+            dish addDish = new dish(name, image, price, score,dishID, dishshot);
             foodsList.add(addDish);
         }
     }
