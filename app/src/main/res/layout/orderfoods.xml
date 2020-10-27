@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
+        android:minHeight="40dp"
         android:background="@drawable/radius_btn_lighttheme"
         android:layout_gravity="center_horizontal"
         android:text="取消订单"/>

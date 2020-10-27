@@ -60,6 +60,8 @@ public class OrderFragment extends Fragment {
         MyOrder myOrder=new MyOrder();
         myOrder.setDishID_III(allDishID);
         myOrder.setOrderNo_II(i);
+        long currentTime = System.currentTimeMillis();
+        myOrder.setOrderTime(currentTime);
         myOrder.setUserID(list.get(0).getUserID());
         myOrder.setPrepared(false);
         myOrder.setEndTime(timeStamp);
@@ -82,11 +84,28 @@ public class OrderFragment extends Fragment {
         int userID = pref2.getInt("userID", -1);
         List<MyOrder> myOrderList=LitePal.where("userID==?", "" + userID).find(MyOrder.class);
         myOrderItemList.clear();
+        //对myOrderList做个排序：已取餐的放在下面；其他按照下单时间降序
+        Collections.sort(myOrderList, new Comparator<MyOrder>() {
+            @Override
+            public int compare(MyOrder m1, MyOrder m2) {
+                boolean isPick1 = m1.isPick();
+                boolean isPick2 = m2.isPick();
+                long orderTime1 = m1.getOrderTime();
+                long orderTime2 = m2. getOrderTime();
+                if(isPick1 && !isPick2)
+                    return 1;
+                else if(!isPick1 && isPick2)
+                    return -1;
+                else{
+                    return (int)(orderTime2 - orderTime1);
+                }
+            }
+        });
         for(MyOrder one:myOrderList){
             ArrayList<Integer> allDishID =one.getDishID_III();
             int orderNO=one.getOrderNo_II();
             int myOrderID=one.getId();
-            boolean isprepared = OrderActivity.haveOrderPrepared(myOrderID);
+            boolean isprepared = one.isPrepared();
             boolean isPick = one.isPick();
             long endTimeStamp = one.getEndTime();
             String endTime = DateFormatUtils.long2Str(endTimeStamp, true);
@@ -94,23 +113,6 @@ public class OrderFragment extends Fragment {
             MyOrderItem myOrderItem = new MyOrderItem(allDishID, isprepared, orderNO, myOrderID, endTime, isPick, cost);
             myOrderItemList.add(myOrderItem);
         }
-        //对myOrderItemList做个排序：已取餐的放在下面；按照订单号排序
-        Collections.sort(myOrderItemList, new Comparator<MyOrderItem>() {
-                    @Override
-                    public int compare(MyOrderItem m1, MyOrderItem m2) {
-                        boolean isPick1 = m1.isPick();
-                        boolean isPick2 = m2.isPick();
-                        int orderNo1 = m1.getOrderNo_III();
-                        int orderNo2 = m2. getOrderNo_III();
-                        if(isPick1 && !isPick2)
-                            return 1;
-                        else if(!isPick1 && isPick2)
-                            return -1;
-                        else{
-                            return orderNo2 - orderNo1;
-                        }
-                    }
-                });
     }
     private void initRecycle(){
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
@@ -131,18 +133,30 @@ public class OrderFragment extends Fragment {
         SharedPreferences pref2 = getActivity().getSharedPreferences("currentID",MODE_PRIVATE);
         int userID = pref2.getInt("userID",-1);
 //        //EndTime
-//        ArrayList<Long> endTime = statisticData.EndTimeStatistic(userID);
-//        Log.d("StatisticTest", "endTime:" + endTime.size());
-//        for(Long time: endTime){
-//            String tempTime = DateFormatUtils.long2Str(time, true);
-//            Log.d("StatisticTest", tempTime);
-//        }
-        //Cost
-        Object[] weekCost = statisticData.weekCost(userID);
-        Log.d("StatisticTest", Integer.toString(weekCost.length));
-        for(int i=0;i<7;i++){
-            //Log.d("StatisticTest", (i+1) + ": " + Float.toString(weekCost[i]));
+        Object[] endTime = statisticData.EndTimeStatistic(userID);
+        Log.d("StatisticTest", "endTime:" + endTime.length);
+        for(Object time: endTime){
+            Log.d("StatisticTest", time.toString());
         }
+//        //Cost
+//        //week
+//        Object[] weekCost = statisticData.weekCost(userID);
+//        Log.d("StatisticTest", Integer.toString(weekCost.length));
+//        for(int i=0;i<7;i++){
+//            Log.d("StatisticTest", (i+1) + ": " + (weekCost[i]));
+//        }
+        //month
+//        Object[] monthCost = statisticData.monthCost(userID);
+//        Log.d("StatisticTest", Integer.toString(monthCost.length));
+//        for(int i=0;i<31;i++){
+//            Log.d("StatisticTest", (i+1) + ": " + (monthCost[i]));
+//        }
+//        //year
+//        Object[] yearCost = statisticData.yearCost(userID);
+//        Log.d("StatisticTest", Integer.toString(yearCost.length));
+//        for(int i=0;i<12;i++){
+//            Log.d("StatisticTest", (i+1) + ": " + (yearCost[i]));
+//        }
 //        ArrayList<Float> weekCost = statisticData.CostStatistic(userID, 0);
 //        Log.d("StatisticTest", "weekCost:");
 //        for(float week:weekCost){

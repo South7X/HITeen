@@ -11,7 +11,9 @@
     <color name="cancel">#B9B9B9</color>
     <color name="darkbtn">#8D8D8D</color>
     <color name="gray_ce">#CECECE</color>
+    <color name="grey_ff">#5A5A5A</color>
     <color name="red">#CA3A0D</color>
+    <color name="dark_orange">#FF4800</color>
     <color name="yellow">#EFD811</color>
     <color name="green">#34AC39</color>
     <color name="blue">#157DCF</color>

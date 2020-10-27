@@ -6,25 +6,44 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hitsz.eatut.adapter.FeedbackItem;
 import com.hitsz.eatut.adapter.WindowAdapter;
 import com.hitsz.eatut.adapter.window;
+import com.hitsz.eatut.database.CanteenInfo;
+import com.hitsz.eatut.database.DishInfo;
+import com.hitsz.eatut.database.MyOrder;
 import com.hitsz.eatut.database.WindowInfo;
+import com.hitsz.eatut.datepicker.DateFormatUtils;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
-public class WindowActivity extends AppCompatActivity {
+public class WindowActivity extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView recyclerView;
+    private TextView canIntroName;
+    private TextView canIntroScore;
+    private TextView canIntroSale;
+    private  TextView canIntroAddr;
+    private Button canIntroComment;
+
+
     private List<window> windowList=new ArrayList<>();
     private String canteenName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +51,56 @@ public class WindowActivity extends AppCompatActivity {
         Intent intent = getIntent();
         canteenName = intent.getStringExtra("extra_data");
         findView();
+        initCanteenIntro();
         initWindows(canteenName);
         initRecycle();
     }
-
+    public void onClick(View v){
+        if(v.getId() == R.id.canteen_intro_comment){
+            Intent intent = new Intent(v.getContext(), CommentActivity.class);
+            intent.putExtra("extra_data", canteenName);
+            v.getContext().startActivity(intent);
+        }
+    }
     protected void findView(){
         recyclerView=(RecyclerView)findViewById(R.id.window_recycle);
-
+        canIntroName=findViewById(R.id.canteen_intro_name);
+        canIntroScore=findViewById(R.id.canteen_intro_score);
+        canIntroSale=findViewById(R.id.canteen_intro_monthly_sale);
+        canIntroAddr=findViewById(R.id.canteen_intro_address);
+        canIntroComment=findViewById(R.id.canteen_intro_comment);
+        canIntroComment.setOnClickListener(this);
     }
+    //初始化食堂介绍文本信息：食堂名称、本月到目前为止的销量、评分、地址
+    private float canteenMonthlySale(){
+        //返回该食堂本月到目前为止的销量
+        float sale = 0;
+        //本月的所有订单
+        long beginDayOfThisMonth = DateUtils.getBeginDayOfMonth(DateUtils.getNowMonth());//当月第一天开始时间戳
+        Log.d("CommentTest", "本月第一天开始时间点: " + DateFormatUtils.long2Str(beginDayOfThisMonth, true));
+        List<MyOrder> myOrderList = LitePal.where("endTime>?", ""+beginDayOfThisMonth).find(MyOrder.class);
+        for(MyOrder one:myOrderList){
+            List<Integer> dishIDs = one.getDishID_III();
+            for(int i=0;i<dishIDs.size();i++){
+                //遍历某订单中所有菜品
+                DishInfo dishInfo = LitePal.where("id=?", "" + dishIDs.get(i)).find(DishInfo.class).get(0);
+                if(canteenName.equals(dishInfo.getBelongToCanteen()))
+                    //如果该菜品属于这个食堂
+                    sale+=dishInfo.getDishPrice();
+            }
+        }
+        return sale;
+    }
+    private void initCanteenIntro(){
+        canIntroName.setText(canteenName);
+        CanteenInfo canteenInfo = LitePal.where("canteenName=?", canteenName).find(CanteenInfo.class).get(0);
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        canIntroScore.setText(decimalFormat.format(canteenInfo.getCanteenScore()));
+        canIntroAddr.setText(canteenInfo.getCanteenAddress());
+        String sale = "￥" + decimalFormat.format(canteenMonthlySale());
+        canIntroSale.setText(sale);
+    }
+
     //初始化档口信息
     private void initWindows(String canteenName){
         Log.d("find_canteen", canteenName);
@@ -74,9 +135,9 @@ public class WindowActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

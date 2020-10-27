@@ -9,6 +9,7 @@ public class MyOrder extends LitePalSupport {
     private int id;
     private ArrayList<Integer> dishID_III;
     private int orderNo_II;
+    private long orderTime;
     private int userID;
     private long endTime;
     private boolean isPrepared;
@@ -26,6 +27,10 @@ public class MyOrder extends LitePalSupport {
 
     public int getOrderNo_II() {
         return orderNo_II;
+    }
+
+    public long getOrderTime() {
+        return orderTime;
     }
 
     public int getUserID() {
@@ -58,6 +63,10 @@ public class MyOrder extends LitePalSupport {
 
     public void setOrderNo_II(int orderNo_II) {
         this.orderNo_II = orderNo_II;
+    }
+
+    public void setOrderTime(long orderTime) {
+        this.orderTime = orderTime;
     }
 
     public void setUserID(int userID) {
