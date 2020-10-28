@@ -14,11 +14,11 @@
 
         <!--        <include layout="@layout/main_title_bar"></include>&lt;!&ndash;引入标题栏&ndash;&gt;-->
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp"
-            android:src="@drawable/sign_up"/>
+            android:src="@drawable/sign_up" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,7 +34,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
-            android:layout_marginTop="35dp"
             android:drawablePadding="10dp"
             android:hint="昵称长度不小于两位字符"
             android:paddingLeft="8dp"
@@ -59,9 +58,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
-            android:layout_marginTop="35dp"
             android:drawablePadding="10dp"
             android:hint="请输入9位学号"
+            android:inputType="number"
             android:paddingLeft="8dp"
             android:singleLine="true"
             android:textColor="#000000"
@@ -83,7 +82,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
-            android:layout_marginTop="35dp"
             android:drawablePadding="10dp"
             android:hint="请输入宿舍楼号"
             android:paddingLeft="8dp"
@@ -94,7 +92,7 @@
         <Button
             android:id="@+id/btn_change"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"

@@ -564,6 +564,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
     private void initInformation(){
         String[] tags = {"清淡","酸","甜","苦","辣","咸","油炸"};
+        //                 0     1    2   3    4    5    6
         int canteenNumber = 3;
         String[] canteenName = {"荔园一食堂", "荔园二食堂", "荔园三食堂"};
         int[] canteenImage = {R.drawable.canteen1, R.drawable.canteen2, R.drawable.canteen3};
@@ -583,7 +584,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int[] dishImage_window1_canteen3 = {R.drawable.dumplings, R.drawable.dumplings, R.drawable.dumplings, R.drawable.dumplings};
         initDish(4, dishName_window1_canteen3, windowName_canteen3[0], canteenName[2],
                 dishTags_window1_canteen3, dishPrice_window1_canteen3, dishImage_window1_canteen3);
-
 
         String[] dishName_window2_canteen3 = {"蒸南瓜", "口水鸡", "鸡排", "番茄炒蛋"};
         String[] dishTags_window2_canteen3 = {tags[2]+'$'+tags[0], tags[4], tags[6], tags[1]+'$'+tags[2]};
@@ -607,6 +607,101 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 dishTags_window4_canteen3, dishPrice_window4_canteen3, dishImage_window4_canteen3);
 
 
+        // Canteen 1 Info
+        String[] windowName_canteen1 = {"五谷鱼粉", "大众餐", "兰州拉面"};
+        int[] windowImage_canteen1 = {R.drawable.wuguyufen_window, R.drawable.dazhongzixuan_window, R.drawable.lanzhoulamian_window};
+        int[] windowDishNumber_canteen1 = {5, 8, 4};
+        initWindow(3, canteenName[0], windowName_canteen1, windowImage_canteen1, windowDishNumber_canteen1);
+
+        String[] dishName_window1_canteen1 = {"招牌鱼粉", "番茄鱼粉", "酸菜鱼粉", "水煮鱼粉", "麻辣鱼粉"};
+        String[] dishTags_window1_canteen1 = {tags[4], tags[2]+'$'+tags[1], tags[1], tags[4], tags[4]};
+        float[] dishPrice_window1_canteen1 = {13, 13, 13, 13, 13};
+        int[] dishImage_window1_canteen1 = {R.drawable.zhaopaiyufen, R.drawable.fanqieyufen,
+                R.drawable.suancaiyufen, R.drawable.shuizhuyufen, R.drawable.malayufen};
+        initDish(5, dishName_window1_canteen1, windowName_canteen1[0], canteenName[0],
+                dishTags_window1_canteen1, dishPrice_window1_canteen1, dishImage_window1_canteen1);
+
+        String[] dishName_window2_canteen1 = {"炒白菜", "清蒸鱼尾", "炒秋葵", "鸡腿", "麻婆豆腐", "鸡心", "奥尔良鸡排", "烧土豆"};
+        String[] dishTags_window2_canteen1 = {tags[0], tags[0], tags[0], tags[6], tags[4], tags[5], tags[6], tags[5]};
+        float[] dishPrice_window2_canteen1 = {3, 6, 3, 6, 3, 6, 6, 3};
+        int[] dishImage_window2_canteen1 = {R.drawable.chaobaicai, R.drawable.qingzhengyuwei,
+                R.drawable.chaoqiukui, R.drawable.jitui, R.drawable.mapodoufu, R.drawable.jixin,
+                R.drawable.aoerliangjipai, R.drawable.shaotudou};
+        initDish(8, dishName_window2_canteen1, windowName_canteen1[1], canteenName[0],
+                dishTags_window2_canteen1, dishPrice_window2_canteen1, dishImage_window2_canteen1);
+
+        String[] dishName_window3_canteen1 = {"卤蛋", "牛肉拉面", "牛肉拌面", "炸酱面"};
+        String[] dishTags_window3_canteen1 = {tags[5], tags[0], tags[0], tags[5]};
+        float[] dishPrice_window3_canteen1 = {2, 8, 10, 13};
+        int[] dishImage_window3_canteen1 = {R.drawable.ludan, R.drawable.niuroulamian,
+                R.drawable.niuroubanmian, R.drawable.zhajiangmian};
+        initDish(4, dishName_window3_canteen1, windowName_canteen1[2], canteenName[0],
+                dishTags_window3_canteen1, dishPrice_window3_canteen1, dishImage_window3_canteen1);
+
+
+        //Canteen 2 Info
+        String[] windowName_canteen2 = {"小炒", "粤菜", "湘菜","东北菜","鸡公煲","养生粥","煲仔饭"};
+        int[] windowImage_canteen2 = {R.drawable.canteen2_window1, R.drawable.canteen2_window2, R.drawable.canteen2_window3,
+                R.drawable.canteen2_window4, R.drawable.canteen2_window5, R.drawable.canteen2_window6, R.drawable.canteen2_window7};
+        int[] windowDishNumber_canteen2 = {4, 7, 7, 4, 3, 3, 2};
+        initWindow(7, canteenName[1], windowName_canteen2, windowImage_canteen2, windowDishNumber_canteen2);
+
+        String[] dishName_window1_canteen2 = {"农家炒肉", "小炒拆骨肉", "花菜炒肉", "青椒肥肠"};
+        String[] dishTags_window1_canteen2 = {tags[4], tags[4], tags[5], tags[4]};
+        float[] dishPrice_window1_canteen2 = {15, 15, 13, 18};
+        int[] dishImage_window1_canteen2 = {R.drawable.nongjiaxiaochaorou, R.drawable.xiaochaochaigurou,
+                R.drawable.huacaichaorou, R.drawable.qinjiaofeichang};
+        initDish(4, dishName_window1_canteen2, windowName_canteen2[0], canteenName[1],
+                dishTags_window1_canteen2, dishPrice_window1_canteen2, dishImage_window1_canteen2);
+
+        String[] dishName_window2_canteen2 = {"白切鸡", "红烧狮子头", "木耳炒腐竹", "白灼菜心", "卤水鸭", "魔芋烧鸭", "烤鸡排"};
+        String[] dishTags_window2_canteen2 = {tags[0], tags[6], tags[5], tags[0], tags[5], tags[5], tags[6]};
+        float[] dishPrice_window2_canteen2 = {6,6,3,3,6,6,6};
+        int[] dishImage_window2_canteen2 = {R.drawable.baiqieji, R.drawable.shizitou,
+                R.drawable.muerchaofuzhu, R.drawable.baizhuocaixin, R.drawable.lushuiya,
+                R.drawable.moyushaoya, R.drawable.jipai};
+        initDish(7, dishName_window2_canteen2, windowName_canteen2[1], canteenName[1],
+                dishTags_window2_canteen2, dishPrice_window2_canteen2, dishImage_window2_canteen2);
+
+        String[] dishName_window3_canteen2 = {"干豆角炒肉", "番茄炒蛋", "炒包菜", "椒盐虾", "青椒炒肉", "豆豉烧鸭", "番茄鱼"};
+        String[] dishTags_window3_canteen2 = {tags[5], tags[1]+'$'+tags[2], tags[0], tags[5], tags[4], tags[5], tags[2]};
+        float[] dishPrice_window3_canteen2 = {6,3,3,6,6,6,6};
+        int[] dishImage_window3_canteen2 = {R.drawable.doujiaochaorou, R.drawable.fanqiechaodan,
+                R.drawable.chaobaocai, R.drawable.jiaoyanxia, R.drawable.qinjiaofeichang,
+                R.drawable.douchishaoya, R.drawable.fanqieyufen};
+        initDish(7, dishName_window3_canteen2, windowName_canteen2[2], canteenName[1],
+                dishTags_window3_canteen2, dishPrice_window3_canteen2, dishImage_window3_canteen2);
+
+        String[] dishName_window4_canteen2 = {"咕噜肉", "锅包肉", "拍黄瓜", "手撕鸡"};
+        String[] dishTags_window4_canteen2 = {tags[2], tags[2], tags[0], tags[5]};
+        float[] dishPrice_window4_canteen2 = {6,6,3,6};
+        int[] dishImage_window4_canteen2 = {R.drawable.gulurou, R.drawable.guobaorou,
+                R.drawable.paihuanggua, R.drawable.shousiji};
+        initDish(4, dishName_window4_canteen2, windowName_canteen2[3], canteenName[1],
+                dishTags_window4_canteen2, dishPrice_window4_canteen2, dishImage_window4_canteen2);
+
+        String[] dishName_window5_canteen2 = {"鸡公煲", "排骨煲", "牛腩煲"};
+        String[] dishTags_window5_canteen2 = {tags[5]+'$'+tags[4], tags[5], tags[5]};
+        float[] dishPrice_window5_canteen2 = {20,20,22};
+        int[] dishImage_window5_canteen2 = {R.drawable.jigongbao, R.drawable.niunanbao,
+                R.drawable.niunanbao};
+        initDish(3, dishName_window5_canteen2, windowName_canteen2[4], canteenName[1],
+                dishTags_window5_canteen2, dishPrice_window5_canteen2, dishImage_window5_canteen2);
+
+        String[] dishName_window6_canteen2 = {"小米粥", "打卤面", "哨子面"};
+        String[] dishTags_window6_canteen2 = {tags[0], tags[5], tags[5]};
+        float[] dishPrice_window6_canteen2 = {3,15,13};
+        int[] dishImage_window6_canteen2 = {R.drawable.xiaomizhou, R.drawable.dalumian,
+                R.drawable.shaozimian};
+        initDish(3, dishName_window6_canteen2, windowName_canteen2[5], canteenName[1],
+                dishTags_window6_canteen2, dishPrice_window6_canteen2, dishImage_window6_canteen2);
+
+        String[] dishName_window7_canteen2 = {"腊肉煲仔饭", "鸡肉煲仔饭"};
+        String[] dishTags_window7_canteen2 = {tags[5], tags[5]};
+        float[] dishPrice_window7_canteen2 = {15,15};
+        int[] dishImage_window7_canteen2 = {R.drawable.laroubaozaifan, R.drawable.jiroubaozaifan};
+        initDish(2, dishName_window7_canteen2, windowName_canteen2[6], canteenName[1],
+                dishTags_window7_canteen2, dishPrice_window7_canteen2, dishImage_window7_canteen2);
 
 
         buildTreeFromDatabase();
