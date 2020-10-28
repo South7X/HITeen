@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import android.content.Intent;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.hitsz.eatut.database.VoteInfo;
 
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.MenuItem;
 
 import org.litepal.LitePal;
 
@@ -32,6 +34,11 @@ public class ViewVoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewvote);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         Intent intent = getIntent();
         findView();
         initRecycle();
@@ -75,4 +82,14 @@ public class ViewVoteActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

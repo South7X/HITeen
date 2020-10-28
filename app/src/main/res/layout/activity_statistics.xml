@@ -19,7 +19,6 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="2dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,30 +29,45 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight='1'
-            android:background="@drawable/radius_stroke_linearlayout"
+            android:background="@color/white"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
-            android:text="用餐时间" />
+            android:text="用餐时间"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/gray_ce"/>
         <Button
             android:id="@+id/expense"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight='1'
-            android:background="@drawable/radius_stroke_linearlayout"
+            android:background="@color/white"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
-            android:text="用餐花销" />
+            android:text="用餐花销"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/gray_ce"/>
         <Button
             android:id="@+id/favor"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight='1'
-            android:background="@drawable/radius_stroke_linearlayout"
+            android:background="@color/white"
             android:layout_marginStart="1dp"
             android:layout_marginEnd="1dp"
-            android:text="口味偏好" />
+            android:text="口味偏好"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
 
     </LinearLayout>
 
