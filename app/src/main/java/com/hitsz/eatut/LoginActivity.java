@@ -525,146 +525,88 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    private void initCanteen(int num, String[] canteenName, int[] canteenImage, int[] canteenWindowNumber) {
+        //食堂
+        for (int i = 0; i < num; i ++){
+            CanteenInfo canteen = new CanteenInfo();
+            canteen.setCanteenName(canteenName[i]);
+            canteen.setImageID(canteenImage[i]);
+            canteen.setCanteenWindowNumber(canteenWindowNumber[i]);
+            canteen.save();
+
+        }
+    }
+
+    private void initWindow(int num, String belongToCanteenName, String[] windowName, int [] windowImage, int[] windowDishNumber) {
+        //档口
+        for (int i = 0; i < num; i ++){
+            WindowInfo window = new WindowInfo();
+            window.setWindowName(windowName[i]);
+            window.setBelongToCanteenName(belongToCanteenName);
+            window.setImageID(windowImage[i]);
+            window.setWindowDishNumber(windowDishNumber[i]);
+            window.save();
+        }
+    }
+
+    private void initDish(int num, String[] dishName, String belongToWindow, String belongToCanteen,
+                          String[] tags, float[] dishPrice, int[] dishImage){
+        for (int i = 0; i < num; i ++){
+            DishInfo dish = new DishInfo();
+            dish.setDishName(dishName[i]);
+            dish.setBelongToWindow(belongToWindow);
+            dish.setBelongToCanteen(belongToCanteen);
+            dish.setDishTags(tags[i]);
+            dish.setDishPrice(dishPrice[i]);
+            dish.setImageID(dishImage[i]);
+            dish.save();
+        }
+    }
     private void initInformation(){
         String[] tags = {"清淡","酸","甜","苦","辣","咸","油炸"};
-        //食堂
-        CanteenInfo canteen1 = new CanteenInfo();
-        canteen1.setCanteenName("荔园一食堂");
-        canteen1.setImageID(R.drawable.canteen1);
-        canteen1.setCanteenWindowNumber(15);
-        canteen1.save();
-        CanteenInfo canteen2 = new CanteenInfo();
-        canteen2.setCanteenName("荔园二食堂");
-        canteen2.setImageID(R.drawable.canteen2);
-        canteen2.setCanteenWindowNumber(5);
-        canteen2.save();
-        CanteenInfo canteen3 = new CanteenInfo();
-        canteen3.setCanteenName("荔园三食堂");
-        canteen3.setImageID(R.drawable.canteen3);
-        canteen3.setCanteenWindowNumber(10);
-        canteen3.save();
-        //档口
-        WindowInfo window1 = new WindowInfo();
-        window1.setWindowName("乐记水饺");
-        window1.setBelongToCanteenName("荔园三食堂");
-        window1.setImageID(R.drawable.jiaozi_window);
-        window1.setWindowDishNumber(3);
-        window1.save();
-        WindowInfo window2 = new WindowInfo();
-        window2.setWindowName("开饭了");
-        window2.setBelongToCanteenName("荔园三食堂");
-        window2.setImageID(R.drawable.kaifanle_window);
-        window2.setWindowDishNumber(10);
-        window2.save();
-        WindowInfo window3 = new WindowInfo();
-        window3.setWindowName("兰州拉面");
-        window3.setBelongToCanteenName("荔园三食堂");
-        window3.setImageID(R.drawable.lamian_window);
-        window3.setWindowDishNumber(10);
-        window3.save();
-        WindowInfo window4 = new WindowInfo();
-        window4.setWindowName("粤式烧腊");
-        window4.setBelongToCanteenName("荔园三食堂");
-        window4.setImageID(R.drawable.shaola_window);
-        window4.setWindowDishNumber(10);
-        window4.save();
-        //菜品
-        DishInfo dish1 = new DishInfo();
-        dish1.setDishName("猪肉白菜水饺");
-        dish1.setBelongToWindow("乐记水饺");
-        dish1.setBelongToCanteen("荔园三食堂");
-        dish1.setDishTags(tags[0]);
-        dish1.setDishPrice(12);
-        dish1.setImageID(R.drawable.dumplings);
-        dish1.save();
-        DishInfo dish2 = new DishInfo();
-        dish2.setDishName("猪肉玉米水饺");
-        dish2.setBelongToWindow("乐记水饺");
-        dish2.setBelongToCanteen("荔园三食堂");
-        dish2.setDishTags(tags[0]);
-        dish2.setDishPrice(9);
-        dish2.setImageID(R.drawable.dumplings);
-        dish2.save();
-        DishInfo dish3 = new DishInfo();
-        dish3.setDishName("猪肉芹菜水饺");
-        dish3.setBelongToWindow("乐记水饺");
-        dish3.setBelongToCanteen("荔园三食堂");
-        dish3.setDishTags(tags[0]);
-        dish3.setDishPrice(10);
-        dish3.setImageID(R.drawable.dumplings);
-        dish3.save();
-        DishInfo dish4 = new DishInfo();
-        dish4.setDishName("蒸南瓜");
-        dish4.setBelongToWindow("开饭了");
-        dish4.setBelongToCanteen("荔园三食堂");
-        dish4.setDishTags(tags[2]+'$'+tags[0]);
-        dish4.setDishPrice(1);
-        dish4.setImageID(R.drawable.nangua);
-        dish4.save();
-        DishInfo dish5 = new DishInfo();
-        dish5.setDishName("口水鸡");
-        dish5.setBelongToWindow("开饭了");
-        dish5.setBelongToCanteen("荔园三食堂");
-        dish5.setDishTags(tags[4]);
-        dish5.setDishPrice(8);
-        dish5.setImageID(R.drawable.koushuiji);
-        dish5.save();
-        DishInfo dish6 = new DishInfo();
-        dish6.setDishName("鸡排");
-        dish6.setBelongToWindow("开饭了");
-        dish6.setBelongToCanteen("荔园三食堂");
-        dish6.setDishTags(tags[6]);
-        dish6.setDishPrice(8);
-        dish6.setImageID(R.drawable.jipai);
-        dish6.save();
-        DishInfo dish7 = new DishInfo();
-        dish7.setDishName("番茄炒蛋");
-        dish7.setBelongToWindow("开饭了");
-        dish7.setBelongToCanteen("荔园三食堂");
-        dish7.setDishTags(tags[1]+'$'+tags[2]);
-        dish7.setDishPrice(4);
-        dish7.setImageID(R.drawable.fanqiechaodan);
-        dish7.save();
-        DishInfo dish8 = new DishInfo();
-        dish8.setDishName("土豆牛肉拌面");
-        dish8.setBelongToWindow("兰州拉面");
-        dish8.setBelongToCanteen("荔园三食堂");
-        dish8.setDishTags(tags[4]);
-        dish8.setDishPrice(15);
-        dish8.setImageID(R.drawable.tudouniuroubanmian);
-        dish8.save();
-        DishInfo dish9 = new DishInfo();
-        dish9.setDishName("传统牛肉拉面");
-        dish9.setBelongToWindow("兰州拉面");
-        dish9.setBelongToCanteen("荔园三食堂");
-        dish9.setDishTags(tags[0]);
-        dish9.setDishPrice(8);
-        dish9.setImageID(R.drawable.niuroulamian);
-        dish9.save();
-        DishInfo dish10 = new DishInfo();
-        dish10.setDishName("烧鸭饭");
-        dish10.setBelongToWindow("粤式烧腊");
-        dish10.setBelongToCanteen("荔园三食堂");
-        dish10.setDishTags(tags[5]);
-        dish10.setDishPrice(13);
-        dish10.setImageID(R.drawable.shaoyafan);
-        dish10.save();
-        DishInfo dish11 = new DishInfo();
-        dish11.setDishName("鸡腿饭");
-        dish11.setBelongToWindow("粤式烧腊");
-        dish11.setBelongToCanteen("荔园三食堂");
-        dish11.setDishTags(tags[5]);
-        dish11.setDishPrice(15);
-        dish11.setImageID(R.drawable.jituifan);
-        dish11.save();
-        DishInfo dish12 = new DishInfo();
-        dish12.setDishName("猪脚饭");
-        dish12.setBelongToWindow("粤式烧腊");
-        dish12.setBelongToCanteen("荔园三食堂");
-        dish12.setDishTags(tags[5]);
-        dish12.setDishPrice(15);
-        dish12.setImageID(R.drawable.zhujiaofan);
-        dish12.save();
+        int canteenNumber = 3;
+        String[] canteenName = {"荔园一食堂", "荔园二食堂", "荔园三食堂"};
+        int[] canteenImage = {R.drawable.canteen1, R.drawable.canteen2, R.drawable.canteen3};
+        int[] canteenWindowNumber = {15, 5, 10};
+        initCanteen(canteenNumber, canteenName, canteenImage, canteenWindowNumber);
+
+        //initialize canteen3
+        String[] windowName_canteen3 = {"乐记水饺", "开饭了", "兰州拉面", "粤式烧腊"};
+        int[] windowImage_canteen3 = {R.drawable.jiaozi_window, R.drawable.kaifanle_window, R.drawable.lamian_window, R.drawable.shaola_window};
+        int[] windowDishNumber_canteen3 = {3, 10, 10, 10};
+        initWindow(4, canteenName[2], windowName_canteen3, windowImage_canteen3, windowDishNumber_canteen3);
+
+        //initialize dishes
+        String[] dishName_window1_canteen3 = {"猪肉白菜水饺", "猪肉玉米水饺", "猪肉芹菜水饺", "韭菜鸡蛋水饺"};
+        String[] dishTags_window1_canteen3 = {tags[0], tags[0], tags[0], tags[0]};
+        float[] dishPrice_window1_canteen3 = {12, 9, 10, 9};
+        int[] dishImage_window1_canteen3 = {R.drawable.dumplings, R.drawable.dumplings, R.drawable.dumplings, R.drawable.dumplings};
+        initDish(4, dishName_window1_canteen3, windowName_canteen3[0], canteenName[2],
+                dishTags_window1_canteen3, dishPrice_window1_canteen3, dishImage_window1_canteen3);
+
+
+        String[] dishName_window2_canteen3 = {"蒸南瓜", "口水鸡", "鸡排", "番茄炒蛋"};
+        String[] dishTags_window2_canteen3 = {tags[2]+'$'+tags[0], tags[4], tags[6], tags[1]+'$'+tags[2]};
+        float[] dishPrice_window2_canteen3 = {1, 8, 8, 4};
+        int[] dishImage_window2_canteen3 = {R.drawable.nangua, R.drawable.koushuiji, R.drawable.jipai, R.drawable.fanqiechaodan};
+        initDish(4, dishName_window2_canteen3, windowName_canteen3[1], canteenName[2],
+                dishTags_window2_canteen3, dishPrice_window2_canteen3, dishImage_window2_canteen3);
+
+        String[] dishName_window3_canteen3 = {"土豆牛肉拌面", "传统牛肉拉面"};
+        String[] dishTags_window3_canteen3 = {tags[4], tags[0]};
+        float[] dishPrice_window3_canteen3 = {15, 8};
+        int[] dishImage_window3_canteen3 = {R.drawable.tudouniuroubanmian, R.drawable.niuroulamian};
+        initDish(2, dishName_window3_canteen3, windowName_canteen3[2], canteenName[2],
+                dishTags_window3_canteen3, dishPrice_window3_canteen3, dishImage_window3_canteen3);
+
+        String[] dishName_window4_canteen3 = {"烧鸭饭", "鸡腿饭", "猪脚饭"};
+        String[] dishTags_window4_canteen3 = {tags[5], tags[5], tags[5]};
+        float[] dishPrice_window4_canteen3 = {13,15,15};
+        int[] dishImage_window4_canteen3 = {R.drawable.shaoyafan, R.drawable.jituifan, R.drawable.zhujiaofan};
+        initDish(3, dishName_window4_canteen3, windowName_canteen3[3], canteenName[2],
+                dishTags_window4_canteen3, dishPrice_window4_canteen3, dishImage_window4_canteen3);
+
+
 
 
         buildTreeFromDatabase();
