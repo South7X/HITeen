@@ -16,10 +16,14 @@
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShowPostActivity"></activity>
-        <activity android:name=".ui.UserCenter_ui.ChangeUserInfoActivity" />
-        <activity android:name=".ui.UserCenter_ui.AboutActivity"></activity>
-        <activity android:name=".ForgetPassword" />
+        <activity android:name=".ShowPostActivity"
+            android:label="海报"></activity>
+        <activity android:name=".ui.UserCenter_ui.ChangeUserInfoActivity"
+            android:label="修改个人信息"/>
+        <activity android:name=".ui.UserCenter_ui.AboutActivity"
+            android:label="关于"></activity>
+        <activity android:name=".ForgetPassword"
+            android:label="忘记密码"/>
         <activity
             android:name=".SignUpActivity"
             android:label="注册" />
