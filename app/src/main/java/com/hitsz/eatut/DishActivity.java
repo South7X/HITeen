@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +35,11 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_dish);
         Intent intent = getIntent();
         windowName = intent.getStringExtra("extra_data");
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         findView();
         initfoods(windowName);
         initRecycle();
@@ -49,8 +56,19 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void findView(){
         recyclerView=(RecyclerView)findViewById(R.id.dish_recycle);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            //设置fab下滑消失上滑显示
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy > 0 && fab.getVisibility() == View.VISIBLE){
+                    fab.hide();
+                }else if(dy < 0 && fab.getVisibility() != View.VISIBLE){
+                    fab.show();
+                }
+            }
+        });
         fab=(FloatingActionButton)findViewById(R.id.fab);
-
         fab.setOnClickListener(this);
     }
     //初始化菜品信息
@@ -92,16 +110,11 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

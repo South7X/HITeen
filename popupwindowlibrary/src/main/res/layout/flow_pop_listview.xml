@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/darktheme"
+            android:background="@color/lighttheme"
             android:gravity="center"
             android:padding="5dp"
             android:text="确定"

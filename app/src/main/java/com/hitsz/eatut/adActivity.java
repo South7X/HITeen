@@ -14,10 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 public class adActivity extends AppCompatActivity{
     private Button rankingEntryButton;
     private Button showPostButton;
+    private Button viewVoteButton;
 
     protected void findView() {
         showPostButton = findViewById(R.id.showpost_btn);
         rankingEntryButton = findViewById(R.id.ranking_entry_btn);
+        viewVoteButton = findViewById(R.id.viewvote_btn);
     }
 
     @Override
@@ -38,6 +40,14 @@ public class adActivity extends AppCompatActivity{
             @Override
             public void onClick(View v){
                 Intent intent=new Intent(adActivity.this, ShowPostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        viewVoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(adActivity.this, ViewVoteActivity.class);
                 startActivity(intent);
             }
         });

@@ -18,8 +18,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.popupwindowlibrary.view.ScreenPopWindow;
 import com.hitsz.eatut.LoginActivity;
+import com.hitsz.eatut.MainActivity;
 import com.hitsz.eatut.R;
+import com.hitsz.eatut.RecentVisitActivity;
 import com.hitsz.eatut.SignUpActivity;
+import com.hitsz.eatut.StatisticsActivity;
 import com.hitsz.eatut.adapter.dish;
 import com.hitsz.eatut.database.DishInfo;
 import com.hitsz.eatut.database.UserInfo;
@@ -38,6 +41,8 @@ public class UserCenterFragment extends Fragment {
 
     private Button change_btn;
     private Button stastic_btn;
+    private Button recentVisitButton;
+    private Button about_btn;
     private String phoneNumber;
     private String name;
     private TextView user_name;
@@ -46,6 +51,8 @@ public class UserCenterFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_user_center, container, false);
         change_btn=root.findViewById(R.id.button_change);
         stastic_btn=root.findViewById(R.id.button_stastic);
+        recentVisitButton = root.findViewById(R.id.button_recent_visit);
+        about_btn=root.findViewById(R.id.about);
         user_name=root.findViewById(R.id.user_center_name);
         init();
         return root;
@@ -68,6 +75,29 @@ public class UserCenterFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), ChangeUserInfoActivity.class);
                 intent.putExtra("phoneNumber", phoneNumber);
                 startActivityForResult(intent, 1);
+            }
+        });
+        stastic_btn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                Intent Statistics_intent = new Intent(getActivity(), StatisticsActivity.class);
+                startActivity(Statistics_intent);
+            }
+        });
+        recentVisitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent RecentVisitIntent = new Intent(getActivity(), RecentVisitActivity.class);
+                startActivity(RecentVisitIntent);
+            }
+        });
+        about_btn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v){
+                Intent About_intent = new Intent(getActivity(), AboutActivity.class);
+                startActivity(About_intent);
             }
         });
     }

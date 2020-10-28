@@ -50,6 +50,18 @@ public class SearchFragment extends Fragment implements View.OnClickListener{
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
         recyclerView=root.findViewById(R.id.supplier_recycle_lv);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            //设置fab下滑消失上滑显示
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy > 0 && fab.getVisibility() == View.VISIBLE){
+                    fab.hide();
+                }else if(dy < 0 && fab.getVisibility() != View.VISIBLE){
+                    fab.show();
+                }
+            }
+        });
         fab=root.findViewById(R.id.fab);
         fab.setOnClickListener(this);
         sortbtn=root.findViewById(R.id.sort_btn);

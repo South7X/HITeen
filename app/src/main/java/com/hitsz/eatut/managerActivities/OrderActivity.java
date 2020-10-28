@@ -103,7 +103,7 @@ public class OrderActivity extends AppCompatActivity {
     //通过recyclerview显示litepal中内容
     private void initOrder(){
         /*
-        **查询 MyOrder里面的菜品
+         **查询 MyOrder里面的菜品
          */
         List<MyOrder> MyOrderInfo = LitePal.where("isPrepared = ?", ""+0).find(MyOrder.class);
         orderInfoList.clear();

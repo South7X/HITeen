@@ -21,6 +21,8 @@ import org.litepal.LitePal;
 
 import java.util.List;
 
+import static com.hitsz.eatut.BaseClass.md5;
+
 public class SignUpActivity extends AppCompatActivity {
 
     // private TextView tv_main_title;//标题
@@ -168,12 +170,10 @@ public class SignUpActivity extends AppCompatActivity {
      */
     private void saveRegisterInfo(String userName, String phoneNumber,String studentNumber,
                                   String psw, String addressDormitory){
-        // String md5Psw = MD5Utils.md5(psw);//把密码用MD5加密
-        // TODO: MD5 encode
-        //loginInfo表示文件名, mode_private SharedPreferences sp = getSharedPreferences( );
+        String md5Psw = md5(psw);//把密码用MD5加密
         UserInfo newUser = new UserInfo();
         newUser.setUserName(userName);
-        newUser.setPassword(psw);
+        newUser.setPassword(md5Psw);
         newUser.setStudentNumber(studentNumber);
         newUser.setTelephoneNumber(phoneNumber);
         newUser.setAddressDormitory(addressDormitory);

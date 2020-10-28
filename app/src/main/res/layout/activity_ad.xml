@@ -7,13 +7,13 @@
     <Button
         android:id="@+id/ranking_entry_btn"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="20dp"
+        android:layout_height="100dp"
+        android:layout_margin="15dp"
         android:text="@string/ranking_entry"
         android:textStyle="bold"
         android:textSize="22sp"
         android:textColor="@color/white"
-        android:background="@drawable/radius_btn_lighttheme"/>
+        android:background="@drawable/ranking_background"/>
 
     <Button
         android:id="@+id/showpost_btn"
@@ -29,4 +29,16 @@
 <!--        android:id="@+id/ad_image"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content" />-->
+
+    <Button
+        android:id="@+id/viewvote_btn"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="20dp"
+        android:text="参与投票"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:background="@drawable/radius_btn_lighttheme"
+        />
 </LinearLayout>

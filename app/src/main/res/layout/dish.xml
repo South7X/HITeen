@@ -10,47 +10,65 @@
         android:id="@+id/food_image"
         android:layout_width="0dp"
         android:adjustViewBounds="true"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/food_name"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/Stressfont"
-        android:layout_marginLeft="5dp"/>
-    <TextView
-        android:id="@+id/food_price"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/fontcolor"/>
-    <TextView
-        android:id="@+id/food_score"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="5dp"
-        android:textColor="@color/fontcolor"/>
-    <Button
-        android:id="@+id/cmt_btn"
-        android:layout_width="65dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/radius_btn_comment"
-        android:text="评价" />
+        android:orientation="vertical"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp">
+        <TextView
+            android:id="@+id/food_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="鸡腿饭"/>
+        <TextView
+            android:id="@+id/food_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textColor="@color/fontcolor"
+            android:text="5.0分"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/food_price"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="start"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/dark_orange"
+                android:text="￥15.0"/>
+            <Button
+                android:id="@+id/cmt_btn"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/radius_btn_comment"
+                android:minHeight="40dp"
+                android:text="评价" />
 
-    <Button
-        android:id="@+id/order_btn"
-        android:layout_width="65dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/radius_btn_lighttheme"
-        android:text="点餐" />
+            <Button
+                android:id="@+id/order_btn"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/radius_btn_lighttheme"
+                android:minHeight="40dp"
+                android:text="点餐" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

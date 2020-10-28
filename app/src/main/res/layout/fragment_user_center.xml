@@ -3,38 +3,75 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
         android:src="@drawable/sign_up"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:text="HITeen"
         android:id="@+id/user_center_name"/>
 <!--        android:text="Hello World"-->
 
     <Button
         android:id="@+id/button_change"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:background="@color/white"
         android:drawableLeft="@drawable/user"
+        android:drawableRight="@drawable/grey_bold_right_arrow"
         android:drawablePadding="15dp"
         android:text="修改个人信息"
-
         android:textSize="18sp" />
-
+    <View
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E2E2" />
     <Button
         android:id="@+id/button_stastic"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:background="@color/white"
         android:drawableLeft="@drawable/stastic"
+        android:drawableRight="@drawable/grey_bold_right_arrow"
         android:drawablePadding="15dp"
         android:text="统计"
         android:textSize="18sp" />
-
-
+    <View
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E2E2" />
+    <Button
+        android:id="@+id/button_recent_visit"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/recent_visit"
+        android:drawableRight="@drawable/grey_bold_right_arrow"
+        android:drawablePadding="15dp"
+        android:text="最近浏览"
+        android:textSize="18sp" />
+    <View
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E2E2" />
+    <Button
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/about"
+        android:drawableRight="@drawable/grey_bold_right_arrow"
+        android:drawablePadding="15dp"
+        android:text="关于"
+        android:textSize="18sp" />
 </LinearLayout>

@@ -61,6 +61,7 @@ import static com.hitsz.eatut.BaseClass.buildTreeFromDatabase;
 import static com.hitsz.eatut.BaseClass.createLinkedListFromDatabase;
 import static com.hitsz.eatut.BaseClass.isPasswordValid;
 import static com.hitsz.eatut.BaseClass.isUserExist;
+import static com.hitsz.eatut.BaseClass.md5;
 
 /**
  * @author lixiang
@@ -78,6 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
     private String managerNumber = "88888888888";//15888858888
+    private String managerPassword = "12345678";
     public final int maxUserNum = 100000;
     private int[] itsHashCodeToID = new int[maxUserNum];
     private int countUserNumber = 0;
@@ -99,7 +101,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
         //TODO: remove after connect to a real server
-        addManagerToDatabase(managerNumber, "12345678");
+        if (!isUserExist(managerNumber)){
+            addManagerToDatabase(managerNumber, managerPassword);
+        }
 
         mTelephoneView = (AutoCompleteTextView) findViewById(R.id.telephone);
         populateAutoComplete();
@@ -161,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void addManagerToDatabase(String phone, String password) {
         UserInfo user1 = new UserInfo();
         user1.setTelephoneNumber(phone);
-        user1.setPassword(password);
+        user1.setPassword(md5(password));
         user1.save();
     }
 
@@ -394,7 +398,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         List<UserInfo> users;
         users = LitePal.where("telephoneNumber = ?", input).find(UserInfo.class);
         for (UserInfo user: users) {
-            return user.getPassword().equals(password);
+            return user.getPassword().equals(md5(password));
         }
         return false;
     }
@@ -474,7 +478,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 int userID = (LitePal.where("telephoneNumber like ?", mPhone).find(UserInfo.class)).get(0).getId();
                 Log.d("userID", Integer.toString(userID));
                 SaveUserID(userID);
-                if (mPhone.equals(managerNumber)&&mPassword.equals("12345678")) startActivity(intent2);//管理者界面
+                Log.d("managerPassword", mPassword);
+                Log.d("managerPassword", managerPassword);
+                if (mPhone.equals(managerNumber)&&mPassword.equals(managerPassword)) startActivity(intent2);//管理者界面
                 else startActivity(intent);//用户界面
             } else {
                 Log.v(TAG, "onPostExecute: in else");

@@ -148,9 +148,10 @@ public class DishAdapter extends RecyclerView.Adapter<DishAdapter.ViewHolder> {
         dish food=mFoodList.get(position);
 //        holder.foodImage.setImageResource(food.getImageId());
         holder.foodName.setText(food.getName());
-        holder.foodPrice.setText(String.valueOf(food.getDishPrice()));
+        String price = "￥" + food.getDishPrice();
+        holder.foodPrice.setText(price);
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
-        String score = decimalFormat.format(food.getDishScore());
+        String score = decimalFormat.format(food.getDishScore()) + "分";
         holder.foodScore.setText(score);
 
         /*

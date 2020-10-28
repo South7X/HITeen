@@ -11,13 +11,14 @@
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ShowPostActivity"></activity>
         <activity android:name=".ui.UserCenter_ui.ChangeUserInfoActivity" />
+        <activity android:name=".ui.UserCenter_ui.AboutActivity"></activity>
         <activity android:name=".ForgetPassword" />
         <activity
             android:name=".SignUpActivity"
@@ -39,8 +40,11 @@
             android:name=".managerActivities.EditActivity"
             android:label="食堂信息" />
         <activity
-            android:name=".managerActivities.ViewvoteActivity"
-            android:label="投票结果" />
+            android:name=".managerActivities.AddVoteActivity"
+            android:label="发起投票" />
+        <activity
+            android:name=".ViewVoteActivity"
+            android:label="参与投票" />
         <activity
             android:name=".managerActivities.FeedInfoActivity"
             android:label="反馈信息" />
@@ -77,12 +81,25 @@
         <activity
             android:name=".managerActivities.DeletedishActivity"
             android:label="删除菜品信息" />
-        <activity android:name=".CheckActivity" />
-        <activity android:name=".WindowActivity" />
-        <activity android:name=".DishActivity" />
-        <activity android:name=".adActivity" />
-        <activity android:name=".RankActivity" />
-        <activity android:name=".CommentActivity"/>
-    </application>
+        <activity
+            android:name=".managerActivities.VotingResultActivity"
+            android:label="查看投票结果"/>
+        <activity
+            android:name=".StatisticsActivity"
+            android:label="统计" />
+        <activity android:name=".CheckActivity"
+            android:label="购物车"/>
+        <activity android:name=".WindowActivity"
+            android:label="档口"/>
+        <activity android:name=".DishActivity"
+            android:label="菜品"/>
+        <activity android:name=".adActivity"
+            android:label="活动"/>
+        <activity android:name=".RankActivity"
+            android:label="排行榜"/>
+        <activity android:name=".CommentActivity"
+            android:label="评论"/>
+        <activity android:name=".RecentVisitActivity"
+            android:label="最近浏览"/>    </application>
 
 </manifest>
