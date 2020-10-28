@@ -525,13 +525,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void initCanteen(int num, String[] canteenName, int[] canteenImage, int[] canteenWindowNumber) {
+    private void initCanteen(int num, String[] canteenName, int[] canteenImage,
+                             int[] canteenWindowNumber, String[] canteenAddress) {
         //食堂
         for (int i = 0; i < num; i ++){
             CanteenInfo canteen = new CanteenInfo();
             canteen.setCanteenName(canteenName[i]);
             canteen.setImageID(canteenImage[i]);
             canteen.setCanteenWindowNumber(canteenWindowNumber[i]);
+            canteen.setCanteenAddress(canteenAddress[i]);
             canteen.save();
 
         }
@@ -567,9 +569,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //                 0     1    2   3    4    5    6
         int canteenNumber = 3;
         String[] canteenName = {"荔园一食堂", "荔园二食堂", "荔园三食堂"};
+        String[] canteenAddress = {"哈工大西南门荔园3栋旁","哈工大西南门荔园4栋5栋之间","哈工大荔园7栋8栋之间"};
         int[] canteenImage = {R.drawable.canteen1, R.drawable.canteen2, R.drawable.canteen3};
         int[] canteenWindowNumber = {15, 5, 10};
-        initCanteen(canteenNumber, canteenName, canteenImage, canteenWindowNumber);
+        initCanteen(canteenNumber, canteenName, canteenImage, canteenWindowNumber,canteenAddress);
 
         //initialize canteen3
         String[] windowName_canteen3 = {"乐记水饺", "开饭了", "兰州拉面", "粤式烧腊"};
