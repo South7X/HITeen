@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-
-
     }
 
     private void test(){
@@ -141,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
         traversalWholeLinkedList();
 
         //增加结点
-        addNewCanteen("canteen4", "***", 30);
-        addNewWindow("window1","**", "canteen4", 10);
-        addNewDish("dish1","canteen4", "window1", 2, tags1);
+        //addNewCanteen("canteen4", "***", 30);
+        //addNewWindow("window1","**", "canteen4", 10);
+        //addNewDish("dish1","canteen4", "window1", 2, tags1);
 
         //遍历输出
         Log.d("LinkedList", "增加结点后");
@@ -181,10 +179,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.feedback: {
                 Intent feedback_intent = new Intent(MainActivity.this, FeedbackActivity.class);
                 startActivity(feedback_intent);
-                Toast.makeText(MainActivity.this, "跳转至设置",
-                        Toast.LENGTH_SHORT).show();
             }
-            default:
         }
         return super.onOptionsItemSelected(item);
     }

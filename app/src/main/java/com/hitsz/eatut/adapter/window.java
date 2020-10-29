@@ -7,11 +7,13 @@ public class window {
     private String name;
     private float score;
     private int imageID;
+    private byte[] winShot;
 
-    public window(String name, float score, int imageID){
+    public window(String name, float score, int imageID,byte[] winShot){
         this.imageID = imageID;
         this.name = name;
         this.score = score;
+        this.winShot= winShot;
     }
 
     public String getName() {
@@ -24,5 +26,9 @@ public class window {
 
     public float getScore() {
         return score;
+    }
+
+    public byte[] getWinShot() {
+        return winShot;
     }
 }

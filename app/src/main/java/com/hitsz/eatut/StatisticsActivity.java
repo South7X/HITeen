@@ -1,5 +1,6 @@
 package com.hitsz.eatut;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hitsz.eatut.ui.Search_ui.SearchFragment;
 
@@ -7,6 +8,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
@@ -34,6 +36,11 @@ public class StatisticsActivity extends AppCompatActivity {
     public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         SharedPreferences pref2 = this.getSharedPreferences("currentID",MODE_PRIVATE);
         userID = pref2.getInt("userID", -1);
         taste_hash=statisticData.PreferStatistic(userID,1);
@@ -285,5 +292,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
         expenseList.add(fb1);
         favorList.add(fb2);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,23 +1,30 @@
 package com.hitsz.eatut.adapter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.res.TypedArrayUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hitsz.eatut.R;
 import com.hitsz.eatut.WindowActivity;
+import com.hitsz.eatut.database.CanteenInfo;
+
+import org.litepal.LitePal;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.lang.String;
 
-//档口适配器
+//餐厅适配器
 
 /**
  * @author lixiang
@@ -57,15 +64,40 @@ public class CanteenAdapter extends RecyclerView.Adapter<CanteenAdapter.ViewHold
         });
         return holder;
     }
+
     @Override
-    public void onBindViewHolder(ViewHolder holder,int position){
-        canteen can=mCanteenList.get(position);
-        holder.canteenImage.setImageResource(can.getImageID());
+    public void onBindViewHolder(ViewHolder holder,int position) {
+        canteen can = mCanteenList.get(position);
+
         holder.canteenName.setText(can.getName());
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         String score = decimalFormat.format(can.getScore()) + "分";
         holder.canteenScore.setText(score);
+
+        /*
+        Lily
+        判断图片ID是否为0，不为0用drawable图片，否则用bitmap图片
+        */
+        if(can.getImageID() == 0){
+            byte[] imagess = can.getCanteenshot();
+            Bitmap bms = BitmapFactory.decodeByteArray(imagess, 0, imagess.length);
+            holder.canteenImage.setImageBitmap(bms);
+        }else{
+            holder.canteenImage.setImageResource(can.getImageID());
+        }
+
+
+//        if(position<3){
+//            holder.canteenImage.setImageResource(can.getImageID());
+//        }else{
+//            byte[] imagess = can.getCanteenshot();
+//            Bitmap bms = BitmapFactory.decodeByteArray(imagess, 0, imagess.length);
+//            holder.canteenImage.setImageBitmap(bms);
+//
+//        }
+
     }
+
     @Override
     public int getItemCount(){
         return mCanteenList.size();

@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,11 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_dish);
         Intent intent = getIntent();
         windowName = intent.getStringExtra("extra_data");
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         findView();
         initfoods(windowName);
         initRecycle();
@@ -74,7 +80,8 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
             float price = dishInfo.getDishPrice();
             float score = dishInfo.getDishScore();
             int dishID=dishInfo.getId();
-            dish addDish = new dish(name, image, price, score,dishID);
+            byte[] dishshot= dishInfo.getDishshot();
+            dish addDish = new dish(name, image, price, score,dishID, dishshot);
             foodsList.add(addDish);
         }
     }
@@ -103,16 +110,11 @@ public class DishActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 }
