@@ -1,5 +1,7 @@
 package com.hitsz.eatut.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,9 +49,19 @@ public class recentVisitAdapter  extends RecyclerView.Adapter<recentVisitAdapter
     public void onBindViewHolder(ViewHolder holder,int position){
         //注意要转化为String格式，否则会bug
         recentVisit re = recentVisitList.get(position);
-        holder.recentImg.setImageResource(re.getImageId());
         holder.recentCanteen.setText(re.getCanteen());
         holder.recentDish.setText(re.getDish());
+                        /*
+        Lily
+        判断图片ID是否为0，不为0用drawable图片，否则用bitmap图片
+        */
+        if(re.getImageId() == 0){
+            byte[] imagess = re.getDishShot();
+            Bitmap bms = BitmapFactory.decodeByteArray(imagess, 0, imagess.length);
+            holder.recentImg.setImageBitmap(bms);
+        }else{
+            holder.recentImg.setImageResource(re.getImageId());
+        }
     }
     @Override
     public int getItemCount(){

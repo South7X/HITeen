@@ -9,7 +9,9 @@ public class rankingItem {
     private int imageId;
     private float dishPrice;
     private float dishScore;
-    public rankingItem(int rankingNum, String canteen, String dish, int orderTimes, int imageId, float dishScore, float dishPrice){
+    private byte[] dishShot;
+
+    public rankingItem(int rankingNum, String canteen, String dish, int orderTimes, int imageId, float dishScore, float dishPrice, byte[] dishShot){
         this.rankingNum = rankingNum;
         this.canteen = canteen;
         this.dish = dish;
@@ -17,6 +19,7 @@ public class rankingItem {
         this.imageId = imageId;
         this.dishPrice = dishPrice;
         this.dishScore = dishScore;
+        this.dishShot = dishShot;
     }
 
     public int getRankingNum() {
@@ -47,6 +50,10 @@ public class rankingItem {
         return dishScore;
     }
 
+    public byte[] getDishShot() {
+        return dishShot;
+    }
+
     public void setRankingNum(int rankingNum) {
         this.rankingNum = rankingNum;
     }
@@ -73,5 +80,9 @@ public class rankingItem {
 
     public void setDishPrice(float dishPrice) {
         this.dishPrice = dishPrice;
+    }
+
+    public void setDishShot(byte[] dishShot) {
+        this.dishShot = dishShot;
     }
 }

@@ -1,5 +1,7 @@
 package com.hitsz.eatut.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +57,6 @@ public class RankingAdapter  extends RecyclerView.Adapter<RankingAdapter.ViewHol
     public void onBindViewHolder(ViewHolder holder,int position){
         //注意要转化为String格式，否则会bug
         rankingItem ra = rankingList.get(position);
-        holder.rankingImg.setImageResource(ra.getImageId());
         String num = "TOP" + String.valueOf(ra.getRankingNum());
         holder.rankingNum.setText(num);
         holder.rankingCanteen.setText(ra.getCanteen());
@@ -67,6 +68,17 @@ public class RankingAdapter  extends RecyclerView.Adapter<RankingAdapter.ViewHol
         holder.rankingScore.setText(score);
         String price ="￥" + decimalFormat.format(ra.getDishPrice());
         holder.rankingPrice.setText(price);
+                /*
+        Lily
+        判断图片ID是否为0，不为0用drawable图片，否则用bitmap图片
+        */
+        if(ra.getImageId() == 0){
+            byte[] imagess = ra.getDishShot();
+            Bitmap bms = BitmapFactory.decodeByteArray(imagess, 0, imagess.length);
+            holder.rankingImg.setImageBitmap(bms);
+        }else{
+            holder.rankingImg.setImageResource(ra.getImageId());
+        }
     }
     @Override
     public int getItemCount(){

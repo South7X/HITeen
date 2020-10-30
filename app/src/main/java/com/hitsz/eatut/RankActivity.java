@@ -98,7 +98,7 @@ public class RankActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("RankingRelate", "weekMap复制到List中，dishID=" + dishID + " orderTimes=" + orderTimes);
                 DishInfo dishInfo = (LitePal.where("id = ?", "" + dishID).find(DishInfo.class)).get(0);//int型要加""转成string
                 rankingItem ra = new rankingItem(i + 1, dishInfo.getBelongToCanteen() + "-" + dishInfo.getBelongToWindow(),
-                        dishInfo.getDishName(), orderTimes, dishInfo.getImageID(), dishInfo.getDishScore(), dishInfo.getDishPrice());
+                        dishInfo.getDishName(), orderTimes, dishInfo.getImageID(), dishInfo.getDishScore(), dishInfo.getDishPrice(), dishInfo.getDishshot());
                 weekRankingList.add(ra);
                 i++;
             }
@@ -142,7 +142,7 @@ public class RankActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("RankingRelate", "monthMap复制到List中，dishID=" + dishID + " orderTimes=" + orderTimes);
                 DishInfo dishInfo = (LitePal.where("id=?", "" + dishID).find(DishInfo.class)).get(0);
                 rankingItem ra = new rankingItem(i + 1, dishInfo.getBelongToCanteen() + "-" + dishInfo.getBelongToWindow(),
-                        dishInfo.getDishName(), orderTimes, dishInfo.getImageID(), dishInfo.getDishScore(), dishInfo.getDishPrice());
+                        dishInfo.getDishName(), orderTimes, dishInfo.getImageID(), dishInfo.getDishScore(), dishInfo.getDishPrice(), dishInfo.getDishshot());
                 monthRankingList.add(ra);
                 i++;
             }
