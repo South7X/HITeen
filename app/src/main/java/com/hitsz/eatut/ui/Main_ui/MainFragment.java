@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -72,6 +73,14 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         initRecycle();
         return root;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initRecentVisit();
+        initRecycle();
+    }
+
     public void onClick(View v){
         switch (v.getId()){
             case R.id.showpost_btn:
