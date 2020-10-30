@@ -20,9 +20,7 @@ import java.util.Locale;
 
 public class StatisticData {
     private long dayPeriod = 86400000L;
-    private long weekPeriod = 604800000L;
     private long monthPeriod = 2678400000L;//31天
-    private long yearPeriod = 31536000000L;
 
     public Object[] EndTimeStatistic(int userID){
         /*
@@ -87,20 +85,23 @@ public class StatisticData {
         long[] monthStamp = new long[32];
         long thisMonthBeginStamp = DateUtils.getBeginDayOfMonth(DateUtils.getNowMonth());//本月第一天
         monthStamp[0] = thisMonthBeginStamp;//第一天开始
+        Log.d("StatisticTest", DateFormatUtils.long2Str(monthStamp[0], true));
         long nextMonthBeginStamp = DateUtils.getBeginDayOfMonth(DateUtils.getNowMonth()+1);//下一个月第一天
+        Log.d("StatisticTest","下一个月的第一天："+DateFormatUtils.long2Str(nextMonthBeginStamp, true));
         long temp = thisMonthBeginStamp;
         int i=1;
-        while(temp<nextMonthBeginStamp){
+        while(temp<nextMonthBeginStamp && i<32){
             monthStamp[i] = monthStamp[i-1] + dayPeriod;
             temp += dayPeriod;
-            Log.d("StatisticTest", DateFormatUtils.long2Str(monthStamp[i], true));
+            Log.d("StatisticTest", "monthStamp" + i + ": " + DateFormatUtils.long2Str(monthStamp[i], true));
+            Log.d("StatisticTest", "temp: " + DateFormatUtils.long2Str(temp, true));
             i+=1;
         }
         return monthStamp;
     }
     public Object[] monthCost(int userID){
         /*
-         * 返回本月到目前为止每天的花销
+         * 返回本月每天的花销
          * */
         List<MyOrder> myOrderList=LitePal.where("userID=?", "" + userID).find(MyOrder.class);
         Object[] monthCost = new Object[31];//但不一定每个月份都有31天
@@ -120,6 +121,10 @@ public class StatisticData {
                     monthCost[i]=temp;
                 }
             }
+        }
+        for(int i=0;i<31;i++){
+            //一个月：[1, )左闭右开
+            Log.d("StatisticTest", "monthCost: " + i + ": "+ monthCost[i]);
         }
         return monthCost;
     }

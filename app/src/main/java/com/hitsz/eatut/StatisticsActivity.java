@@ -146,6 +146,9 @@ public class StatisticsActivity extends AppCompatActivity {
                                     aaChartModel.dataLabelsEnabled     = false;
                                     aaChartModel.xAxisTickInterval=0;
                                     Object[] total =statisticData.monthCost(userID);
+                                    for(int i=0;i<31;i++){
+                                        Log.d("StatisticTest", "StatisticAc调用得到的total: " + i + ": "+ total[i]);
+                                    }
                                     Object[] data1= Arrays.copyOfRange(total,0,10);
                                     Object[] data2= Arrays.copyOfRange(total,10,20);
                                     Object[] data3= Arrays.copyOfRange(total,20,31);
