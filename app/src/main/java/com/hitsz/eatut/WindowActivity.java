@@ -147,6 +147,7 @@ public class WindowActivity extends AppCompatActivity implements View.OnClickLis
     protected void onRestart() {
         super.onRestart();
         windowList.clear();
+        initCanteenIntro();
         initWindows(canteenName);
         initRecycle();
     }

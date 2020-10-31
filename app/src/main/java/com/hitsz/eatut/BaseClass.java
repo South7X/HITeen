@@ -692,6 +692,7 @@ public class BaseClass {
                                                     String belongToWindowName, String dishName, float score){
         float returnScore;
         Log.d("Score dish:", dishName);
+        Log.d("Current canteen & window & dish Name", tempNode.nodeData.nodeName);
         if (tempNode.nodeData.nodeName.equals(dishName)){//找到该菜品结点
             returnScore = detailChangeDishScoreInTreeAndDatabase(tempNode, score);
         }
