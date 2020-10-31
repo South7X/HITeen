@@ -78,6 +78,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRecentVisit();
+        initCanteen();
         initRecycle();
     }
 
