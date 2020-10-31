@@ -62,6 +62,7 @@ import static com.hitsz.eatut.BaseClass.createLinkedListFromDatabase;
 import static com.hitsz.eatut.BaseClass.isPasswordValid;
 import static com.hitsz.eatut.BaseClass.isUserExist;
 import static com.hitsz.eatut.BaseClass.md5;
+import static com.hitsz.eatut.BaseClass.traversalWholeTreeNodes;
 
 /**
  * @author lixiang
@@ -683,7 +684,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         initDish(4, dishName_window4_canteen2, windowName_canteen2[3], canteenName[1],
                 dishTags_window4_canteen2, dishPrice_window4_canteen2, dishImage_window4_canteen2);
 
-        String[] dishName_window5_canteen2 = {"鸡公煲", "排骨煲", "牛腩煲"};
+        String[] dishName_window5_canteen2 = {"经典鸡公煲", "排骨煲", "牛腩煲"};
         String[] dishTags_window5_canteen2 = {tags[5]+'$'+tags[4], tags[5], tags[5]};
         float[] dishPrice_window5_canteen2 = {20,20,22};
         int[] dishImage_window5_canteen2 = {R.drawable.jigongbao, R.drawable.niunanbao,
@@ -708,6 +709,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
         buildTreeFromDatabase();
+        traversalWholeTreeNodes();
         createLinkedListFromDatabase();
     }
 
