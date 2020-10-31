@@ -36,6 +36,7 @@ public class StatisticData {
         {
             long temp = myOrderList.get(i).getEndTime();
             endTimes[i] = DateFormatUtils.long2StrOnlyGetHour(temp);
+            Log.d("StatisticTime", ""+endTimes[i]);
         }
         return endTimes;
     }

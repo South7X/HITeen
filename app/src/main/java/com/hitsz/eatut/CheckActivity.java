@@ -56,6 +56,7 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
     private CustomDatePicker mTimerPicker;
     private int i;
     private long mTimeStamp;//时间戳
+    private Boolean wrongTimeFlag = false;
     @Override
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -75,7 +76,9 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         switch(v.getId()){
             case R.id.confirm_btn:
                 initOrder();
-                if(orderFoodsList.isEmpty())
+                if(wrongTimeFlag){
+                    DialogWrongTime();
+                }else if(orderFoodsList.isEmpty())
                 {
                     DialogEmpty();
                 }
@@ -151,6 +154,19 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         });
         builder.show();
     }
+    private void DialogWrongTime(){
+        builder.setTitle("无法提交");
+        builder.setMessage("当前不在合法订餐时间范围内；请于当日0:00~19:00进行订餐！");
+        builder.setPositiveButton("好吧", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                AlertDialog dialog=builder.show();
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.show();
+    }
     private void initOrder(){
         List<orderFood> orderFoods = LitePal.findAll(orderFood.class);
         orderFoodsList.clear();
@@ -183,17 +199,60 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         });
         recyclerView.setAdapter(adapter);
     }
+    private long[] endTimePeriod(){
+        long hourPeriod = 3600000L;//一个小时的毫秒数
+        long[] endTimeStamps = new long[6];
+        //存放一天中合法时间段的节点时间戳：[6, 8] [11, 13] [17, 19]
+        endTimeStamps[0] = DateUtils.getDayTime(6);
+        endTimeStamps[1] = DateUtils.getDayTime(8);
+        endTimeStamps[2] = DateUtils.getDayTime(11);
+        endTimeStamps[3] = DateUtils.getDayTime(13);
+        endTimeStamps[4] = DateUtils.getDayTime(17);
+        endTimeStamps[5] = DateUtils.getDayTime(19);
+        return endTimeStamps;
+
+    }
     private void initTimerPicker() {
         /*时间选择控件初始化*/
-        //时间范围：[beginTime, endTime]
-        String beginTime = "2019-1-1 00:00";
-        String endTime = "2020-12-31 00:00";
-        String currentTime = DateFormatUtils.long2Str(System.currentTimeMillis(), true);
-        //默认初始时间为当前时间
-        mTvSelectedTime.setText(currentTime);
+        //控件可选的时间范围：传入的[beginTime, endTime]
+        /*
+        用户可选定时间段：0:00 - 8:00 早餐，8:00 - 13:00午餐，13:00 - 19:00晚餐；
+        用户可订餐时间段：0:00 - 19:00;
+        [0:00, 8:00]可定早餐，[8:00, 13:00]可定午餐，[13:00, 19:00]可定晚餐；且显然，最早取餐时间要在可订餐时间段内。
+         */
 
-
-        // 通过日期字符串初始化日期，格式请用：yyyy-MM-dd HH:mm
+        long[] endTimeStamps = endTimePeriod();
+        long currentTime = System.currentTimeMillis();
+        long beginTime = currentTime;
+        long endTime = currentTime;
+        //重要：因为mTVSelectedTime显示的currentTime会被传入，所以必须对其和较小订餐时间点进行比较
+        if(currentTime<= endTimeStamps[1]){
+            //currentTime < 8:00
+            beginTime = endTimeStamps[0];
+            endTime = endTimeStamps[1];
+            currentTime = currentTime<beginTime?beginTime:currentTime;
+        }else if(currentTime<= endTimeStamps[3]){
+            //currentTime < 13:00
+            beginTime = endTimeStamps[2];
+            endTime = endTimeStamps[3];
+            currentTime = currentTime<beginTime?beginTime:currentTime;
+        }else if(currentTime<= endTimeStamps[5]){
+            //currentTime < 19:00
+            beginTime = endTimeStamps[4];
+            endTime = endTimeStamps[5];
+            currentTime = currentTime<beginTime?beginTime:currentTime;
+        }
+        if(beginTime == endTime){
+            //在非法点餐时间, wrongTimeFlag置false，以触发DialogWrongTime弹窗
+            String warning = "点餐开放时间为当日0:00-19:00";
+            mTvSelectedTime.setText(warning);
+            wrongTimeFlag = true;
+        }
+        //在合法点餐时间
+        else{
+            mTvSelectedTime.setText(DateFormatUtils.long2Str(currentTime, true));
+            wrongTimeFlag = false;
+        }
         mTimerPicker = new CustomDatePicker(this, new CustomDatePicker.Callback() {
             @Override
             public void onTimeSelected(long timestamp) {
@@ -201,7 +260,7 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
                 mTimeStamp = timestamp;
                 mTvSelectedTime.setText(DateFormatUtils.long2Str(timestamp, true));
             }
-        }, beginTime, endTime, currentTime);
+            }, beginTime, endTime, currentTime);
         // 允许点击屏幕或物理返回键关闭
         mTimerPicker.setCancelable(true);
         // 显示时和分
@@ -211,6 +270,34 @@ public class CheckActivity extends AppCompatActivity implements View.OnClickList
         // 不允许滚动动画
         mTimerPicker.setCanShowAnim(false);
     }
+//    private void initTimerPicker() {
+//        /*时间选择控件初始化*/
+//        //时间范围：[beginTime, endTime]
+//        String beginTime = "2019-1-1 00:00";
+//        String endTime = "2020-12-31 00:00";
+//        String currentTime = DateFormatUtils.long2Str(System.currentTimeMillis(), true);
+//        //默认初始时间为当前时间
+//        mTvSelectedTime.setText(currentTime);
+//
+//
+//        // 通过日期字符串初始化日期，格式请用：yyyy-MM-dd HH:mm
+//        mTimerPicker = new CustomDatePicker(this, new CustomDatePicker.Callback() {
+//            @Override
+//            public void onTimeSelected(long timestamp) {
+//                Log.d("CheckActivityTimeStamp", Long.toString(timestamp));//时间戳
+//                mTimeStamp = timestamp;
+//                mTvSelectedTime.setText(DateFormatUtils.long2Str(timestamp, true));
+//            }
+//        }, beginTime, endTime, currentTime);
+//        // 允许点击屏幕或物理返回键关闭
+//        mTimerPicker.setCancelable(true);
+//        // 显示时和分
+//        mTimerPicker.setCanShowPreciseTime(true);
+//        // 允许循环滚动
+//        mTimerPicker.setScrollLoop(true);
+//        // 不允许滚动动画
+//        mTimerPicker.setCanShowAnim(false);
+//    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

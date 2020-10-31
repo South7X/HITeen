@@ -80,5 +80,14 @@ public class DateUtils {
         gc.setTime(date);
         return gc.get(1);
     }
+    public static long getDayTime(int hour){
+        //返回当天int时的时间戳，如当传入6时，返回当天6点的时间戳。
+        Calendar cal = new GregorianCalendar();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime().getTime();
+    }
 
 }
