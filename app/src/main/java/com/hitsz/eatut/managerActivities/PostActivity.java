@@ -228,6 +228,8 @@ public class PostActivity extends AppCompatActivity {
         shuju.setPostshot(images);
         shuju.save();
 
+        img_view.setImageBitmap(bitmap);
+
     }
 
 
