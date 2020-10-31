@@ -81,6 +81,12 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         initRecycle();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initRecentVisit();
+    }
     public void onClick(View v){
         switch (v.getId()){
             case R.id.showpost_btn:
