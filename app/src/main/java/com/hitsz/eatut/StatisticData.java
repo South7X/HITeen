@@ -86,16 +86,16 @@ public class StatisticData {
         long[] monthStamp = new long[32];
         long thisMonthBeginStamp = DateUtils.getBeginDayOfMonth(DateUtils.getNowMonth());//本月第一天
         monthStamp[0] = thisMonthBeginStamp;//第一天开始
-        Log.d("StatisticTest", DateFormatUtils.long2Str(monthStamp[0], true));
+//        Log.d("StatisticTest", DateFormatUtils.long2Str(monthStamp[0], true));
         long nextMonthBeginStamp = DateUtils.getBeginDayOfMonth(DateUtils.getNowMonth()+1);//下一个月第一天
-        Log.d("StatisticTest","下一个月的第一天："+DateFormatUtils.long2Str(nextMonthBeginStamp, true));
+//        Log.d("StatisticTest","下一个月的第一天："+DateFormatUtils.long2Str(nextMonthBeginStamp, true));
         long temp = thisMonthBeginStamp;
         int i=1;
         while(temp<nextMonthBeginStamp && i<32){
             monthStamp[i] = monthStamp[i-1] + dayPeriod;
             temp += dayPeriod;
-            Log.d("StatisticTest", "monthStamp" + i + ": " + DateFormatUtils.long2Str(monthStamp[i], true));
-            Log.d("StatisticTest", "temp: " + DateFormatUtils.long2Str(temp, true));
+//            Log.d("StatisticTest", "monthStamp" + i + ": " + DateFormatUtils.long2Str(monthStamp[i], true));
+//            Log.d("StatisticTest", "temp: " + DateFormatUtils.long2Str(temp, true));
             i+=1;
         }
         return monthStamp;

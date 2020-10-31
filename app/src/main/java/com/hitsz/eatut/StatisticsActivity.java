@@ -71,11 +71,11 @@ public class StatisticsActivity extends AppCompatActivity {
                 times=statisticData.EndTimeStatistic(userID);
                 Object[]data =new Object[]{0,0,0,0,0,0,0};
                 for (Object o : times) {
-                    if (o.toString().equals("6")) {
+                    if (o.toString().equals("06")) {
                         data[0] = (int) data[0] + 1;
                         continue;
                     }
-                    if (o.toString().equals("7")) {
+                    if (o.toString().equals("07")) {
                         data[1] = (int) data[1] + 1;
                         continue;
                     }
@@ -150,8 +150,19 @@ public class StatisticsActivity extends AppCompatActivity {
                                         Log.d("StatisticTest", "StatisticAc调用得到的total: " + i + ": "+ total[i]);
                                     }
                                     Object[] data1= Arrays.copyOfRange(total,0,10);
+                                    for(int i=0;i<10;i++){
+                                        Log.d("StatisticTest", "data 1" + i + ": "+ data1[i]);
+                                    }
                                     Object[] data2= Arrays.copyOfRange(total,10,20);
+                                    for(int i=0;i<10;i++){
+                                        Log.d("StatisticTest", "data 2" + i + ": "+ data2[i]);
+                                    }
+
                                     Object[] data3= Arrays.copyOfRange(total,20,31);
+                                    for(int i=0;i<11;i++){
+                                        Log.d("StatisticTest", "data 3" + i + ": "+ data3[i]);
+                                    }
+
                                     Calendar now = Calendar.getInstance();
                                     String[] Str=new String[11];
                                     for(int i=1;i<=10;i++)
@@ -165,6 +176,7 @@ public class StatisticsActivity extends AppCompatActivity {
                                     Str[10]="31日";
                                     aaChartModel.chartType = AAChartType.Line;
                                     aaChartModel.categories(Str);
+                                    Log.d("StatisticTest", "Calendar value" + now.get(Calendar.DAY_OF_MONTH));
                                     switch (now.get(Calendar.DAY_OF_MONTH)/10){
                                         case 0:
                                             data1=Arrays.copyOfRange(data1,0,now.get(Calendar.DAY_OF_MONTH));
@@ -181,7 +193,6 @@ public class StatisticsActivity extends AppCompatActivity {
                                                     new AASeriesElement().name("0+").data(data1),
                                                     new AASeriesElement().name("10+").data(data2),
                                                     new AASeriesElement().name("20+").data(data3)});
-
                                     }
                                     aaChartView.aa_drawChartWithChartModel(aaChartModel);
                                     break;
