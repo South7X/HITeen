@@ -6,14 +6,12 @@
     android:layout_height="match_parent"
     >
 <!--     200 200 -->
-<!--    <ImageView-->
-<!--        android:id="@+id/img"-->
-<!--        android:layout_width="230dp"-->
-<!--        android:layout_height="320dp"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:layout_marginTop="50dp"/>-->
-<!--        android:background="#aa111222"-->
-<!--        android:onClick="getPicture" />-->
+    <ImageView
+        android:id="@+id/img_view"
+        android:layout_width="230dp"
+        android:layout_height="320dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
 
 <!--    <Button-->
 <!--        android:id="@+id/paizhao"-->

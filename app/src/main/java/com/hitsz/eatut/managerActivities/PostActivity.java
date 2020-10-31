@@ -48,6 +48,7 @@ public class PostActivity extends AppCompatActivity {
     // 拍照，相册 按钮
     private Button xiangce;
     private TextView post_text;
+    private ImageView img_view;
     private Uri imageUri;
     private byte[]images=new byte[1024];
     // 从相册获得图片
@@ -66,6 +67,8 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
         //paizhao=(Button)findViewById(R.id.paizhao);
         xiangce=(Button)findViewById(R.id.xiangce);
+        // 展示拟上传的图片
+        img_view=(ImageView)findViewById(R.id.img_view);
         // 显示文字
         post_text=(TextView)findViewById(R.id.text_post);
         post_text.setText("  上传并展示一张图片 "+"\n"+"  新图片将覆盖旧图片 ");
