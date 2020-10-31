@@ -57,7 +57,6 @@ public class StatisticsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AAChartModel aaChartModel = new AAChartModel();
-                aaChartView.aa_drawChartWithChartModel(aaChartModel);
                 aaChartModel.backgroundColor="#fffff0";
                 String[] s=new String[]{"6:00-7:00", "7:00-8:00", "11:00-12:00", "12:00-13:00", "17:00-18:00","18:00-19:00","其他"};
                 aaChartModel.dataLabelsEnabled     = false;
@@ -71,11 +70,11 @@ public class StatisticsActivity extends AppCompatActivity {
                 times=statisticData.EndTimeStatistic(userID);
                 Object[]data =new Object[]{0,0,0,0,0,0,0};
                 for (Object o : times) {
-                    if (o.toString().equals("6")) {
+                    if (o.toString().equals("06")) {
                         data[0] = (int) data[0] + 1;
                         continue;
                     }
-                    if (o.toString().equals("7")) {
+                    if (o.toString().equals("07")) {
                         data[1] = (int) data[1] + 1;
                         continue;
                     }
@@ -97,6 +96,7 @@ public class StatisticsActivity extends AppCompatActivity {
                     }
                     data[6] = (int) data[6] + 1;
                 }
+                System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ Arrays.toString(data));
                 aaChartModel.series(new AASeriesElement[]{
                         new AASeriesElement()
                                 .name("时段用餐次数")
@@ -110,7 +110,6 @@ public class StatisticsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 AAChartModel aaChartModel = new AAChartModel();
-                aaChartView.aa_drawChartWithChartModel(aaChartModel);
                 aaChartModel.backgroundColor="#fffff0";
                 aaChartModel.colorsTheme = new String[]{"#00ffff","#fe117c","#ffc069","#06caf4","#3CB371","#FFFF00","#FF4500","#9400D3","#FF00FF","#FFB6C1","#00008B","#FFD700"};
                 screenPopWindow = new ScreenPopWindow(statis, expenseList);
@@ -139,13 +138,14 @@ public class StatisticsActivity extends AppCompatActivity {
                                     aaChartView.aa_drawChartWithChartModel(aaChartModel);
                                     break;
                                 case"月":
-                                    //Object data1[]={15,2,3,6,5,4,8,3,9,11};
-                                    //Obiect data2[]={22,20,29,24,17,10,7,17,23,8};
-                                    //Object data3[]={11,14,15,20,19,8,5,11,16,10,29};
+                                    //Object[] data1 ={15,2,3,6,5,4,8,3,9,11,20};
+                                    //Object[] data2 ={22,20,29,24,17,10,7,17,23,8};
+                                    //Object[] data3 ={11,14,15,20,19,8,5,11,16,10,29};
                                     aaChartModel.polar=Boolean.FALSE;
                                     aaChartModel.dataLabelsEnabled     = false;
                                     aaChartModel.xAxisTickInterval=0;
                                     Object[] total =statisticData.monthCost(userID);
+                                    System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ Arrays.toString(total));
                                     Object[] data1= Arrays.copyOfRange(total,0,10);
                                     Object[] data2= Arrays.copyOfRange(total,10,20);
                                     Object[] data3= Arrays.copyOfRange(total,20,31);
@@ -162,18 +162,19 @@ public class StatisticsActivity extends AppCompatActivity {
                                     Str[10]="31日";
                                     aaChartModel.chartType = AAChartType.Line;
                                     aaChartModel.categories(Str);
-                                    switch (now.get(Calendar.DAY_OF_MONTH)/10){
+
+                                    switch ((now.get(Calendar.DAY_OF_MONTH)-1)/10){
                                         case 0:
                                             data1=Arrays.copyOfRange(data1,0,now.get(Calendar.DAY_OF_MONTH));
                                             aaChartModel.series(new AASeriesElement[]{
                                                     new AASeriesElement().name("0+").data(data1)});
                                         case 1:
-                                            data2=Arrays.copyOfRange(data2,0,now.get(Calendar.DAY_OF_MONTH)%10);
+                                            data2=Arrays.copyOfRange(data2,0,now.get(Calendar.DAY_OF_MONTH)-10);
                                             aaChartModel.series(new AASeriesElement[]{
                                                     new AASeriesElement().name("0+").data(data1),
                                                     new AASeriesElement().name("10+").data(data2)});
-                                        case 2:
-                                            data3=Arrays.copyOfRange(data3,0,now.get(Calendar.DAY_OF_MONTH)%10);
+                                        default:
+                                            data3=Arrays.copyOfRange(data3,0,now.get(Calendar.DAY_OF_MONTH)-20);
                                             aaChartModel.series(new AASeriesElement[]{
                                                     new AASeriesElement().name("0+").data(data1),
                                                     new AASeriesElement().name("10+").data(data2),

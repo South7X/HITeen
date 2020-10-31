@@ -90,7 +90,7 @@ public class StatisticData {
         long nextMonthBeginStamp = DateUtils.getBeginDayOfMonth(DateUtils.getNowMonth()+1);//下一个月第一天
         long temp = thisMonthBeginStamp;
         int i=1;
-        while(temp<nextMonthBeginStamp){
+        while(temp<nextMonthBeginStamp&&i<32){
             monthStamp[i] = monthStamp[i-1] + dayPeriod;
             temp += dayPeriod;
             Log.d("StatisticTest", DateFormatUtils.long2Str(monthStamp[i], true));
