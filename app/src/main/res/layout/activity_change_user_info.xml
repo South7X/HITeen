@@ -100,6 +100,17 @@
             android:text="确认修改"
             android:textColor="@android:color/holo_orange_light"
             android:textSize="18sp"/>
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginTop="15dp"
+            android:text="退出登录"
+            android:textColor="@color/red"
+            android:textSize="18sp"/>
     </LinearLayout>
 
 </ScrollView>

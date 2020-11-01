@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@color/manager_color"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -27,5 +28,12 @@
         android:id="@+id/button_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/ima_background"
+        android:background="@drawable/manager_backgroun"
+        android:layout_width="400dp"
+        android:layout_height="215dp"
+        android:layout_marginTop="300dp"/>
 
 </LinearLayout>

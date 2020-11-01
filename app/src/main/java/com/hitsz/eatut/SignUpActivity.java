@@ -126,7 +126,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 if (TextUtils.isEmpty(addressDormitory)){
-                    et_psw_again.setError("请输入宿舍楼号");
+                    et_addressDormitory.setError("请输入宿舍楼号");
                     focusView = et_psw_again;
                     cancel = true;
                 }

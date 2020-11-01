@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hitsz.eatut.ui.Search_ui.SearchFragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -162,7 +163,7 @@ public class StatisticsActivity extends AppCompatActivity {
                                     Str[10]="31日";
                                     aaChartModel.chartType = AAChartType.Line;
                                     aaChartModel.categories(Str);
-
+                                    Log.d("StatisticTest", Integer.toString(now.get(Calendar.DAY_OF_MONTH)));
                                     switch ((now.get(Calendar.DAY_OF_MONTH)-1)/10){
                                         case 0:
                                             data1=Arrays.copyOfRange(data1,0,now.get(Calendar.DAY_OF_MONTH));

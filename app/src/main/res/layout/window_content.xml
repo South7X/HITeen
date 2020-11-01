@@ -98,7 +98,6 @@
                 android:text="@string/intro_address"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-
                 />
                 <Space
                     android:layout_width="5dp"
@@ -108,6 +107,67 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/comment_keyword"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    />
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/canteen_window_keyword_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:textColor="@color/dark_orange"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/canteen_window_keyword_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:textColor="@color/dark_orange"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/canteen_window_keyword_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:textColor="@color/dark_orange"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/canteen_window_keyword_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:textColor="@color/dark_orange"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/canteen_window_keyword_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:textColor="@color/dark_orange"
+                    android:textStyle="bold"
+                    />
             </LinearLayout>
             <Button
                 android:id="@+id/canteen_intro_comment"

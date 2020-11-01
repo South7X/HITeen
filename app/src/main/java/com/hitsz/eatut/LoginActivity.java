@@ -576,7 +576,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         initCanteen(canteenNumber, canteenName, canteenImage, canteenWindowNumber,canteenAddress);
 
         //initialize canteen3
-        String[] windowName_canteen3 = {"乐记水饺", "开饭了", "兰州拉面", "粤式烧腊"};
+        String[] windowName_canteen3 = {"乐记水饺", "开饭了", "兰州清真拉面", "粤式烧腊"};
         int[] windowImage_canteen3 = {R.drawable.jiaozi_window, R.drawable.kaifanle_window, R.drawable.lamian_window, R.drawable.shaola_window};
         int[] windowDishNumber_canteen3 = {3, 10, 10, 10};
         initWindow(4, canteenName[2], windowName_canteen3, windowImage_canteen3, windowDishNumber_canteen3);

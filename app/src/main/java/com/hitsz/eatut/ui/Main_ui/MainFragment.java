@@ -78,16 +78,9 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initRecentVisit();
-        initCanteen();
         initRecycle();
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        initRecentVisit();
-    }
     public void onClick(View v){
         switch (v.getId()){
             case R.id.showpost_btn:

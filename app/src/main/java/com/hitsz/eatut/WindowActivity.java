@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.hitsz.eatut.BaseClass.getCanteenCommentKeyword;
+
 
 public class WindowActivity extends AppCompatActivity implements View.OnClickListener{
     private RecyclerView recyclerView;
@@ -40,7 +42,11 @@ public class WindowActivity extends AppCompatActivity implements View.OnClickLis
     private TextView canIntroSale;
     private  TextView canIntroAddr;
     private Button canIntroComment;
-
+    private TextView canWindowKeyWord1;
+    private TextView canWindowKeyWord2;
+    private TextView canWindowKeyWord3;
+    private TextView canWindowKeyWord4;
+    private TextView canWindowKeyWord5;
 
     private List<window> windowList=new ArrayList<>();
     private String canteenName;
@@ -76,6 +82,11 @@ public class WindowActivity extends AppCompatActivity implements View.OnClickLis
         canIntroAddr=findViewById(R.id.canteen_intro_address);
         canIntroComment=findViewById(R.id.canteen_intro_comment);
         canIntroComment.setOnClickListener(this);
+        canWindowKeyWord1=findViewById(R.id.canteen_window_keyword_1);
+        canWindowKeyWord2=findViewById(R.id.canteen_window_keyword_2);
+        canWindowKeyWord3=findViewById(R.id.canteen_window_keyword_3);
+        canWindowKeyWord4=findViewById(R.id.canteen_window_keyword_4);
+        canWindowKeyWord5=findViewById(R.id.canteen_window_keyword_5);
     }
     //初始化食堂介绍文本信息：食堂名称、本月到目前为止的销量、评分、地址
     private float canteenMonthlySale(){
@@ -105,6 +116,7 @@ public class WindowActivity extends AppCompatActivity implements View.OnClickLis
         canIntroAddr.setText(canteenInfo.getCanteenAddress());
         String sale = "￥" + decimalFormat.format(canteenMonthlySale());
         canIntroSale.setText(sale);
+        initKeyWords();
     }
 
     //初始化档口信息
@@ -150,6 +162,56 @@ public class WindowActivity extends AppCompatActivity implements View.OnClickLis
         initCanteenIntro();
         initWindows(canteenName);
         initRecycle();
+    }
+    private void initKeyWords(){
+        String AllkeyWord = getCanteenCommentKeyword(canteenName);
+        if(!AllkeyWord.isEmpty()) {
+            String[] keyWords = AllkeyWord.split(" ");
+            switch (keyWords.length) {
+                case 1:
+                    canWindowKeyWord1.setText(keyWords[0]);
+                    canWindowKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                case 2:
+                    canWindowKeyWord1.setText(keyWords[0]);
+                    canWindowKeyWord2.setText(keyWords[1]);
+                    canWindowKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord2.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                case 3:
+                    canWindowKeyWord1.setText(keyWords[0]);
+                    canWindowKeyWord2.setText(keyWords[1]);
+                    canWindowKeyWord3.setText(keyWords[2]);
+                    canWindowKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord2.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord3.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                case 4:
+                    canWindowKeyWord1.setText(keyWords[0]);
+                    canWindowKeyWord2.setText(keyWords[1]);
+                    canWindowKeyWord3.setText(keyWords[2]);
+                    canWindowKeyWord4.setText(keyWords[3]);
+                    canWindowKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord2.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord3.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord4.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                case 5:
+                    canWindowKeyWord1.setText(keyWords[0]);
+                    canWindowKeyWord2.setText(keyWords[1]);
+                    canWindowKeyWord3.setText(keyWords[2]);
+                    canWindowKeyWord4.setText(keyWords[3]);
+                    canWindowKeyWord5.setText(keyWords[4]);
+                    canWindowKeyWord1.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord2.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord3.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord4.setBackgroundResource(R.drawable.radius_text_view);
+                    canWindowKeyWord5.setBackgroundResource(R.drawable.radius_text_view);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
 

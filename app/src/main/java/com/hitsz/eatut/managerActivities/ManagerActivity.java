@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,12 +19,14 @@ public class ManagerActivity extends AppCompatActivity {
     private Button button_order;
     private Button button_post;
     private  Button button_edit;
+    private ImageView ima_background;
 
    protected void findView(){
        button_feedinfo=findViewById(R.id.button_feedback);
        button_order=(Button)findViewById(R.id.button_order);
        button_post=(Button)findViewById(R.id.button_advertiseview);
        button_edit=(Button)findViewById(R.id.button_edit);
+       ima_background=(ImageView)findViewById(R.id.ima_background);
    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
