@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hitsz.eatut.ui.Search_ui.SearchFragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +96,6 @@ public class StatisticsActivity extends AppCompatActivity {
                     }
                     data[6] = (int) data[6] + 1;
                 }
-                System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ Arrays.toString(data));
                 aaChartModel.series(new AASeriesElement[]{
                         new AASeriesElement()
                                 .name("时段用餐次数")
@@ -146,7 +144,6 @@ public class StatisticsActivity extends AppCompatActivity {
                                     aaChartModel.dataLabelsEnabled     = false;
                                     aaChartModel.xAxisTickInterval=0;
                                     Object[] total =statisticData.monthCost(userID);
-                                    System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ Arrays.toString(total));
                                     Object[] data1= Arrays.copyOfRange(total,0,10);
                                     Object[] data2= Arrays.copyOfRange(total,10,20);
                                     Object[] data3= Arrays.copyOfRange(total,20,31);
@@ -163,17 +160,20 @@ public class StatisticsActivity extends AppCompatActivity {
                                     Str[10]="31日";
                                     aaChartModel.chartType = AAChartType.Line;
                                     aaChartModel.categories(Str);
-                                    Log.d("StatisticTest", Integer.toString(now.get(Calendar.DAY_OF_MONTH)));
+
                                     switch ((now.get(Calendar.DAY_OF_MONTH)-1)/10){
                                         case 0:
                                             data1=Arrays.copyOfRange(data1,0,now.get(Calendar.DAY_OF_MONTH));
                                             aaChartModel.series(new AASeriesElement[]{
                                                     new AASeriesElement().name("0+").data(data1)});
+                                            break;
                                         case 1:
+                                            System.out.println("这他妈怎么回事啊");
                                             data2=Arrays.copyOfRange(data2,0,now.get(Calendar.DAY_OF_MONTH)-10);
                                             aaChartModel.series(new AASeriesElement[]{
                                                     new AASeriesElement().name("0+").data(data1),
                                                     new AASeriesElement().name("10+").data(data2)});
+                                            break;
                                         default:
                                             data3=Arrays.copyOfRange(data3,0,now.get(Calendar.DAY_OF_MONTH)-20);
                                             aaChartModel.series(new AASeriesElement[]{
