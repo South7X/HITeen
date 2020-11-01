@@ -145,12 +145,14 @@ public class OrderFragment extends Fragment {
 //        for(int i=0;i<7;i++){
 //            Log.d("StatisticTest", (i+1) + ": " + (weekCost[i]));
 //        }
-        //month
-//        Object[] monthCost = statisticData.monthCost(userID);
-//        Log.d("StatisticTest", Integer.toString(monthCost.length));
-//        for(int i=0;i<31;i++){
-//            Log.d("StatisticTest", (i+1) + ": " + (monthCost[i]));
-//        }
+//        month
+        Object[][] monthCost = statisticData.allMonthCost(userID);
+        for(int i=0;i<12;i++){
+            Log.d("StatisticTest", "第" + (i+1) + "个月：\n =============================================================");
+            for(int j=0;j<31;j++){
+                Log.d("StatisticTest", "第" + (j+1) + "天：" + monthCost[i][j]);
+            }
+        }
 //        //year
 //        Object[] yearCost = statisticData.yearCost(userID);
 //        Log.d("StatisticTest", Integer.toString(yearCost.length));

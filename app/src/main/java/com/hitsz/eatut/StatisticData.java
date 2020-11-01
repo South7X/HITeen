@@ -79,6 +79,53 @@ public class StatisticData {
         }
         return weekCost;
     }
+    private long[] getAllMonthStamp(int curMonth){
+        /*
+        * 用以得到所有月份日期时间戳。
+        * */
+        long[] monthStamp = new long[32];
+        long curMonthBeginStamp = DateUtils.getBeginDayOfMonth(curMonth);
+        monthStamp[0] = curMonthBeginStamp;
+        long nextMonthBeginStamp = DateUtils.getBeginDayOfMonth(curMonth+1);
+        long temp = curMonthBeginStamp;
+        int i = 1;
+        while(temp<nextMonthBeginStamp && i<32){
+            monthStamp[i] = monthStamp[i-1] + dayPeriod;
+            temp += dayPeriod;
+            i+=1;
+        }
+        return monthStamp;
+    }
+    public Object[][] allMonthCost(int userID){
+        /*
+        * 返回Object[12][32]，存放每个月每天的花销。
+        * */
+        List<MyOrder> myOrderList=LitePal.where("userID=?", "" + userID).find(MyOrder.class);
+        Object[][] monthCost = new Object[12][31];
+        for(int i=0;i<12;i++){
+            for(int j=0;j<31;j++){
+                monthCost[i][j] = 0.0F;
+            }
+        }
+        for(MyOrder one:myOrderList){
+            long endTime = one.getEndTime();
+            float cost = one.getCost();
+            for(int i=0;i<12;i++){
+                long[] monthStamp = getAllMonthStamp(i+1);
+//                for(int k=0;k<32;k++){
+//                    Log.d("StatisticTest", "第"+(i+1) + "个月 " + "monthStamp" + k + ": " + DateFormatUtils.long2Str(monthStamp[k], true));
+//                }
+                for(int j=0;j<31;j++){
+                    if(endTime >= monthStamp[j] && endTime < monthStamp[j+1]){
+                        float temp = (float)monthCost[i][j];
+                        temp += cost;
+                        monthCost[i][j] = temp;
+                    }
+                }
+            }
+        }
+        return monthCost;
+    }
     private long[] getMonthStamp(){
         /*
         * 返回本月每天的起止时间戳，因为月份的天数不一样，所以用下个月的第一天作为条件判断
