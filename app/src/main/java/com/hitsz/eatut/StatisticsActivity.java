@@ -29,6 +29,7 @@ public class StatisticsActivity extends AppCompatActivity {
     private ScreenPopWindow screenPopWindow;
     private List<FiltrateBean> expenseList = new ArrayList<>();
     private List<FiltrateBean> favorList = new ArrayList<>();
+    private List<FiltrateBean> monthlist = new ArrayList<>();
     public StatisticData statisticData =new StatisticData();
     public HashMap<String, Integer> taste_hash=new HashMap<>();
     public HashMap<String, Integer> window_hash=new HashMap<>();
@@ -96,7 +97,6 @@ public class StatisticsActivity extends AppCompatActivity {
                     }
                     data[6] = (int) data[6] + 1;
                 }
-                System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ Arrays.toString(data));
                 aaChartModel.series(new AASeriesElement[]{
                         new AASeriesElement()
                                 .name("时段用餐次数")
@@ -144,44 +144,67 @@ public class StatisticsActivity extends AppCompatActivity {
                                     aaChartModel.polar=Boolean.FALSE;
                                     aaChartModel.dataLabelsEnabled     = false;
                                     aaChartModel.xAxisTickInterval=0;
-                                    Object[] total =statisticData.monthCost(userID);
-                                    System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ Arrays.toString(total));
-                                    Object[] data1= Arrays.copyOfRange(total,0,10);
-                                    Object[] data2= Arrays.copyOfRange(total,10,20);
-                                    Object[] data3= Arrays.copyOfRange(total,20,31);
-                                    Calendar now = Calendar.getInstance();
-                                    String[] Str=new String[11];
-                                    for(int i=1;i<=10;i++)
-                                    {
-                                        String a="+";
-                                        String s=String.valueOf(i);
-                                        s=a.concat(s);
-                                        s=s.concat("日");
-                                        Str[i-1]=s;
-                                    }
-                                    Str[10]="31日";
-                                    aaChartModel.chartType = AAChartType.Line;
-                                    aaChartModel.categories(Str);
+                                    screenPopWindow = new ScreenPopWindow(statis, monthlist);
+                                    //设置多选，因为共用的一个bean，这里调用reset重置下数据
+                                    screenPopWindow.setSingle(true).reset().build();
+                                    screenPopWindow.showAsDropDown(expense);
+                                    screenPopWindow.setOnConfirmClickListener(new ScreenPopWindow.OnConfirmClickListener() {
+                                     @Override
+                                      public void onConfirmClick(List<String> list) {
+                                          if (list.isEmpty()==Boolean.FALSE) {
+                                              String str = list.get(0);
+                                              int month;
+                                              if(str.length()==2)
+                                              {
+                                                  month=Integer.parseInt(str.substring(0,1));
+                                                  System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+str.substring(0,1));
+                                                  System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+month);
+                                              }
+                                              else month=Integer.parseInt(str.substring(0,2));
+                                              if(month==11){
+                                                  Object[] total =statisticData.monthCost(userID);
+                                                  Object[] data1= Arrays.copyOfRange(total,0,10);
+                                                  Object[] data2= Arrays.copyOfRange(total,10,20);
+                                                  Object[] data3= Arrays.copyOfRange(total,20,31);
+                                                  Calendar now = Calendar.getInstance();
+                                                  String[] Str=new String[11];
+                                                  for(int i=1;i<=10;i++)
+                                                  {
+                                                      String a="+";
+                                                      String s=String.valueOf(i);
+                                                      s=a.concat(s);
+                                                      s=s.concat("日");
+                                                      Str[i-1]=s;
+                                                  }
+                                                  Str[10]="31日";
+                                                  aaChartModel.chartType = AAChartType.Line;
+                                                  aaChartModel.categories(Str);
 
-                                    switch ((now.get(Calendar.DAY_OF_MONTH)-1)/10){
-                                        case 0:
-                                            data1=Arrays.copyOfRange(data1,0,now.get(Calendar.DAY_OF_MONTH));
-                                            aaChartModel.series(new AASeriesElement[]{
-                                                    new AASeriesElement().name("0+").data(data1)});
-                                        case 1:
-                                            data2=Arrays.copyOfRange(data2,0,now.get(Calendar.DAY_OF_MONTH)-10);
-                                            aaChartModel.series(new AASeriesElement[]{
-                                                    new AASeriesElement().name("0+").data(data1),
-                                                    new AASeriesElement().name("10+").data(data2)});
-                                        default:
-                                            data3=Arrays.copyOfRange(data3,0,now.get(Calendar.DAY_OF_MONTH)-20);
-                                            aaChartModel.series(new AASeriesElement[]{
-                                                    new AASeriesElement().name("0+").data(data1),
-                                                    new AASeriesElement().name("10+").data(data2),
-                                                    new AASeriesElement().name("20+").data(data3)});
+                                                  switch ((now.get(Calendar.DAY_OF_MONTH)-1)/10){
+                                                      case 0:
+                                                          data1=Arrays.copyOfRange(data1,0,now.get(Calendar.DAY_OF_MONTH));
+                                                          aaChartModel.series(new AASeriesElement[]{
+                                                                  new AASeriesElement().name("0+").data(data1)});
+                                                          break;
+                                                      case 1:
+                                                          data2=Arrays.copyOfRange(data2,0,now.get(Calendar.DAY_OF_MONTH)-10);
+                                                          aaChartModel.series(new AASeriesElement[]{
+                                                                  new AASeriesElement().name("0+").data(data1),
+                                                                  new AASeriesElement().name("10+").data(data2)});
+                                                          break;
+                                                      default:
+                                                          data3=Arrays.copyOfRange(data3,0,now.get(Calendar.DAY_OF_MONTH)-20);
+                                                          aaChartModel.series(new AASeriesElement[]{
+                                                                  new AASeriesElement().name("0+").data(data1),
+                                                                  new AASeriesElement().name("10+").data(data2),
+                                                                  new AASeriesElement().name("20+").data(data3)});
 
-                                    }
-                                    aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                                                  }
+                                                          aaChartView.aa_drawChartWithChartModel(aaChartModel);
+                                                      }
+                                                  }
+                                              }
+                                    });
                                     break;
                                 case"年":
                                     aaChartModel.chartType = AAChartType.Column;
@@ -270,7 +293,7 @@ public class StatisticsActivity extends AppCompatActivity {
     private void initParam() {
         String[] filter = {"周","月","年"};
         String[] sort = {"口味偏好","档口偏好"};
-
+        String[] monthsort = {"1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"};
         FiltrateBean fb1 = new FiltrateBean();
         fb1.setTypeName("查看类型");
         List<FiltrateBean.Children> childrenList0 = new ArrayList<>();
@@ -291,8 +314,18 @@ public class StatisticsActivity extends AppCompatActivity {
         }
         fb2.setChildren(childrenList1);
 
+        FiltrateBean fb3 = new FiltrateBean();
+        fb3.setTypeName("查看类型");
+        List<FiltrateBean.Children> childrenList2 = new ArrayList<>();
+        for (String asort : monthsort) {
+            FiltrateBean.Children cd = new FiltrateBean.Children();
+            cd.setValue(asort);
+            childrenList2.add(cd);
+        }
+        fb3.setChildren(childrenList2);
         expenseList.add(fb1);
         favorList.add(fb2);
+        monthlist.add(fb3);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -17,9 +17,9 @@ public class ScreenPopWindow extends PopupWindow {
 
     private final Activity context;
     private final List<FiltrateBean> dictList;
-    private CustomHeightListView mListView;
-    private TextView tvReset, tvConfirm;
-    private View nullView,topView,bottomView;
+    public CustomHeightListView mListView;
+    public TextView tvReset, tvConfirm;
+    public View nullView,topView,bottomView;
     private ScreenListViewAdapter adapter;
     private OnConfirmClickListener onConfirmClickListener;
 
