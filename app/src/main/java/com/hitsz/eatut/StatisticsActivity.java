@@ -165,7 +165,6 @@ public class StatisticsActivity extends AppCompatActivity {
                                               Calendar now = Calendar.getInstance();
                                               LocalDate ld = LocalDate.of(now.get(Calendar.YEAR), month, 1);
                                               int days=ld.lengthOfMonth();
-                                              System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+ld.lengthOfMonth());
                                               if(month<13){
                                                   Object[] total =statisticData.allMonthCost(userID)[month-1];
                                                   Object[] data1= Arrays.copyOfRange(total,0,10);
