@@ -5,15 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-<!--     200 200 -->
+    <!--     200 200 -->
 
-    <TextView
-        android:id="@+id/text_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="40dp"
-        android:background="@drawable/textviw_border"/>
+
 
     <ImageView
         android:id="@+id/img_view"
@@ -23,22 +17,64 @@
         android:layout_marginTop="50dp"
         />
 
-<!--    <Button-->
-<!--        android:id="@+id/paizhao"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="#ffff"-->
-<!--        android:text="打开相机" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/paizhao"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="#ffff"-->
+    <!--        android:text="打开相机" />-->
 
 
-    <Button
-        android:id="@+id/xiangce"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="380dp"
-        android:background="@drawable/square_btn_lighttheme"
-        android:text="从相册选择图片上传" />
+
+
+    <TextView
+        android:layout_marginBottom="30dp"
+        android:id="@+id/text_post"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/xiangce"
+        android:background="@drawable/textviw_border"
+        android:layout_centerHorizontal="true"/>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:id="@+id/xiangce"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="从相册选择图片上传"
+                android:textSize="20dp"
+                android:background="@color/gray_f3"/>
+        </LinearLayout>
+    </LinearLayout>
 
 
 </FrameLayout>

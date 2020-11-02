@@ -71,7 +71,9 @@ public class PostActivity extends AppCompatActivity {
         img_view=(ImageView)findViewById(R.id.img_view);
         // 显示文字
         post_text=(TextView)findViewById(R.id.text_post);
-        post_text.setText("  上传并展示一张图片 "+"\n"+"  新图片将覆盖旧图片 ");
+        post_text.setText("\n\n\n" +
+                "\n     上传并展示一张图片     " +
+                "\n     新图片将覆盖旧图片     \n\n\n\n");
         //img = (ImageView)this.findViewById(R.id.img);
 
         // 相册点击事件

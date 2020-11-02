@@ -1,44 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:text="增加食堂"
-        android:id="@+id/button_addcanteen"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        android:layout_margin="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:text="增加档口"
-        android:id="@+id/button_addwindow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <Button
+                android:text="增加食堂"
+                android:id="@+id/button_addcanteen"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/diamond"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/grey_bold_right_arrow"
+                android:gravity="fill"
+                android:paddingLeft="20dip"
+                android:textSize="20sp" />
 
-    <Button
-        android:text="增加菜品"
-        android:id="@+id/button_adddish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <View
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E2E2E2" />
 
-    <Button
-        android:text="删除食堂"
-        android:id="@+id/button_deletecanteen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <Button
+                android:text="增加档口"
+                android:id="@+id/button_addwindow"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/diamond"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/grey_bold_right_arrow"
+                android:gravity="fill"
+                android:paddingLeft="20dip"
+                android:textSize="20sp" />
+            <View
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E2E2E2" />
 
-    <Button
-        android:text="删除档口"
-        android:id="@+id/button_deletewindow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <Button
+                android:text="增加菜品"
+                android:id="@+id/button_adddish"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/diamond"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/grey_bold_right_arrow"
+                android:gravity="fill"
+                android:paddingLeft="20dip"
+                android:textSize="20sp" />
+            <View
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E2E2E2" />
 
-    <Button
-        android:text="删除菜品"
-        android:id="@+id/button_deletedish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <Button
+                android:text="删除食堂"
+                android:id="@+id/button_deletecanteen"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/diamond"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/grey_bold_right_arrow"
+                android:gravity="fill"
+                android:paddingLeft="20dip"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E2E2E2" />
+
+            <Button
+                android:text="删除档口"
+                android:id="@+id/button_deletewindow"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/diamond"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/grey_bold_right_arrow"
+                android:gravity="fill"
+                android:paddingLeft="20dip"
+                android:textSize="20sp" />
+
+            <View
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E2E2E2" />
+
+            <Button
+                android:text="删除菜品"
+                android:id="@+id/button_deletedish"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/diamond"
+                android:drawablePadding="15dp"
+                android:drawableRight="@drawable/grey_bold_right_arrow"
+                android:gravity="fill"
+                android:paddingLeft="20dip"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>
