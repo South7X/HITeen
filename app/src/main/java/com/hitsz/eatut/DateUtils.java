@@ -23,7 +23,7 @@ public class DateUtils {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, getNowYear());
         cal.set(Calendar.DATE,  0);
-        cal.set(Calendar.HOUR, 12);
+        cal.set(Calendar.HOUR, 24);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         switch(index){
@@ -63,6 +63,11 @@ public class DateUtils {
             case 12:
                 cal.set(Calendar.MONTH, Calendar.DECEMBER);
                 break;
+            case 13:
+                //当输入为13时跳转到次年一月
+                cal.set(Calendar.YEAR, getNowYear()+1);
+                cal.set(Calendar.MONTH, Calendar.JANUARY);
+                break;
         }
         return cal.getTime().getTime();
     }
@@ -79,6 +84,15 @@ public class DateUtils {
         GregorianCalendar gc = (GregorianCalendar) Calendar.getInstance();
         gc.setTime(date);
         return gc.get(1);
+    }
+    public static long getDayTime(int hour){
+        //返回当天int时的时间戳，如当传入6时，返回当天6点的时间戳。
+        Calendar cal = new GregorianCalendar();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime().getTime();
     }
 
 }
