@@ -16,18 +16,21 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -102,9 +105,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
         //TODO: remove after connect to a real server
-        if (!isUserExist(managerNumber)){
-            addManagerToDatabase(managerNumber, managerPassword);
-        }
+//        if (!isUserExist(managerNumber)){
+//            addManagerToDatabase(managerNumber, managerPassword);
+//        }
 
         mTelephoneView = (AutoCompleteTextView) findViewById(R.id.telephone);
         populateAutoComplete();
@@ -127,6 +130,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
          * 忘记密码
          */
         TextView forgetPsd = findViewById(R.id.forget_psd);
+        forgetPsd.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
         forgetPsd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -134,6 +138,46 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 startActivity(intent);
             }
 
+        });
+
+        /**
+         * 管理员登录
+         */
+        TextView manager_login = findViewById(R.id.manager_login);
+        manager_login.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+        manager_login.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                AlertDialog.Builder customizeDialog =
+                        new AlertDialog.Builder(LoginActivity.this);
+                final View dialogView = LayoutInflater.from(LoginActivity.this)
+                        .inflate(R.layout.dialog_customize,null);
+                customizeDialog.setTitle("管理员登录");
+                customizeDialog.setView(dialogView);
+                customizeDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                customizeDialog.setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 获取EditView中的输入内容
+                                EditText manager_password =
+                                        (EditText) dialogView.findViewById(R.id.manager_password);
+                                if (!manager_password.equals(managerPassword)){
+                                    Intent intent = new Intent(LoginActivity.this, ManagerActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    manager_password.setError("密码错误");
+                                }
+                            }
+                        });
+                customizeDialog.show();
+            }
         });
 
         /**
@@ -163,12 +207,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    private void addManagerToDatabase(String phone, String password) {
-        UserInfo user1 = new UserInfo();
-        user1.setTelephoneNumber(phone);
-        user1.setPassword(md5(password));
-        user1.save();
-    }
+//    private void addManagerToDatabase(String phone, String password) {
+//        UserInfo user1 = new UserInfo();
+//        user1.setTelephoneNumber(phone);
+//        user1.setPassword(md5(password));
+//        user1.save();
+//    }
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -474,15 +518,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return;
                 }
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                Intent intent2 = new Intent(LoginActivity.this, ManagerActivity.class);
+//                Intent intent2 = new Intent(LoginActivity.this, ManagerActivity.class);
 //                SavePhone(mPhone);
                 int userID = (LitePal.where("telephoneNumber like ?", mPhone).find(UserInfo.class)).get(0).getId();
                 Log.d("userID", Integer.toString(userID));
                 SaveUserID(userID);
                 Log.d("managerPassword", mPassword);
                 Log.d("managerPassword", managerPassword);
-                if (mPhone.equals(managerNumber)&&mPassword.equals(managerPassword)) startActivity(intent2);//管理者界面
-                else startActivity(intent);//用户界面
+                startActivity(intent);//用户界面
             } else {
                 Log.v(TAG, "onPostExecute: in else");
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

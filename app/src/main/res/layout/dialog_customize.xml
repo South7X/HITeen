@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="61dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:gravity="center|center_horizontal"
+        android:text="密码："
+        android:textColor="@color/signbtn"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/manager_password"
+        android:layout_width="172dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="35dp"
+        android:drawablePadding="10dp"
+        android:hint="请输入管理员密码"
+        android:inputType="textPassword"
+        android:minWidth="100dip"
+        android:paddingLeft="8dp"
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:textColorHint="#a3a3a3"
+        android:textSize="14sp" />
+
+</LinearLayout>

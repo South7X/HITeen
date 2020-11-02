@@ -74,15 +74,39 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <TextView
-                android:id="@+id/forget_psd"
-                android:clickable="true"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/action_forget_password"
-                android:textColor="@color/signbtn"
-                android:textSize="15sp"/>
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/forget_psd"
+                    android:clickable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/action_forget_password"
+                    android:textColor="@color/signbtn"
+                    android:textSize="15sp"/>
+                <View
+                    android:layout_width="1dip"
+                    android:layout_height="match_parent"
+                    android:background="@color/signbtn"/>
+                <TextView
+                    android:layout_width="6dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/manager_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:text="@string/action_manager_login"
+                    android:textColor="@color/signbtn"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
 
 
             <LinearLayout

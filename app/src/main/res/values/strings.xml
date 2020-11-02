@@ -6,7 +6,8 @@
     <string name="prompt_password">请输入密码</string>
     <string name="action_sign_in">登录</string>
     <string name="action_sign_up">注册</string>
-    <string name="action_forget_password">忘记密码？</string>
+    <string name="action_forget_password"><u>忘记密码？</u></string>
+    <string name="action_manager_login"><u>管理员登录</u></string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_phone">格式不正确</string>
     <string name="error_invalid_password">密码长度不小于8位</string>
