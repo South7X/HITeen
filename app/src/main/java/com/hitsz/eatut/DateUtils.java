@@ -23,7 +23,7 @@ public class DateUtils {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, getNowYear());
         cal.set(Calendar.DATE,  0);
-        cal.set(Calendar.HOUR, 12);
+        cal.set(Calendar.HOUR, 24);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         switch(index){
@@ -62,6 +62,11 @@ public class DateUtils {
                 break;
             case 12:
                 cal.set(Calendar.MONTH, Calendar.DECEMBER);
+                break;
+            case 13:
+                //当输入为13时跳转到次年一月
+                cal.set(Calendar.YEAR, getNowYear()+1);
+                cal.set(Calendar.MONTH, Calendar.JANUARY);
                 break;
         }
         return cal.getTime().getTime();
