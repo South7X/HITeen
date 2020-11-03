@@ -146,13 +146,13 @@ public class OrderFragment extends Fragment {
 //            Log.d("StatisticTest", (i+1) + ": " + (weekCost[i]));
 //        }
 //        month
-        Object[][] monthCost = statisticData.allMonthCost(userID);
-        for(int i=0;i<12;i++){
-            Log.d("StatisticTest", "第" + (i+1) + "个月：\n =============================================================");
-            for(int j=0;j<31;j++){
-                Log.d("StatisticTest", "第" + (j+1) + "天：" + monthCost[i][j]);
-            }
-        }
+//        Object[][] monthCost = statisticData.allMonthCost(userID);
+//        for(int i=0;i<12;i++){
+//            Log.d("StatisticTest", "第" + (i+1) + "个月：\n =============================================================");
+//            for(int j=0;j<31;j++){
+//                Log.d("StatisticTest", "第" + (j+1) + "天：" + monthCost[i][j]);
+//            }
+//        }
 //        //year
 //        Object[] yearCost = statisticData.yearCost(userID);
 //        Log.d("StatisticTest", Integer.toString(yearCost.length));
@@ -174,25 +174,25 @@ public class OrderFragment extends Fragment {
 //        for(float year:yearCost){
 //            Log.d("StatisticTest", Float.toString(year));
 //        }
-//        //Prefer
-//        HashMap<String, Integer> windowMap = statisticData.PreferStatistic(userID, 0);
-//        Log.d("StatisticTest", "windowPrefer:");
-//        List<HashMap.Entry<String, Integer>> entryList = new ArrayList<HashMap.Entry<String, Integer>>(windowMap.entrySet());
-//        Iterator<HashMap.Entry<String, Integer>> iterator = entryList.iterator();
-//        HashMap.Entry<String, Integer> tmpEntry = null;
-//        while(iterator.hasNext()){
-//            tmpEntry = iterator.next();
-//            Log.d("StatisticTest", tmpEntry.getKey() + " " + tmpEntry.getValue());
-//        }
-//        HashMap<String, Integer> tagMap = statisticData.PreferStatistic(userID, 1);
-//        Log.d("StatisticTest", "tagPrefer:");
-//        List<HashMap.Entry<String, Integer>> entryList1 = new ArrayList<HashMap.Entry<String, Integer>>(tagMap.entrySet());
-//        Iterator<HashMap.Entry<String, Integer>> iterator1 = entryList1.iterator();
-//        HashMap.Entry<String, Integer> tmpEntry1 = null;
-//        while(iterator1.hasNext()){
-//            tmpEntry1 = iterator1.next();
-//            Log.d("StatisticTest", tmpEntry1.getKey() + " " + tmpEntry1.getValue());
-//        }
+        //Prefer
+        HashMap<String, Integer> windowMap = statisticData.PreferStatistic(userID, 0);
+        Log.d("StatisticTest", "windowPrefer:");
+        List<HashMap.Entry<String, Integer>> entryList = new ArrayList<HashMap.Entry<String, Integer>>(windowMap.entrySet());
+        Iterator<HashMap.Entry<String, Integer>> iterator = entryList.iterator();
+        HashMap.Entry<String, Integer> tmpEntry = null;
+        while(iterator.hasNext()){
+            tmpEntry = iterator.next();
+            Log.d("StatisticTest", tmpEntry.getKey() + " " + tmpEntry.getValue());
+        }
+        HashMap<String, Integer> tagMap = statisticData.PreferStatistic(userID, 1);
+        Log.d("StatisticTest", "tagPrefer:");
+        List<HashMap.Entry<String, Integer>> entryList1 = new ArrayList<HashMap.Entry<String, Integer>>(tagMap.entrySet());
+        Iterator<HashMap.Entry<String, Integer>> iterator1 = entryList1.iterator();
+        HashMap.Entry<String, Integer> tmpEntry1 = null;
+        while(iterator1.hasNext()){
+            tmpEntry1 = iterator1.next();
+            Log.d("StatisticTest", tmpEntry1.getKey() + " " + tmpEntry1.getValue());
+        }
 
     }
 }
